@@ -1,0 +1,1481 @@
+# PareDeJogar.com — MVP Completo
+## Instruções para o Cursor AI
+
+> Stack: React 19 + Vite + Tailwind CSS 4 + Supabase + React Router 6 + Vercel
+
+---
+
+## PASSO 1 — Criar o projeto
+
+```bash
+npm create vite@latest paredejogar -- --template react
+cd paredejogar
+npm install
+npm install react-router-dom @supabase/supabase-js
+npm install -D tailwindcss @tailwindcss/vite
+```
+
+---
+
+## PASSO 2 — Estrutura de arquivos
+
+Crie a seguinte estrutura dentro de `src/`:
+
+```
+src/
+  lib/
+    supabase.js
+  hooks/
+    useAuth.js
+  components/
+    Navbar.jsx
+    Footer.jsx
+    LeadForm.jsx
+    ProtectedRoute.jsx
+  pages/
+    LandingPage.jsx
+    auth/
+      LoginPage.jsx
+      RegisterPage.jsx
+      ForgotPasswordPage.jsx
+      AuthCallback.jsx
+    ContractPage.jsx
+    DashboardPage.jsx
+    modules/
+      Aula1.jsx
+      Aula2.jsx
+      Aula3.jsx
+      CheckIn.jsx
+  App.jsx
+  main.jsx
+  index.css
+```
+
+---
+
+## PASSO 3 — Configuração Tailwind + Vite
+
+### `vite.config.js`
+```js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
+
+### `src/index.css`
+```css
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --cream: #F8F5EF;
+  --navy: #1B3558;
+  --navy-light: #264573;
+  --orange: #E07B35;
+  --orange-dark: #C5631C;
+  --teal: #1A6B72;
+  --teal-light: #2A8A93;
+  --green: #2E7D52;
+  --red: #C0392B;
+  --text: #1A1A2E;
+  --text-muted: #6B7280;
+  --border: #E5E0D8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'DM Serif Display', serif;
+  line-height: 1.2;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(224,123,53,0.4); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--navy);
+  padding: 13px 28px;
+  border-radius: 8px;
+  border: 2px solid var(--navy);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-secondary:hover { background: var(--navy); color: white; }
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  background: white;
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+.input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,107,114,0.1); }
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+}
+
+.section { padding: 80px 24px; }
+.container { max-width: 1100px; margin: 0 auto; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+```
+
+---
+
+## PASSO 4 — Supabase Setup
+
+### `src/lib/supabase.js`
+```js
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+```
+
+### `.env.local` (criar na raiz do projeto)
+```
+VITE_SUPABASE_URL=https://SEU_PROJETO.supabase.co
+VITE_SUPABASE_ANON_KEY=sua_anon_key_aqui
+```
+
+### SQL para rodar no Supabase (Dashboard > SQL Editor)
+```sql
+-- Tabela de leads (pessoas que preencheram o formulário na landing)
+create table if not exists leads (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text not null,
+  phone text,
+  message text,
+  created_at timestamptz default now()
+);
+
+-- Tabela de contratos assinados
+create table if not exists contracts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade,
+  signed_name text not null,
+  signed_at timestamptz not null,
+  created_at timestamptz default now(),
+  unique(user_id)
+);
+
+-- Progresso nas aulas (futuro)
+create table if not exists user_progress (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade,
+  module_id integer not null,
+  lesson_id integer not null,
+  completed_at timestamptz default now(),
+  unique(user_id, module_id, lesson_id)
+);
+
+-- RLS
+alter table leads enable row level security;
+alter table contracts enable row level security;
+alter table user_progress enable row level security;
+
+-- leads: qualquer um pode inserir
+create policy "leads insert" on leads for insert to anon, authenticated with check (true);
+create policy "leads admin read" on leads for select to authenticated using (true);
+
+-- contracts: apenas o próprio usuário
+create policy "contracts own" on contracts for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- user_progress: apenas o próprio usuário
+create policy "progress own" on user_progress for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+```
+
+---
+
+## PASSO 5 — Hook de Autenticação
+
+### `src/hooks/useAuth.js`
+```js
+import { useState, useEffect, createContext, useContext } from 'react'
+import { supabase } from '../lib/supabase'
+
+const AuthContext = createContext(null)
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const signUp = (email, password) =>
+    supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } })
+
+  const signIn = (email, password) =>
+    supabase.auth.signInWithPassword({ email, password })
+
+  const signInWithGoogle = () =>
+    supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: `${window.location.origin}/auth/callback` } })
+
+  const signOut = () => supabase.auth.signOut()
+
+  const resetPassword = (email) =>
+    supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/auth/reset-password` })
+
+  return (
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signInWithGoogle, signOut, resetPassword }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export const useAuth = () => useContext(AuthContext)
+```
+
+---
+
+## PASSO 6 — Componentes Base
+
+### `src/components/ProtectedRoute.jsx`
+```jsx
+import { Navigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+
+export default function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth()
+
+  if (loading) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ width: 48, height: 48, border: '3px solid #E5E0D8', borderTop: '3px solid #1B3558', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }}/>
+        <p style={{ color: 'var(--text-muted)', fontFamily: 'Plus Jakarta Sans' }}>Carregando...</p>
+      </div>
+    </div>
+  )
+
+  if (!user) return <Navigate to="/entrar" replace />
+  return children
+}
+```
+
+### `src/components/Navbar.jsx`
+```jsx
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+
+export default function Navbar() {
+  const { user, signOut } = useAuth()
+  const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/')
+  }
+
+  return (
+    <nav style={{ background: 'white', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 100, padding: '0 24px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
+        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 36, height: 36, background: 'var(--navy)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ color: 'var(--orange)', fontFamily: 'DM Serif Display', fontSize: 18, fontWeight: 700 }}>P</span>
+          </div>
+          <span style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: 'var(--navy)', fontWeight: 700 }}>
+            Pare<span style={{ color: 'var(--orange)' }}>De</span>Jogar
+          </span>
+        </Link>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+          <Link to="/#metodo" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }} className="hidden-mobile">O Método</Link>
+          <Link to="/#recursos" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }} className="hidden-mobile">Recursos</Link>
+
+          {user ? (
+            <>
+              <Link to="/painel" className="btn-secondary" style={{ padding: '8px 18px', fontSize: 14 }}>Meu Painel</Link>
+              <button onClick={handleSignOut} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>Sair</button>
+            </>
+          ) : (
+            <>
+              <Link to="/entrar" style={{ color: 'var(--navy)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>Entrar</Link>
+              <Link to="/cadastrar" className="btn-primary" style={{ padding: '10px 20px', fontSize: 14 }}>Começar Agora</Link>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
+  )
+}
+```
+
+### `src/components/Footer.jsx`
+```jsx
+import { Link } from 'react-router-dom'
+
+export default function Footer() {
+  return (
+    <footer style={{ background: 'var(--navy)', color: 'white', padding: '48px 24px 32px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, marginBottom: 40 }}>
+          <div>
+            <div style={{ fontFamily: 'DM Serif Display', fontSize: 24, marginBottom: 12 }}>
+              Pare<span style={{ color: 'var(--orange)' }}>De</span>Jogar
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, lineHeight: 1.7 }}>
+              Ajudamos você a superar o vício em jogos e reconstruir sua vida com base em ciência e acolhimento humano.
+            </p>
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, marginBottom: 16, fontSize: 14, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)' }}>Programa</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <Link to="/#metodo" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Método ISTOP</Link>
+              <Link to="/contrato" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Contrato de Interrupção</Link>
+              <Link to="/painel" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Acessar Programa</Link>
+            </div>
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, marginBottom: 16, fontSize: 14, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)' }}>Suporte</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <a href="mailto:contato@paredejogar.com" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>contato@paredejogar.com</a>
+            </div>
+          </div>
+        </div>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>© 2025 PareDeJogar. Todos os direitos reservados.</p>
+          <div style={{ display: 'flex', gap: 20 }}>
+            <Link to="/privacidade" style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: 13 }}>Privacidade</Link>
+            <Link to="/termos" style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: 13 }}>Termos</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+```
+
+### `src/components/LeadForm.jsx`
+```jsx
+import { useState } from 'react'
+import { supabase } from '../lib/supabase'
+
+export default function LeadForm() {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
+  const [status, setStatus] = useState(null) // null | 'loading' | 'success' | 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setStatus('loading')
+    const { error } = await supabase.from('leads').insert([form])
+    if (error) { setStatus('error'); return }
+    setStatus('success')
+    setForm({ name: '', email: '', phone: '', message: '' })
+  }
+
+  if (status === 'success') return (
+    <div style={{ textAlign: 'center', padding: '40px 24px', animation: 'fadeUp 0.5s ease both' }}>
+      <div style={{ fontSize: 56, marginBottom: 16 }}>🌱</div>
+      <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 28, color: 'var(--navy)', marginBottom: 12 }}>Recebemos seu contato!</h3>
+      <p style={{ color: 'var(--text-muted)', maxWidth: 400, margin: '0 auto' }}>Em breve entraremos em contato. O primeiro passo já foi dado.</p>
+    </div>
+  )
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div>
+        <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>Seu nome *</label>
+        <input className="input" type="text" required placeholder="Como você se chama?" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+      </div>
+      <div>
+        <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>E-mail *</label>
+        <input className="input" type="email" required placeholder="seu@email.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+      </div>
+      <div>
+        <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>WhatsApp</label>
+        <input className="input" type="tel" placeholder="(48) 99999-9999" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
+      </div>
+      <div>
+        <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>Como posso te ajudar?</label>
+        <textarea className="input" rows={3} placeholder="Conte um pouco sobre sua situação (opcional)" value={form.message} onChange={e => setForm({...form, message: e.target.value})} style={{ resize: 'vertical' }}/>
+      </div>
+      {status === 'error' && <p style={{ color: 'var(--red)', fontSize: 14 }}>Ops, algo deu errado. Tente novamente.</p>}
+      <button type="submit" className="btn-primary" disabled={status === 'loading'} style={{ opacity: status === 'loading' ? 0.7 : 1, cursor: status === 'loading' ? 'not-allowed' : 'pointer' }}>
+        {status === 'loading' ? 'Enviando...' : 'Quero Receber Orientação Gratuita'}
+      </button>
+      <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>Seus dados são confidenciais. Sem spam.</p>
+    </form>
+  )
+}
+```
+
+---
+
+## PASSO 7 — Páginas de Auth
+
+### `src/pages/auth/LoginPage.jsx`
+```jsx
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+
+export default function LoginPage() {
+  const { signIn, signInWithGoogle } = useAuth()
+  const navigate = useNavigate()
+  const [form, setForm] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true); setError('')
+    const { error } = await signIn(form.email, form.password)
+    if (error) { setError(error.message === 'Invalid login credentials' ? 'E-mail ou senha incorretos.' : error.message); setLoading(false); return }
+    navigate('/painel')
+  }
+
+  const handleGoogle = async () => {
+    await signInWithGoogle()
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+      <div style={{ width: '100%', maxWidth: 440 }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <div style={{ fontFamily: 'DM Serif Display', fontSize: 28, color: 'var(--navy)' }}>
+              Pare<span style={{ color: 'var(--orange)' }}>De</span>Jogar
+            </div>
+          </Link>
+          <h1 style={{ fontSize: 26, marginTop: 16, marginBottom: 8 }}>Bem-vindo de volta</h1>
+          <p style={{ color: 'var(--text-muted)' }}>Continue sua jornada de recuperação</p>
+        </div>
+
+        <div className="card">
+          <button onClick={handleGoogle} style={{ width: '100%', padding: '12px', border: '1.5px solid var(--border)', borderRadius: 8, background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, fontSize: 15, fontWeight: 600, fontFamily: 'Plus Jakarta Sans', marginBottom: 20, transition: 'all 0.2s' }}
+            onMouseEnter={e => e.target.style.borderColor = 'var(--navy)'}
+            onMouseLeave={e => e.target.style.borderColor = 'var(--border)'}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+            Continuar com Google
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ flex: 1, height: 1, background: 'var(--border)' }}/>
+            <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>ou com e-mail</span>
+            <div style={{ flex: 1, height: 1, background: 'var(--border)' }}/>
+          </div>
+
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>E-mail</label>
+              <input className="input" type="email" required value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="seu@email.com" />
+            </div>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                <label style={{ fontWeight: 600, fontSize: 14, color: 'var(--navy)' }}>Senha</label>
+                <Link to="/esqueci-senha" style={{ fontSize: 13, color: 'var(--teal)', textDecoration: 'none', fontWeight: 600 }}>Esqueci a senha</Link>
+              </div>
+              <input className="input" type="password" required value={form.password} onChange={e => setForm({...form, password: e.target.value})} placeholder="Sua senha" />
+            </div>
+            {error && <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', padding: '10px 14px', borderRadius: 8, color: '#DC2626', fontSize: 14 }}>{error}</div>}
+            <button type="submit" className="btn-primary" disabled={loading} style={{ opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer', width: '100%', textAlign: 'center' }}>
+              {loading ? 'Entrando...' : 'Entrar'}
+            </button>
+          </form>
+        </div>
+
+        <p style={{ textAlign: 'center', marginTop: 20, color: 'var(--text-muted)', fontSize: 14 }}>
+          Não tem conta? <Link to="/cadastrar" style={{ color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Cadastrar grátis</Link>
+        </p>
+      </div>
+    </div>
+  )
+}
+```
+
+### `src/pages/auth/RegisterPage.jsx`
+```jsx
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+
+export default function RegisterPage() {
+  const { signUp, signInWithGoogle } = useAuth()
+  const navigate = useNavigate()
+  const [form, setForm] = useState({ email: '', password: '', confirm: '' })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    if (form.password.length < 6) { setError('A senha deve ter pelo menos 6 caracteres.'); return }
+    if (form.password !== form.confirm) { setError('As senhas não conferem.'); return }
+    setLoading(true)
+    const { error } = await signUp(form.email, form.password)
+    if (error) { setError(error.message); setLoading(false); return }
+    setSuccess(true)
+  }
+
+  if (success) return (
+    <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+      <div style={{ textAlign: 'center', maxWidth: 440 }}>
+        <div style={{ fontSize: 64, marginBottom: 16 }}>✉️</div>
+        <h2 style={{ fontSize: 28, color: 'var(--navy)', marginBottom: 12 }}>Confirme seu e-mail</h2>
+        <p style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>Enviamos um link de confirmação para <strong>{form.email}</strong>. Clique no link para ativar sua conta e iniciar sua jornada.</p>
+        <Link to="/entrar" className="btn-primary" style={{ display: 'inline-block', marginTop: 24 }}>Voltar ao Login</Link>
+      </div>
+    </div>
+  )
+
+  return (
+    <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+      <div style={{ width: '100%', maxWidth: 440 }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <div style={{ fontFamily: 'DM Serif Display', fontSize: 28, color: 'var(--navy)' }}>Pare<span style={{ color: 'var(--orange)' }}>De</span>Jogar</div>
+          </Link>
+          <h1 style={{ fontSize: 26, marginTop: 16, marginBottom: 8 }}>Comece sua recuperação</h1>
+          <p style={{ color: 'var(--text-muted)' }}>Cadastro gratuito — sem cartão de crédito</p>
+        </div>
+
+        <div className="card">
+          <button onClick={signInWithGoogle} style={{ width: '100%', padding: '12px', border: '1.5px solid var(--border)', borderRadius: 8, background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, fontSize: 15, fontWeight: 600, fontFamily: 'Plus Jakarta Sans', marginBottom: 20, transition: 'border-color 0.2s' }}>
+            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+            Cadastrar com Google
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ flex: 1, height: 1, background: 'var(--border)' }}/>
+            <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>ou com e-mail</span>
+            <div style={{ flex: 1, height: 1, background: 'var(--border)' }}/>
+          </div>
+
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>E-mail</label>
+              <input className="input" type="email" required value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="seu@email.com" />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>Senha</label>
+              <input className="input" type="password" required value={form.password} onChange={e => setForm({...form, password: e.target.value})} placeholder="Mínimo 6 caracteres" />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>Confirmar senha</label>
+              <input className="input" type="password" required value={form.confirm} onChange={e => setForm({...form, confirm: e.target.value})} placeholder="Repita sua senha" />
+            </div>
+            {error && <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', padding: '10px 14px', borderRadius: 8, color: '#DC2626', fontSize: 14 }}>{error}</div>}
+            <button type="submit" className="btn-primary" disabled={loading} style={{ opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer', width: '100%', textAlign: 'center' }}>
+              {loading ? 'Criando conta...' : 'Criar minha conta gratuita'}
+            </button>
+            <p style={{ fontSize: 11, color: 'var(--text-muted)', textAlign: 'center' }}>Ao se cadastrar, você concorda com nossos Termos de Uso e Política de Privacidade.</p>
+          </form>
+        </div>
+
+        <p style={{ textAlign: 'center', marginTop: 20, color: 'var(--text-muted)', fontSize: 14 }}>
+          Já tem conta? <Link to="/entrar" style={{ color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Entrar</Link>
+        </p>
+      </div>
+    </div>
+  )
+}
+```
+
+### `src/pages/auth/ForgotPasswordPage.jsx`
+```jsx
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+
+export default function ForgotPasswordPage() {
+  const { resetPassword } = useAuth()
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState(null)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const { error } = await resetPassword(email)
+    setStatus(error ? 'error' : 'success')
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+      <div style={{ width: '100%', maxWidth: 400 }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <Link to="/" style={{ textDecoration: 'none', fontFamily: 'DM Serif Display', fontSize: 28, color: 'var(--navy)' }}>Pare<span style={{ color: 'var(--orange)' }}>De</span>Jogar</Link>
+          <h1 style={{ fontSize: 26, marginTop: 16, marginBottom: 8 }}>Recuperar senha</h1>
+          <p style={{ color: 'var(--text-muted)' }}>Enviaremos um link para redefinir sua senha</p>
+        </div>
+        <div className="card">
+          {status === 'success' ? (
+            <div style={{ textAlign: 'center', padding: '16px 0' }}>
+              <div style={{ fontSize: 48, marginBottom: 12 }}>📧</div>
+              <p style={{ color: 'var(--green)', fontWeight: 600, marginBottom: 8 }}>E-mail enviado!</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>Verifique sua caixa de entrada e clique no link para redefinir sua senha.</p>
+              <Link to="/entrar" className="btn-primary" style={{ display: 'inline-block', marginTop: 20 }}>Voltar ao Login</Link>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div>
+                <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>E-mail da conta</label>
+                <input className="input" type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="seu@email.com" />
+              </div>
+              {status === 'error' && <p style={{ color: 'var(--red)', fontSize: 14 }}>Ops, algo deu errado. Tente novamente.</p>}
+              <button type="submit" className="btn-primary" style={{ width: '100%', textAlign: 'center' }}>Enviar link de recuperação</button>
+              <Link to="/entrar" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 14, textDecoration: 'none', fontWeight: 600 }}>← Voltar ao login</Link>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+### `src/pages/auth/AuthCallback.jsx`
+```jsx
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../lib/supabase'
+
+export default function AuthCallback() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) navigate('/painel')
+      else navigate('/entrar')
+    })
+  }, [navigate])
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--cream)' }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ width: 48, height: 48, border: '3px solid var(--border)', borderTop: '3px solid var(--navy)', borderRadius: '50%', margin: '0 auto 16px', animation: 'spin 1s linear infinite' }}/>
+        <p style={{ color: 'var(--text-muted)' }}>Autenticando...</p>
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## PASSO 8 — Página de Contrato
+
+### `src/pages/ContractPage.jsx`
+```jsx
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import { supabase } from '../lib/supabase'
+
+const commitments = [
+  { id: 'c1', text: 'Reconheço que o jogo online pode gerar perda de controle e prejuízos financeiros, emocionais e familiares.' },
+  { id: 'c2', text: 'Reconheço que tentar recuperar perdas apostando novamente costuma aprofundar o problema.' },
+  { id: 'c3', text: 'Reconheço que interromper o ciclo exige consciência, prática e apoio.' },
+  { id: 'c4', text: 'Estou disposto a observar meu comportamento de jogo com honestidade.' },
+  { id: 'c5', text: 'Quando sentir vontade intensa de apostar, me comprometo a fazer uma pausa mínima de 15 minutos antes de qualquer decisão.' },
+  { id: 'c6', text: 'Estou disposto a utilizar as ferramentas do programa para apoiar minha mudança.' },
+]
+
+export default function ContractPage() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const [checked, setChecked] = useState({})
+  const [signedName, setSignedName] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [signed, setSigned] = useState(false)
+  const [existingContract, setExistingContract] = useState(null)
+
+  const today = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })
+  const allChecked = commitments.every(c => checked[c.id])
+
+  useEffect(() => {
+    if (user) {
+      supabase.from('contracts').select('*').eq('user_id', user.id).single()
+        .then(({ data }) => { if (data) setExistingContract(data) })
+    }
+  }, [user])
+
+  const handleSign = async () => {
+    if (!allChecked || !signedName.trim()) return
+    setLoading(true)
+    const { error } = await supabase.from('contracts').upsert({
+      user_id: user.id,
+      signed_name: signedName.trim(),
+      signed_at: new Date().toISOString()
+    })
+    if (!error) setSigned(true)
+    setLoading(false)
+  }
+
+  if (existingContract && !signed) return (
+    <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+      <div style={{ maxWidth: 600, textAlign: 'center' }}>
+        <div style={{ fontSize: 64, marginBottom: 16 }}>✅</div>
+        <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 32, color: 'var(--navy)', marginBottom: 12 }}>Contrato já assinado</h2>
+        <p style={{ color: 'var(--text-muted)', marginBottom: 8 }}>Assinado por: <strong>{existingContract.signed_name}</strong></p>
+        <p style={{ color: 'var(--text-muted)', marginBottom: 24 }}>Em: {new Date(existingContract.signed_at).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        <button onClick={() => navigate('/painel')} className="btn-primary">Ir para o Programa</button>
+      </div>
+    </div>
+  )
+
+  if (signed) return (
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, var(--navy) 0%, #0d2240 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+      <div style={{ maxWidth: 560, textAlign: 'center', animation: 'fadeUp 0.8s ease both' }}>
+        <div style={{ fontSize: 72, marginBottom: 24, animation: 'pulse 2s ease infinite' }}>🌟</div>
+        <h1 style={{ fontFamily: 'DM Serif Display', fontSize: 40, color: 'white', marginBottom: 20, lineHeight: 1.2 }}>
+          Hoje começa seu processo de recuperação do controle.
+        </h1>
+        <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 16, padding: '24px 32px', marginBottom: 32, border: '1px solid rgba(255,255,255,0.12)' }}>
+          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, lineHeight: 1.7, fontStyle: 'italic' }}>
+            "Você tomou a decisão mais importante: escolher se mesmo. O cérebro pode aprender novos caminhos, e você acabou de dar o primeiro passo."
+          </p>
+        </div>
+        <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>Assinado por: <strong style={{ color: 'white' }}>{signedName}</strong></p>
+        <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 32, fontSize: 14 }}>{today}</p>
+        <button onClick={() => navigate('/painel')} className="btn-primary" style={{ fontSize: 18, padding: '16px 36px' }}>
+          Iniciar Módulo 1 →
+        </button>
+      </div>
+    </div>
+  )
+
+  return (
+    <div style={{ background: 'var(--cream)', minHeight: '100vh', padding: '60px 24px' }}>
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--navy)', color: 'white', padding: '6px 16px', borderRadius: 100, fontSize: 13, fontWeight: 600, marginBottom: 20 }}>
+            <span>📋</span> Contrato de Interrupção — Método ISTOP
+          </div>
+          <h1 style={{ fontFamily: 'DM Serif Display', fontSize: 40, color: 'var(--navy)', lineHeight: 1.2, marginBottom: 16 }}>
+            Um compromisso consigo mesmo
+          </h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: 17, maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
+            Este não é um contrato externo. É uma decisão consciente de recuperar o controle da sua própria vida.
+          </p>
+        </div>
+
+        {/* Intro */}
+        <div style={{ background: '#EEF2FF', border: '1px solid #C7D2FE', borderRadius: 16, padding: '24px 28px', marginBottom: 32 }}>
+          <p style={{ color: '#3730A3', lineHeight: 1.8, fontSize: 15 }}>
+            O jogo online pode criar um ciclo de impulsos, perdas e tentativas de recuperação que muitas vezes ocorre de forma automática.
+            Interromper esse ciclo exige mais do que informação — exige uma <strong>decisão consciente</strong>.
+          </p>
+        </div>
+
+        {/* Commitments */}
+        <div className="card" style={{ marginBottom: 24 }}>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 24, color: 'var(--navy)', marginBottom: 20 }}>Declaração de compromisso</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 24 }}>Leia cada item com atenção e marque quando estiver pronto:</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {commitments.map((c, i) => (
+              <label key={c.id} style={{ display: 'flex', gap: 14, cursor: 'pointer', padding: '14px 16px', borderRadius: 10, border: `1.5px solid ${checked[c.id] ? 'var(--teal)' : 'var(--border)'}`, background: checked[c.id] ? '#F0FDFA' : 'white', transition: 'all 0.2s' }}>
+                <input type="checkbox" checked={!!checked[c.id]} onChange={e => setChecked({...checked, [c.id]: e.target.checked})} style={{ width: 20, height: 20, marginTop: 2, accentColor: 'var(--teal)', flexShrink: 0, cursor: 'pointer' }} />
+                <span style={{ fontSize: 15, lineHeight: 1.6, color: checked[c.id] ? 'var(--teal)' : 'var(--text)' }}>
+                  <strong style={{ color: 'var(--text-muted)', fontSize: 12 }}>✓ {i + 1}. </strong>
+                  {c.text}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Signature */}
+        <div className="card" style={{ marginBottom: 32 }}>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 24, color: 'var(--navy)', marginBottom: 8 }}>Assinatura</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20 }}>Digite seu nome completo para registrar este compromisso:</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'end' }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>Seu nome</label>
+              <input className="input" type="text" value={signedName} onChange={e => setSignedName(e.target.value)} placeholder="Digite seu nome completo" style={{ fontSize: 16 }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, fontSize: 14, marginBottom: 6, color: 'var(--navy)' }}>Data</label>
+              <div className="input" style={{ background: '#F9FAFB', color: 'var(--text-muted)', cursor: 'default', whiteSpace: 'nowrap' }}>{today}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div style={{ textAlign: 'center' }}>
+          {!allChecked && <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 16 }}>Marque todos os itens acima para continuar</p>}
+          {allChecked && !signedName.trim() && <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 16 }}>Digite seu nome para assinar</p>}
+          <button
+            onClick={handleSign}
+            disabled={!allChecked || !signedName.trim() || loading}
+            className="btn-primary"
+            style={{ fontSize: 18, padding: '18px 48px', opacity: (!allChecked || !signedName.trim()) ? 0.4 : 1, cursor: (!allChecked || !signedName.trim()) ? 'not-allowed' : 'pointer', transition: 'all 0.3s' }}
+          >
+            {loading ? 'Registrando...' : '✨ Aceito iniciar o processo'}
+          </button>
+          <p style={{ color: 'var(--text-muted)', fontSize: 12, marginTop: 12 }}>Este ato simbólico marca o início da sua mudança.</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## PASSO 9 — Dashboard (Painel)
+
+### `src/pages/DashboardPage.jsx`
+```jsx
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import { supabase } from '../lib/supabase'
+
+const lessons = [
+  { id: 1, moduleId: 1, title: 'O vício invisível', subtitle: 'Quando o jogo deixa de ser diversão', path: '/modulo/1/aula/1', icon: '🧠' },
+  { id: 2, moduleId: 1, title: 'O ciclo psicológico', subtitle: 'O padrão mental do jogador', path: '/modulo/1/aula/2', icon: '🔄' },
+  { id: 3, moduleId: 1, title: 'Reconhecendo os sinais', subtitle: 'Identificando a perda de controle', path: '/modulo/1/aula/3', icon: '🚨' },
+  { id: 4, moduleId: 1, title: 'Check-in ISTOP', subtitle: 'Avaliação de risco momentâneo', path: '/checkin', icon: '✅', special: true },
+]
+
+export default function DashboardPage() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const [contract, setContract] = useState(null)
+  const [progress, setProgress] = useState([])
+  const name = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'participante'
+
+  useEffect(() => {
+    if (!user) return
+    supabase.from('contracts').select('*').eq('user_id', user.id).single().then(({ data }) => setContract(data))
+    supabase.from('user_progress').select('*').eq('user_id', user.id).then(({ data }) => setProgress(data || []))
+  }, [user])
+
+  const isCompleted = (moduleId, lessonId) => progress.some(p => p.module_id === moduleId && p.lesson_id === lessonId)
+
+  return (
+    <div style={{ background: 'var(--cream)', minHeight: '100vh', padding: '40px 24px' }}>
+      <div style={{ maxWidth: 800, margin: '0 auto' }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 40 }}>
+          <h1 style={{ fontFamily: 'DM Serif Display', fontSize: 36, color: 'var(--navy)', marginBottom: 8 }}>
+            Olá, {name} 👋
+          </h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: 16 }}>Continue sua jornada de recuperação</p>
+        </div>
+
+        {/* Contrato banner */}
+        {!contract && (
+          <div style={{ background: 'linear-gradient(135deg, var(--navy) 0%, #264573 100%)', borderRadius: 16, padding: '24px 28px', marginBottom: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, fontWeight: 600, marginBottom: 4 }}>PASSO IMPORTANTE</div>
+              <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: 'white', marginBottom: 4 }}>Assine seu Contrato de Interrupção</h3>
+              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 14 }}>Antes de iniciar as aulas, faça seu compromisso consigo mesmo.</p>
+            </div>
+            <Link to="/contrato" className="btn-primary" style={{ whiteSpace: 'nowrap' }}>Assinar Agora →</Link>
+          </div>
+        )}
+
+        {contract && (
+          <div style={{ background: '#F0FDF4', border: '1px solid #86EFAC', borderRadius: 12, padding: '16px 20px', marginBottom: 32, display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 24 }}>✅</span>
+            <div>
+              <p style={{ fontWeight: 700, color: '#15803D', fontSize: 15 }}>Contrato assinado em {new Date(contract.signed_at).toLocaleDateString('pt-BR')}</p>
+              <p style={{ color: '#16A34A', fontSize: 13 }}>"{contract.signed_name}" — você assumiu o compromisso. Continue firme.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Módulo 1 */}
+        <div style={{ marginBottom: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ background: 'var(--navy)', color: 'white', padding: '4px 14px', borderRadius: 100, fontSize: 13, fontWeight: 700 }}>MÓDULO 1</div>
+            <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 24, color: 'var(--navy)' }}>Interrupção</h2>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {lessons.map(lesson => {
+              const completed = isCompleted(lesson.moduleId, lesson.id)
+              return (
+                <Link key={lesson.id} to={lesson.path} style={{ textDecoration: 'none' }}>
+                  <div style={{ background: 'white', borderRadius: 12, padding: '20px 24px', border: `1.5px solid ${completed ? 'var(--teal)' : lesson.special ? 'var(--orange)' : 'var(--border)'}`, display: 'flex', alignItems: 'center', gap: 16, transition: 'all 0.2s', cursor: 'pointer' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateX(4px)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
+                  >
+                    <div style={{ width: 48, height: 48, background: lesson.special ? '#FFF7ED' : '#EFF6FF', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>
+                      {completed ? '✅' : lesson.icon}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--navy)', marginBottom: 2 }}>{lesson.title}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{lesson.subtitle}</div>
+                    </div>
+                    <div style={{ color: lesson.special ? 'var(--orange)' : 'var(--navy)', fontWeight: 700, fontSize: 20 }}>→</div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Módulos futuros */}
+        {['Sensibilização', 'Transformação', 'Organização', 'Prevenção'].map((mod, i) => (
+          <div key={mod} style={{ background: 'white', borderRadius: 12, padding: '20px 24px', border: '1.5px dashed var(--border)', marginBottom: 12, opacity: 0.5 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ background: '#F3F4F6', borderRadius: 8, padding: '4px 12px', fontSize: 12, fontWeight: 700, color: 'var(--text-muted)' }}>MÓDULO {i + 2}</div>
+              <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>{mod}</span>
+              <span style={{ marginLeft: 'auto', fontSize: 12, color: 'var(--text-muted)', background: '#F3F4F6', padding: '3px 10px', borderRadius: 100 }}>Em breve</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## PASSO 10 — Aulas do Módulo 1
+
+### `src/pages/modules/Aula1.jsx`
+```jsx
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+import { supabase } from '../../lib/supabase'
+
+export default function Aula1() {
+  const { user } = useAuth()
+
+  useEffect(() => {
+    if (user) {
+      supabase.from('user_progress').upsert({ user_id: user.id, module_id: 1, lesson_id: 1 })
+    }
+  }, [user])
+
+  return (
+    <div style={{ background: 'var(--cream)', minHeight: '100vh', padding: '60px 24px' }}>
+      <div style={{ maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ marginBottom: 12 }}>
+          <Link to="/painel" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>← Voltar ao Painel</Link>
+        </div>
+        <div style={{ background: 'var(--navy)', color: 'white', display: 'inline-block', padding: '4px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, marginBottom: 16, letterSpacing: '0.08em' }}>MÓDULO 1 · AULA 1</div>
+        <h1 style={{ fontFamily: 'DM Serif Display', fontSize: 38, color: 'var(--navy)', lineHeight: 1.2, marginBottom: 12 }}>
+          O vício invisível: quando o jogo deixa de ser diversão
+        </h1>
+        <p style={{ color: 'var(--text-muted)', fontSize: 16, marginBottom: 40 }}>
+          O primeiro passo para interromper o ciclo do jogo não é força de vontade — é compreensão.
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+          {[
+            { num: '1', title: 'O jogo online não é apenas entretenimento', body: 'A ciência moderna mostra que o jogo pode ativar os mesmos mecanismos cerebrais envolvidos nas dependências químicas. No cérebro humano existe um sistema chamado circuito de recompensa, responsável por gerar sensação de prazer e motivação. Quando algo é percebido como recompensador, o cérebro libera dopamina — o neurotransmissor ligado ao prazer e à expectativa de recompensa. O problema surge quando esse sistema é estimulado de forma artificial e repetitiva.' },
+            { num: '2', title: 'O cérebro do jogador', body: 'Nos jogos online e aplicativos de apostas, pequenas vitórias, quase acertos e recompensas inesperadas liberam dopamina em doses sucessivas. Cada clique pode produzir uma nova expectativa de recompensa. Com o tempo, o comportamento deixa de ser apenas escolha consciente e passa a ser condicionado neurologicamente. O cérebro aprende que apostar pode trazer prazer.' },
+            { num: '3', title: 'O reforço intermitente: o mecanismo que prende o jogador', body: 'Um dos fatores mais poderosos é o chamado reforço intermitente. A recompensa aparece de forma imprevisível — às vezes a pessoa ganha, às vezes perde. E justamente essa imprevisibilidade faz o comportamento se tornar extremamente difícil de interromper. O cérebro permanece esperando que a próxima tentativa seja a vencedora. É o mesmo princípio utilizado em máquinas caça-níqueis.' },
+            { num: '4', title: 'Quando o prazer desaparece e sobra a compulsão', body: 'Com a repetição ocorre a adaptação dopaminérgica: o prazer diminui, mas o impulso de continuar aumenta. Nesse momento o comportamento deixa de ser busca de prazer e passa a ser tentativa de aliviar ansiedade ou recuperar perdas. A pessoa continua jogando não porque está feliz, mas porque não consegue parar.' },
+            { num: '5', title: 'A armadilha do "quase ganhar"', body: 'Os jogos exploram um mecanismo poderoso: o quase acerto. Quase acertar um placar, quase ganhar um prêmio — esses eventos ativam o cérebro de forma semelhante à vitória real. O jogador sente que está perto de ganhar, o que reforça a crença: "na próxima tentativa eu consigo." Esse mecanismo mantém o jogador preso no ciclo.' },
+            { num: '6', title: 'Por que parar se torna tão difícil', body: 'Quando o jogador tenta parar, o cérebro pode reagir com irritação, ansiedade, inquietação e sensação de vazio. Essas reações não significam fraqueza moral — elas refletem alterações reais no sistema de recompensa cerebral. Por isso o vício em jogos online deve ser tratado com a mesma seriedade que outras formas de dependência.' },
+            { num: '7', title: 'Uma droga dentro do bolso', body: 'Diferente dos cassinos tradicionais, os jogos digitais possuem três características que aumentam o risco: acesso permanente pelo celular, estímulos visuais e notificações constantes, e recompensas rápidas e frequentes. Isso cria uma situação inédita na história humana: um cassino disponível 24 horas por dia no bolso. A aposta está sempre a um clique de distância.' },
+          ].map(section => (
+            <div key={section.num} className="card fade-up">
+              <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ background: 'var(--navy)', color: 'white', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>{section.num}</div>
+                <div>
+                  <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: 'var(--navy)', marginBottom: 12 }}>{section.title}</h3>
+                  <p style={{ color: 'var(--text)', lineHeight: 1.8 }}>{section.body}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Exercício */}
+        <div style={{ background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 16, padding: '28px 32px', marginTop: 40 }}>
+          <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+            <span style={{ fontSize: 28 }}>📓</span>
+            <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: '#9A3412' }}>Exercício da Aula 1</h3>
+          </div>
+          <p style={{ color: '#7C2D12', marginBottom: 16, lineHeight: 1.7 }}>Durante os próximos dias observe e anote:</p>
+          {['Quando surge vontade de apostar', 'O que você está sentindo naquele momento', 'Qual situação desencadeou o impulso'].map((item, i) => (
+            <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10 }}>
+              <span style={{ background: '#9A3412', color: 'white', width: 24, height: 24, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{i+1}</span>
+              <p style={{ color: '#7C2D12', lineHeight: 1.6 }}>{item}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Nav */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border)' }}>
+          <Link to="/painel" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontWeight: 600 }}>← Painel</Link>
+          <Link to="/modulo/1/aula/2" className="btn-primary">Próxima Aula →</Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+### `src/pages/modules/Aula2.jsx`
+Crie com a mesma estrutura da Aula1.jsx, mas usando o conteúdo do **Módulo 1 - Aula 2** (O ciclo psicológico do jogador). As seções são: A excitação inicial, A ilusão de controle, A tentativa de recuperar perdas, Culpa e sofrimento, A fuga emocional, O ciclo completo. Navegação: ← para /modulo/1/aula/1 e → para /modulo/1/aula/3. Salva progress com lesson_id: 2.
+
+### `src/pages/modules/Aula3.jsx`
+Crie com a mesma estrutura da Aula1.jsx, mas usando o conteúdo do **Módulo 1 - Aula 3** (Reconhecendo os sinais de perda de controle). As seções são: início discreto, sinais emocionais, comportamentais, financeiros, impacto nas relações, fuga emocional, vergonha e silêncio. Navegação: ← para /modulo/1/aula/2 e → para /checkin. Salva progress com lesson_id: 3.
+
+---
+
+## PASSO 11 — Check-in ISTOP
+
+### `src/pages/modules/CheckIn.jsx`
+```jsx
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+const questions = [
+  { id: 1, text: 'Hoje pensei em apostar ou em recuperar dinheiro perdido?' },
+  { id: 2, text: 'Estou sentindo vontade de jogar neste momento?' },
+  { id: 3, text: 'Estou pensando que "uma aposta pode resolver ou recuperar minhas perdas"?' },
+  { id: 4, text: 'Estou com alguma emoção difícil agora (ansiedade, tristeza, estresse) que me faz querer jogar?' },
+  { id: 5, text: 'Eu reconheço que o jogo ativa o sistema de recompensa do cérebro e pode me prender no ciclo de apostas?' },
+  { id: 6, text: 'Se eu apostar agora, isso pode trazer prejuízos financeiros ou emocionais para mim ou minha família?' },
+  { id: 7, text: 'Estou disposto a adiar a aposta por pelo menos 15 minutos para recuperar o controle?' },
+]
+
+export default function CheckIn() {
+  const [answers, setAnswers] = useState({})
+  const [showResult, setShowResult] = useState(false)
+
+  const simCount = Object.values(answers).filter(a => a === 'sim').length
+  const answered = Object.keys(answers).length === questions.length
+
+  const getRisk = () => {
+    if (simCount <= 1) return { level: 'baixo', color: '#15803D', bg: '#F0FDF4', border: '#86EFAC', text: 'Baixo risco momentâneo. Continue atento.' }
+    if (simCount <= 3) return { level: 'moderado', color: '#D97706', bg: '#FFFBEB', border: '#FDE68A', text: 'Atenção. Pode haver impulso de jogo. Use as técnicas aprendidas.' }
+    return { level: 'alto', color: '#DC2626', bg: '#FEF2F2', border: '#FECACA', text: '⚠️ Momento de risco. Ative o Protocolo de Interrupção ISTOP agora.' }
+  }
+
+  const risk = getRisk()
+
+  return (
+    <div style={{ background: 'var(--cream)', minHeight: '100vh', padding: '60px 24px' }}>
+      <div style={{ maxWidth: 680, margin: '0 auto' }}>
+        <Link to="/painel" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>← Voltar ao Painel</Link>
+
+        <div style={{ textAlign: 'center', margin: '32px 0 40px' }}>
+          <div style={{ background: 'var(--navy)', color: 'white', display: 'inline-block', padding: '4px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, marginBottom: 16 }}>CHECK-IN ISTOP</div>
+          <h1 style={{ fontFamily: 'DM Serif Display', fontSize: 36, color: 'var(--navy)', marginBottom: 12 }}>Avaliação de risco momentâneo</h1>
+          <p style={{ color: 'var(--text-muted)' }}>Respire fundo e responda com sinceridade — leva apenas 1 minuto.</p>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }}>
+          {questions.map((q, i) => (
+            <div key={q.id} className="card" style={{ padding: '20px 24px' }}>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 16 }}>
+                <div style={{ background: 'var(--navy)', color: 'white', width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>{i+1}</div>
+                <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--text)', paddingTop: 2 }}>{q.text}</p>
+              </div>
+              <div style={{ display: 'flex', gap: 10, paddingLeft: 40 }}>
+                {['sim', 'nao'].map(val => (
+                  <button key={val} onClick={() => setAnswers({...answers, [q.id]: val})}
+                    style={{ padding: '10px 28px', borderRadius: 8, border: '2px solid', cursor: 'pointer', fontFamily: 'Plus Jakarta Sans', fontWeight: 700, fontSize: 15, transition: 'all 0.15s',
+                      borderColor: answers[q.id] === val ? (val === 'sim' ? 'var(--teal)' : '#9CA3AF') : 'var(--border)',
+                      background: answers[q.id] === val ? (val === 'sim' ? '#F0FDFA' : '#F9FAFB') : 'white',
+                      color: answers[q.id] === val ? (val === 'sim' ? 'var(--teal)' : '#374151') : 'var(--text-muted)'
+                    }}
+                  >
+                    {val === 'sim' ? '✔ Sim' : '✕ Não'}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {answered && (
+          <div style={{ animation: 'fadeUp 0.5s ease both' }}>
+            <div style={{ background: risk.bg, border: `1px solid ${risk.border}`, borderRadius: 16, padding: '24px 28px', marginBottom: 24 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: risk.color }}>Resultado do Check-in</h3>
+                <div style={{ background: risk.color, color: 'white', padding: '4px 14px', borderRadius: 100, fontSize: 13, fontWeight: 700 }}>
+                  {simCount} de 7 "Sim"
+                </div>
+              </div>
+              <p style={{ color: risk.color, fontSize: 16, lineHeight: 1.6 }}>{risk.text}</p>
+            </div>
+
+            {simCount >= 4 && (
+              <div style={{ background: 'var(--navy)', borderRadius: 16, padding: '24px 28px', marginBottom: 24 }}>
+                <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: 'white', marginBottom: 16 }}>Protocolo de Interrupção ISTOP</h3>
+                {['Afaste-se do celular ou aplicativo de apostas agora', 'Aguarde pelo menos 15 minutos sem abrir o app', 'Respire profundamente — inspire 4s, segure 4s, expire 4s', 'Após 15 minutos, repita o check-in'].map((step, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 12, marginBottom: 12, alignItems: 'flex-start' }}>
+                    <div style={{ background: 'var(--orange)', color: 'white', width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>{i+1}</div>
+                    <p style={{ color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>{step}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div style={{ textAlign: 'center' }}>
+              <button onClick={() => { setAnswers({}); setShowResult(false) }} className="btn-secondary" style={{ marginRight: 12 }}>Refazer Check-in</button>
+              <Link to="/painel" className="btn-primary">Voltar ao Painel</Link>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## PASSO 12 — Landing Page
+
+### `src/pages/LandingPage.jsx`
+```jsx
+import { Link } from 'react-router-dom'
+import LeadForm from '../components/LeadForm'
+
+const symptoms = [
+  'Você tenta recuperar perdas apostando mais',
+  'Sente culpa após jogar',
+  'Esconde suas apostas da família',
+  'Perde dinheiro que precisava para outras coisas',
+  'Pensa em apostas mesmo quando não está jogando',
+]
+
+const steps = [
+  { n: '1', title: 'Parar de Jogar', desc: 'Interromper o ciclo viciante com técnicas baseadas em neurociência', color: 'var(--navy)' },
+  { n: '2', title: 'Elaborar Perdas', desc: 'Processar o sofrimento emocional e financeiro com acolhimento', color: 'var(--teal)' },
+  { n: '3', title: 'Reconstruir Identidade', desc: 'Redescobrir quem você é além do jogo', color: 'var(--green)' },
+  { n: '4', title: 'Manter Vínculos', desc: 'Reparar relacionamentos e construir uma rede de apoio', color: 'var(--orange)' },
+]
+
+const resources = [
+  { icon: '📊', title: 'Teste de Dependência', desc: 'Avalie seu nível de envolvimento com o jogo' },
+  { icon: '📋', title: 'Contrato de Interrupção', desc: 'Faça um compromisso consigo mesmo pelo Método ISTOP' },
+  { icon: '✅', title: 'Check-in Diário', desc: 'Monitore seu estado emocional e risco de recaída' },
+  { icon: '👨‍👩‍👧', title: 'Apoio para Famílias', desc: 'Guia para familiares de pessoas com vício em jogo' },
+]
+
+export default function LandingPage() {
+  return (
+    <div>
+      {/* HERO */}
+      <section style={{ background: 'linear-gradient(135deg, #0F2240 0%, #1B3558 60%, #1A6B72 100%)', minHeight: '88vh', display: 'flex', alignItems: 'center', padding: '80px 24px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 70% 30%, rgba(26,107,114,0.3) 0%, transparent 60%)', pointerEvents: 'none' }}/>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr auto', gap: 60, alignItems: 'center', width: '100%' }}>
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', padding: '6px 16px', borderRadius: 100, marginBottom: 28 }}>
+              <span style={{ color: 'var(--orange)', fontWeight: 700, fontSize: 13 }}>MÉTODO ISTOP</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>Reorganização Comportamental</span>
+            </div>
+            <h1 style={{ fontFamily: 'DM Serif Display', fontSize: 'clamp(36px, 5vw, 58px)', color: 'white', lineHeight: 1.15, marginBottom: 24, animation: 'fadeUp 0.7s ease both' }}>
+              Quando o jogo deixa de ser diversão e começa a controlar sua vida.
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 20, lineHeight: 1.7, marginBottom: 36, maxWidth: 520, animation: 'fadeUp 0.7s 0.1s ease both' }}>
+              Um caminho para parar de apostar, elaborar suas perdas e reconstruir sua vida — com base em ciência e acolhimento humano.
+            </p>
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', animation: 'fadeUp 0.7s 0.2s ease both' }}>
+              <Link to="/cadastrar" className="btn-primary" style={{ fontSize: 17, padding: '16px 32px' }}>Começar Agora — Gratuito</Link>
+              <a href="#metodo" className="btn-secondary" style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white', fontSize: 17, padding: '16px 32px' }}>Conhecer o Método</a>
+            </div>
+          </div>
+
+          {/* ISTOP Cycle Visual */}
+          <div style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 20, padding: '32px 28px', minWidth: 280, backdropFilter: 'blur(8px)' }} className="hidden-mobile">
+            <div style={{ fontFamily: 'DM Serif Display', fontSize: 28, color: 'white', textAlign: 'center', marginBottom: 4 }}>ISTOP</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, textAlign: 'center', marginBottom: 24 }}>Método de Reorganização</div>
+            {[
+              { name: 'Interrupção', sub: 'Parar o Ciclo', color: '#E07B35', icon: '🛑' },
+              { name: 'Sensibilização', sub: 'Tomar Consciência', color: '#F59E0B', icon: '🧠' },
+              { name: 'Transformação', sub: 'Mudar os Hábitos', color: '#34D399', icon: '💪' },
+              { name: 'Organização', sub: 'Nova Rotina', color: '#60A5FA', icon: '📅' },
+              { name: 'Prevenção', sub: 'Evitar Recaída', color: '#A78BFA', icon: '🛡️' },
+            ].map((step, i) => (
+              <div key={step.name} style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '10px 0', borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: step.color + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>{step.icon}</div>
+                <div>
+                  <div style={{ color: 'white', fontWeight: 700, fontSize: 14 }}>{step.name}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12 }}>{step.sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SYMPTOMS */}
+      <section style={{ background: 'white', padding: '72px 24px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 38, color: 'var(--navy)', marginBottom: 12 }}>
+            Talvez o jogo já esteja afetando sua vida
+          </h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: 17, marginBottom: 48 }}>Reconheça os sinais. Você não está sozinho.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
+            {symptoms.map((s, i) => (
+              <div key={i} style={{ background: 'var(--cream)', borderRadius: 12, padding: '18px 20px', display: 'flex', gap: 12, alignItems: 'center', textAlign: 'left' }}>
+                <span style={{ color: 'var(--orange)', fontSize: 20, flexShrink: 0 }}>⚠️</span>
+                <span style={{ fontSize: 15, color: 'var(--text)', fontWeight: 500 }}>{s}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontFamily: 'DM Serif Display', fontSize: 24, color: 'var(--teal)' }}>
+            Você não está sozinho. É possível sair desse ciclo.
+          </p>
+        </div>
+      </section>
+
+      {/* METHOD */}
+      <section id="metodo" className="section" style={{ background: 'var(--cream)' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <div style={{ display: 'inline-block', background: 'var(--navy)', color: 'white', padding: '4px 16px', borderRadius: 100, fontSize: 12, fontWeight: 700, marginBottom: 20 }}>O CAMINHO DA RECUPERAÇÃO</div>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 42, color: 'var(--navy)', marginBottom: 12 }}>4 etapas para recuperar o controle</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: 17, marginBottom: 56 }}>O Método ISTOP guia você por uma jornada estruturada de mudança</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 24 }}>
+            {steps.map((step, i) => (
+              <div key={i} className="card" style={{ textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: step.color }}/>
+                <div style={{ fontFamily: 'DM Serif Display', fontSize: 56, color: step.color, opacity: 0.15, position: 'absolute', top: 8, right: 16 }}>{step.n}</div>
+                <div style={{ background: step.color + '15', width: 56, height: 56, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', position: 'relative' }}>
+                  <span style={{ fontFamily: 'DM Serif Display', fontSize: 24, color: step.color, fontWeight: 700 }}>{step.n}</span>
+                </div>
+                <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: 'var(--navy)', marginBottom: 10 }}>{step.title}</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.6 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LOSSES */}
+      <section style={{ background: 'var(--navy)', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+          <div>
+            <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 40, color: 'white', lineHeight: 1.2, marginBottom: 24 }}>
+              Além do dinheiro, o jogo deixa outros lutos.
+            </h2>
+            {['Perda de dinheiro e segurança financeira', 'Perda de confiança — de si mesmo e dos outros', 'Perda de autoestima e dignidade', 'Perda de relacionamentos importantes'].map((item, i) => (
+              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 16 }}>
+                <span style={{ color: 'var(--orange)', fontSize: 20, flexShrink: 0 }}>●</span>
+                <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 16 }}>{item}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 20, padding: '36px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 26, color: 'white', marginBottom: 8 }}>Dê o primeiro passo</h3>
+            <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 24, fontSize: 14 }}>Fale conosco. Receba orientação gratuita.</p>
+            <LeadForm />
+          </div>
+        </div>
+      </section>
+
+      {/* RESOURCES */}
+      <section id="recursos" className="section" style={{ background: 'white' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 42, color: 'var(--navy)', marginBottom: 12 }}>Recursos Gratuitos</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: 17, marginBottom: 48 }}>Ferramentas para apoiar sua recuperação</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
+            {resources.map((r, i) => (
+              <div key={i} className="card" style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 40, marginBottom: 16 }}>{r.icon}</div>
+                <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 20, color: 'var(--navy)', marginBottom: 8 }}>{r.title}</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.6 }}>{r.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA FINAL */}
+      <section style={{ background: 'linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%)', padding: '80px 24px', textAlign: 'center' }}>
+        <div style={{ maxWidth: 600, margin: '0 auto' }}>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 44, color: 'white', marginBottom: 16 }}>Dê o primeiro passo para uma nova vida.</h2>
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, marginBottom: 36 }}>O processo de mudança começa com uma decisão consciente. Estamos aqui para ajudar.</p>
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/cadastrar" className="btn-primary" style={{ fontSize: 18, padding: '16px 36px' }}>Iniciar Programa Gratuito</Link>
+            <Link to="/entrar" className="btn-secondary" style={{ borderColor: 'rgba(255,255,255,0.5)', color: 'white', fontSize: 18, padding: '16px 36px' }}>Já tenho conta</Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+```
+
+---
+
+## PASSO 13 — App.jsx (Rotas)
+
+### `src/App.jsx`
+```jsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './hooks/useAuth'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import ProtectedRoute from './components/ProtectedRoute'
+
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
+import AuthCallback from './pages/auth/AuthCallback'
+import ContractPage from './pages/ContractPage'
+import DashboardPage from './pages/DashboardPage'
+import Aula1 from './pages/modules/Aula1'
+import Aula2 from './pages/modules/Aula2'
+import Aula3 from './pages/modules/Aula3'
+import CheckIn from './pages/modules/CheckIn'
+
+function Layout({ children, noFooter }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      {!noFooter && <Footer />}
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Layout><LandingPage /></Layout>} />
+          <Route path="/entrar" element={<LoginPage />} />
+          <Route path="/cadastrar" element={<RegisterPage />} />
+          <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/contrato" element={<ProtectedRoute><Layout noFooter><ContractPage /></Layout></ProtectedRoute>} />
+          <Route path="/painel" element={<ProtectedRoute><Layout><DashboardPage /></Layout></ProtectedRoute>} />
+          <Route path="/modulo/1/aula/1" element={<ProtectedRoute><Layout><Aula1 /></Layout></ProtectedRoute>} />
+          <Route path="/modulo/1/aula/2" element={<ProtectedRoute><Layout><Aula2 /></Layout></ProtectedRoute>} />
+          <Route path="/modulo/1/aula/3" element={<ProtectedRoute><Layout><Aula3 /></Layout></ProtectedRoute>} />
+          <Route path="/checkin" element={<ProtectedRoute><Layout><CheckIn /></Layout></ProtectedRoute>} />
+          <Route path="*" element={<Layout><div style={{ padding: '120px 24px', textAlign: 'center' }}><h2>Página não encontrada</h2></div></Layout>} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  )
+}
+```
+
+### `src/main.jsx`
+```jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+```
+
+---
+
+## PASSO 14 — Vercel Deploy
+
+### `vercel.json` (na raiz do projeto)
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
+```
+
+### `index.html` — adicionar ao `<head>`:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>PareDeJogar — Pare de Apostar e Recupere o Controle</title>
+<meta name="description" content="Método ISTOP para superar o vício em jogos online. Programa gratuito baseado em ciência.">
+```
+
+---
+
+## PASSO 15 — Supabase: Configurar Google OAuth
+
+1. No painel Supabase: **Authentication > Providers > Google**
+2. Ative e configure com suas credenciais Google Cloud OAuth
+3. Adicione o Redirect URI: `https://SEU_PROJETO.supabase.co/auth/v1/callback`
+4. Na landing page do Google Cloud Console: adicione `https://paredejogar.com` como Authorized Origin
+
+---
+
+## CHECKLIST FINAL
+
+- [ ] `npm create vite@latest` criado
+- [ ] Dependências instaladas
+- [ ] `.env.local` com credenciais Supabase
+- [ ] SQL rodado no Supabase
+- [ ] Google OAuth configurado no Supabase
+- [ ] Todos os arquivos criados
+- [ ] `vercel.json` criado
+- [ ] `npm run build` sem erros
+- [ ] Deploy no Vercel (conecte o repo GitHub)
+- [ ] Adicionar domínio `paredejogar.com` no Vercel
+- [ ] Atualizar DNS do domínio para apontar para Vercel
