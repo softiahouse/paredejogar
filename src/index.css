@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --verde: #3B6D11;
+  --creme: #F7F5F0;
   --cream: #F8F5EF;
   --navy: #1B3558;
   --navy-light: #264573;

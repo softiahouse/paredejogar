@@ -15,6 +15,9 @@ import Aula1 from './pages/modules/Aula1'
 import Aula2 from './pages/modules/Aula2'
 import Aula3 from './pages/modules/Aula3'
 import CheckIn from './pages/modules/CheckIn'
+import QuizPage from './pages/QuizPage'
+import FamilyQuizPage from './pages/FamilyQuizPage'
+import QuizResultPage from './pages/QuizResultPage'
 
 function Layout({ children, noFooter }) {
   return (
@@ -32,6 +35,9 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Layout><LandingPage /></Layout>} />
+          <Route path="/quiz" element={<Layout><QuizPage /></Layout>} />
+          <Route path="/quiz/familias" element={<Layout><FamilyQuizPage /></Layout>} />
+          <Route path="/resultado" element={<Layout><QuizResultPage /></Layout>} />
           <Route path="/entrar" element={<LoginPage />} />
           <Route path="/cadastrar" element={<RegisterPage />} />
           <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
