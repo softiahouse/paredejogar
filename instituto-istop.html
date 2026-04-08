@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instituto ISTOP — PareDeJogar | Método de Reorganização Comportamental</title>
+  <meta name="description" content="Instituto ISTOP e programa PareDeJogar: método baseado em ciência para superar o jogo problemático e recuperar o controle." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1B3558;
+      --orange: #E07B35;
+      --orange-dark: #C5631C;
+      --teal: #1A6B72;
+      --cream: #F2F4F8;
+      --cream-end: #E8ECF4;
+      --text: #1A1A2E;
+      --muted: #6B7280;
+      --glass: rgba(255,255,255,0.75);
+      --radius: 20px;
+      --radius-btn: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      color: var(--text);
+      background: linear-gradient(165deg, var(--cream) 0%, var(--cream-end) 100%);
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 600; line-height: 1.2; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, #E07B35, #C5631C);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(224,123,53,0.35);
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      padding: 28px;
+    }
+    /* Hero */
+    .hero {
+      min-height: 88vh;
+      background: linear-gradient(160deg, #0a1628 0%, #1B3558 42%, #152a45 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: center; padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero p { color: rgba(255,255,255,0.72); font-size: 1.1rem; max-width: 34rem; margin-bottom: 1.75rem; }
+    .badge { display: inline-flex; gap: 8px; padding: 8px 18px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); margin-bottom: 1.5rem; font-size: 0.75rem; }
+    .badge strong { color: #F4A862; letter-spacing: 0.06em; }
+    .istop-panel {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 22px;
+      padding: 28px;
+    }
+    .istop-panel h2 { text-align: center; font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .istop-panel .sub { text-align: center; font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; letter-spacing: 0.04em; }
+    .istop-row { display: flex; gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .istop-row:last-child { border-bottom: none; }
+    .istop-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.15); }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .istop-panel { max-width: 400px; }
+    }
+    /* Sobre */
+    #sobre { text-align: center; }
+    #sobre h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); color: var(--navy); margin-bottom: 1rem; }
+    #sobre p { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: 1.05rem; }
+    /* Pilares */
+    #pilares .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-top: 2.5rem; }
+    .pillar-card { border-radius: var(--radius); padding: 24px; text-align: center; border: 1px solid rgba(0,0,0,0.06); background: var(--glass); backdrop-filter: blur(16px); }
+    .pillar-card .letter { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 1.25rem; }
+    .pillar-card h3 { font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+    .pillar-card p { font-size: 0.85rem; color: var(--muted); }
+    /* Etapas */
+    #metodo { text-align: center; }
+    #metodo .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; margin-top: 2.5rem; }
+    .step-card { position: relative; border-radius: 22px; padding: 28px 22px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.9); overflow: hidden; }
+    .step-card .bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 22px 22px 0 0; }
+    .step-card .num { width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'DM Serif Display', serif; font-size: 1.35rem; }
+    /* Para quem */
+    #para-quem .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 2rem; }
+    .for-card { padding: 20px; border-radius: 18px; background: var(--glass); border: 1px solid rgba(255,255,255,0.9); }
+    /* Sinais */
+    #sinais .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 2rem; }
+    /* Lutos */
+    #lutos { background: linear-gradient(165deg, #152a45 0%, #1B3558 50%, #0f1f35 100%); color: #fff; }
+    #lutos .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: start; }
+    #lutos-list li { margin-bottom: 14px; padding-left: 8px; }
+    .form-dark { background: rgba(255,255,255,0.1); backdrop-filter: blur(24px); border-radius: 22px; padding: 32px; border: 1px solid rgba(255,255,255,0.2); }
+    .form-dark label { display: block; color: rgba(255,255,255,0.9); font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; }
+    .form-dark input, .form-dark textarea {
+      width: 100%; padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.9); margin-bottom: 14px; font-family: inherit;
+    }
+    /* Resursos */
+    #recursos .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 2.5rem; }
+    /* FAQ */
+    #faq { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-radius: 16px; margin-bottom: 12px; background: var(--glass); border: 1px solid rgba(255,255,255,0.9); overflow: hidden; }
+    .faq-item summary { padding: 18px 22px; cursor: pointer; font-weight: 600; color: var(--navy); list-style: none; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item p { padding: 0 22px 18px; color: var(--muted); font-size: 0.95rem; }
+    /* CTA */
+    #cta-final { text-align: center; background: linear-gradient(145deg, #1a5c62 0%, #1B3558 55%, #0f2240 100%); color: #fff; padding: 80px 24px; }
+    #cta-final h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+    #cta-final p { color: rgba(255,255,255,0.78); margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .section-title { text-align: center; margin-bottom: 0.5rem; font-size: clamp(1.75rem, 3vw, 2.25rem); color: var(--navy); }
+    .section-sub { text-align: center; color: var(--muted); margin-bottom: 0; }
+    .anchor { scroll-margin-top: 80px; }
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="badge"><strong>MÉTODO ISTOP</strong><span style="color:rgba(255,255,255,0.55)">Instituto · Reorganização Comportamental</span></div>
+        <h1>Quando o jogo deixa de ser diversão e começa a controlar sua vida.</h1>
+        <p>Um caminho para parar de apostar, elaborar suas perdas e reconstruir sua vida — com base em ciência e acolhimento humano, na linha do <strong>Instituto ISTOP</strong>.</p>
+        <div class="hero-ctas">
+          <a href="#contato" class="btn-primary">Começar agora — gratuito</a>
+          <a href="#metodo" class="btn-secondary">Conhecer o método</a>
+        </div>
+      </div>
+      <aside class="istop-panel">
+        <h2>ISTOP</h2>
+        <p class="sub">Método de Reorganização</p>
+        <div class="istop-row">
+          <div class="istop-icon" style="background: linear-gradient(145deg, rgba(224,123,53,0.35), rgba(224,123,53,0.15));">🛑</div>
+          <div><strong>Interrupção</strong><br><small style="color:rgba(255,255,255,0.45)">Parar o ciclo</small></div>
+        </div>
+        <div class="istop-row">
+          <div class="istop-icon" style="background: linear-gradient(145deg, rgba(245,158,11,0.35), rgba(245,158,11,0.15));">🧠</div>
+          <div><strong>Sensibilização</strong><br><small style="color:rgba(255,255,255,0.45)">Tomar consciência</small></div>
+        </div>
+        <div class="istop-row">
+          <div class="istop-icon" style="background: linear-gradient(145deg, rgba(52,211,153,0.35), rgba(52,211,153,0.15));">💪</div>
+          <div><strong>Transformação</strong><br><small style="color:rgba(255,255,255,0.45)">Mudar hábitos</small></div>
+        </div>
+        <div class="istop-row">
+          <div class="istop-icon" style="background: linear-gradient(145deg, rgba(96,165,250,0.35), rgba(96,165,250,0.15));">📅</div>
+          <div><strong>Organização</strong><br><small style="color:rgba(255,255,255,0.45)">Nova rotina</small></div>
+        </div>
+        <div class="istop-row">
+          <div class="istop-icon" style="background: linear-gradient(145deg, rgba(167,139,250,0.35), rgba(167,139,250,0.15));">🛡️</div>
+          <div><strong>Prevenção</strong><br><small style="color:rgba(255,255,255,0.45)">Evitar recaída</small></div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <!-- SOBRE -->
+    <section id="sobre" class="section anchor">
+      <div class="container">
+        <h2>Sobre o Instituto ISTOP</h2>
+        <p>
+          O <strong>Instituto ISTOP</strong> reúne práticas de <strong>reorganização comportamental</strong> voltadas a pessoas que vivenciam perda de controle com jogos e apostas online.
+          O programa <strong>PareDeJogar</strong> traduz esse método em ferramentas acessíveis: educação em neurociência do hábito, contrato de interrupção, acompanhamento por módulos e check-in de risco.
+        </p>
+      </div>
+    </section>
+
+    <!-- PILARES -->
+    <section id="pilares" class="section anchor">
+      <div class="container">
+        <h2 class="section-title">Os 5 pilares do método ISTOP</h2>
+        <p class="section-sub">Cada letra orienta uma fase da sua jornada.</p>
+        <div class="grid">
+          <article class="pillar-card">
+            <div class="letter" style="background: linear-gradient(145deg, #E07B35, #C5631C);">I</div>
+            <h3>Interrupção</h3>
+            <p>Parar o ciclo automático antes que ele se alimente de novo.</p>
+          </article>
+          <article class="pillar-card">
+            <div class="letter" style="background: linear-gradient(145deg, #F59E0B, #D97706);">S</div>
+            <h3>Sensibilização</h3>
+            <p>Perceber gatilhos, emoções e pensamentos que sustentam o jogo.</p>
+          </article>
+          <article class="pillar-card">
+            <div class="letter" style="background: linear-gradient(145deg, #34D399, #059669);">T</div>
+            <h3>Transformação</h3>
+            <p>Substituir hábitos de forma gradual, com apoio e estrutura.</p>
+          </article>
+          <article class="pillar-card">
+            <div class="letter" style="background: linear-gradient(145deg, #60A5FA, #2563EB);">O</div>
+            <h3>Organização</h3>
+            <p>Reorganizar tempo, finanças e rotina no dia a dia.</p>
+          </article>
+          <article class="pillar-card">
+            <div class="letter" style="background: linear-gradient(145deg, #A78BFA, #7C3AED);">P</div>
+            <h3>Prevenção</h3>
+            <p>Antecipar recaídas e manter vínculos que sustentam a mudança.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 ETAPAS -->
+    <section id="metodo" class="section anchor">
+      <div class="container">
+        <h2 class="section-title">4 etapas para recuperar o controle</h2>
+        <p class="section-sub">O caminho da recuperação no programa PareDeJogar.</p>
+        <div class="steps">
+          <article class="step-card">
+            <div class="bar" style="background: linear-gradient(90deg, #1B3558, #264573);"></div>
+            <div class="num" style="background: linear-gradient(145deg, #1B3558, #264573);">1</div>
+            <h3 style="font-family:'DM Serif Display',serif;color:var(--navy);margin-bottom:8px;">Parar de jogar</h3>
+            <p style="color:var(--muted);font-size:0.9rem;">Interromper o ciclo com técnicas baseadas em neurociência.</p>
+          </article>
+          <article class="step-card">
+            <div class="bar" style="background: linear-gradient(90deg, #1A6B72, #2A8A93);"></div>
+            <div class="num" style="background: linear-gradient(145deg, #1A6B72, #2A8A93);">2</div>
+            <h3 style="font-family:'DM Serif Display',serif;color:var(--navy);margin-bottom:8px;">Elaborar perdas</h3>
+            <p style="color:var(--muted);font-size:0.9rem;">Processar impacto emocional e financeiro com acolhimento.</p>
+          </article>
+          <article class="step-card">
+            <div class="bar" style="background: linear-gradient(90deg, #2E7D52, #3D9B6A);"></div>
+            <div class="num" style="background: linear-gradient(145deg, #2E7D52, #3D9B6A);">3</div>
+            <h3 style="font-family:'DM Serif Display',serif;color:var(--navy);margin-bottom:8px;">Reconstruir identidade</h3>
+            <p style="color:var(--muted);font-size:0.9rem;">Redescobrir quem você é além do jogo.</p>
+          </article>
+          <article class="step-card">
+            <div class="bar" style="background: linear-gradient(90deg, #E07B35, #C5631C);"></div>
+            <div class="num" style="background: linear-gradient(145deg, #E07B35, #C5631C);">4</div>
+            <h3 style="font-family:'DM Serif Display',serif;color:var(--navy);margin-bottom:8px;">Manter vínculos</h3>
+            <p style="color:var(--muted);font-size:0.9rem;">Reparar relacionamentos e rede de apoio.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARA QUEM -->
+    <section id="para-quem" class="section anchor">
+      <div class="container">
+        <h2 class="section-title">Para quem é este programa</h2>
+        <p class="section-sub">Você não precisa estar no fundo do poço para pedir ajuda.</p>
+        <div class="grid">
+          <div class="for-card glass-card"><p>Quem sente que o jogo <strong>ocupa</strong> cada vez mais tempo e pensamento.</p></div>
+          <div class="for-card glass-card"><p>Quem <strong>esconde</strong> apostas ou mente sobre dinheiro e tempo de tela.</p></div>
+          <div class="for-card glass-card"><p>Quem tentou parar sozinho e <strong>caiu no ciclo</strong> de culpa e nova tentativa.</p></div>
+          <div class="for-card glass-card"><p>Quem quer uma <strong>abordagem séria</strong>, com linguagem clara e sem julgamento.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SINAIS -->
+    <section id="sinais" class="section anchor">
+      <div class="container">
+        <h2 class="section-title">Talvez o jogo já esteja afetando sua vida</h2>
+        <p class="section-sub">Reconheça os sinais. Você não está sozinho.</p>
+        <div class="grid">
+          <div class="glass-card" style="display:flex;gap:14px;align-items:center;"><span>⚠️</span> Você tenta recuperar perdas apostando mais.</div>
+          <div class="glass-card" style="display:flex;gap:14px;align-items:center;"><span>⚠️</span> Sente culpa após jogar.</div>
+          <div class="glass-card" style="display:flex;gap:14px;align-items:center;"><span>⚠️</span> Esconde suas apostas da família.</div>
+          <div class="glass-card" style="display:flex;gap:14px;align-items:center;"><span>⚠️</span> Perde dinheiro que precisava para outras coisas.</div>
+          <div class="glass-card" style="display:flex;gap:14px;align-items:center;"><span>⚠️</span> Pensa em apostas mesmo quando não está jogando.</div>
+        </div>
+        <p style="text-align:center;margin-top:2.5rem;font-family:'DM Serif Display',serif;font-size:1.35rem;background:linear-gradient(135deg, var(--teal), var(--navy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Você não está sozinho. É possível sair desse ciclo.</p>
+      </div>
+    </section>
+
+    <!-- LUTOS + FORM -->
+    <section id="lutos" class="section anchor">
+      <div class="container">
+        <div class="grid">
+          <div>
+            <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,3vw,2.25rem);margin-bottom:1.25rem;">Além do dinheiro, o jogo deixa outros lutos.</h2>
+            <ul id="lutos-list" style="list-style:none;">
+              <li>● Perda de dinheiro e segurança financeira</li>
+              <li>● Perda de confiança — de si mesmo e dos outros</li>
+              <li>● Perda de autoestima e dignidade</li>
+              <li>● Perda de relacionamentos importantes</li>
+            </ul>
+          </div>
+          <div id="contato" class="form-dark">
+            <h3 style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:8px;">Dê o primeiro passo</h3>
+            <p style="color:rgba(255,255,255,0.65);font-size:0.9rem;margin-bottom:1.25rem;">Fale conosco. Receba orientação gratuita.</p>
+            <form action="#" method="post">
+              <label>Seu nome *</label>
+              <input type="text" name="name" required placeholder="Como você se chama?" />
+              <label>E-mail *</label>
+              <input type="email" name="email" required placeholder="seu@email.com" />
+              <label>WhatsApp</label>
+              <input type="tel" name="phone" placeholder="(00) 00000-0000" />
+              <label>Mensagem</label>
+              <textarea name="message" rows="3" placeholder="Opcional"></textarea>
+              <button type="submit" class="btn-primary" style="width:100%;">Quero receber orientação gratuita</button>
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-align:center;margin-top:12px;">Seus dados são confidenciais. Sem spam.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section id="recursos" class="section anchor">
+      <div class="container">
+        <h2 class="section-title">Recursos gratuitos</h2>
+        <p class="section-sub">Ferramentas para apoiar sua recuperação.</p>
+        <div class="grid">
+          <div class="glass-card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:12px;">📊</div><h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:8px;">Teste de dependência</h3><p style="font-size:0.9rem;color:var(--muted);">Avalie seu nível de envolvimento com o jogo.</p></div>
+          <div class="glass-card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:12px;">📋</div><h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:8px;">Contrato de interrupção</h3><p style="font-size:0.9rem;color:var(--muted);">Compromisso consigo pelo método ISTOP.</p></div>
+          <div class="glass-card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:12px;">✅</div><h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:8px;">Check-in diário</h3><p style="font-size:0.9rem;color:var(--muted);">Monitore estado emocional e risco de recaída.</p></div>
+          <div class="glass-card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:12px;">👨‍👩‍👧</div><h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:8px;">Apoio para famílias</h3><p style="font-size:0.9rem;color:var(--muted);">Guia para familiares de pessoas com jogo problemático.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section anchor">
+      <div class="container">
+        <h2 class="section-title">Perguntas frequentes</h2>
+        <p class="section-sub">Transparência sobre o programa e o método ISTOP.</p>
+        <div style="margin-top:2rem;">
+          <details class="faq-item" open>
+            <summary>O PareDeJogar substitui acompanhamento psicológico ou médico?</summary>
+            <p>Não. O programa oferece educação e ferramentas de reorganização comportamental. Em casos de sofrimento intenso ou comorbidades, busque profissionais de saúde.</p>
+          </details>
+          <details class="faq-item">
+            <summary>O que significa o acrônimo ISTOP?</summary>
+            <p><strong>I</strong>nterrupção, <strong>S</strong>ensibilização, <strong>T</strong>ransformação, <strong>O</strong>rganização e <strong>P</strong>revenção — as cinco frentes do método de reorganização.</p>
+          </details>
+          <details class="faq-item">
+            <summary>O programa é gratuito?</summary>
+            <p>O cadastro e acesso inicial ao conteúdo base estão disponíveis gratuitamente; eventuais expansões futuras serão comunicadas com clareza.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Como funciona o contrato de interrupção?</summary>
+            <p>É um compromisso consigo mesmo, registrado na plataforma, que formaliza sua decisão de interromper o ciclo do jogo e seguir as etapas do método.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta-final" class="anchor">
+      <h2>Dê o primeiro passo para uma nova vida.</h2>
+      <p>O processo de mudança começa com uma decisão consciente. Estamos aqui para ajudar.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="#contato" class="btn-primary">Iniciar programa gratuito</a>
+        <a href="#sobre" class="btn-secondary">Conhecer o instituto</a>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background:var(--navy);color:#fff;padding:40px 24px;text-align:center;font-size:0.85rem;">
+    <p style="opacity:0.7;">© Instituto ISTOP · PareDeJogar — Referência estática para desenvolvimento. Versão React em produção.</p>
+  </footer>
+</body>
+</html>
