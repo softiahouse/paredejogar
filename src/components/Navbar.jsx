@@ -44,17 +44,31 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Link
-            to="/#metodo"
-            style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, fontWeight: 500 }}
+            to="/#sobre"
+            style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 13, fontWeight: 500 }}
             className="hidden-mobile"
           >
-            O Método
+            Instituto
+          </Link>
+          <Link
+            to="/#metodo"
+            style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 13, fontWeight: 500 }}
+            className="hidden-mobile"
+          >
+            Método
+          </Link>
+          <Link
+            to="/#faq"
+            style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 13, fontWeight: 500 }}
+            className="hidden-mobile"
+          >
+            FAQ
           </Link>
           <Link
             to="/#recursos"
-            style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, fontWeight: 500 }}
+            style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: 13, fontWeight: 500 }}
             className="hidden-mobile"
           >
             Recursos
