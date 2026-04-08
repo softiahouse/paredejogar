@@ -34,7 +34,7 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Layout><LandingPage /></Layout>} />
+          <Route path="/" element={<Layout noFooter><LandingPage /></Layout>} />
           <Route path="/quiz" element={<Layout><QuizPage /></Layout>} />
           <Route path="/quiz/familias" element={<Layout><FamilyQuizPage /></Layout>} />
           <Route path="/resultado" element={<Layout><QuizResultPage /></Layout>} />

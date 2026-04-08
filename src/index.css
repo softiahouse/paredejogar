@@ -31,8 +31,7 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(165deg, var(--page-bg-start) 0%, var(--page-bg-end) 50%, #E4E9F2 100%);
-  background-attachment: fixed;
+  background: var(--creme);
   min-height: 100vh;
   color: var(--text);
   line-height: 1.6;
