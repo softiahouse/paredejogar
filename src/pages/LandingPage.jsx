@@ -249,6 +249,18 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginTop: 32 }}>
+            <Link to="/quiz" className="btn-primary" style={{ fontSize: 16, padding: '14px 28px' }}>
+              Fazer o teste
+            </Link>
+            <Link
+              to="/quiz/familias"
+              className="btn-secondary"
+              style={{ fontSize: 16, padding: '14px 28px', borderColor: 'rgba(27,53,88,0.2)', color: 'var(--navy)', background: 'rgba(255,255,255,0.95)' }}
+            >
+              Teste para familiares
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -298,7 +310,7 @@ export default function LandingPage() {
           <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 'clamp(34px, 5vw, 44px)', color: 'white', marginBottom: 16, lineHeight: 1.15 }}>Dê o primeiro passo para uma nova vida.</h2>
           <p style={{ color: 'rgba(255,255,255,0.78)', fontSize: 18, marginBottom: 36, lineHeight: 1.65 }}>O processo de mudança começa com uma decisão consciente. Estamos aqui para ajudar.</p>
           <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/cadastrar" className="btn-primary" style={{ fontSize: 17, padding: '15px 32px' }}>Iniciar Programa Gratuito</Link>
+            <Link to="/cadastrar" className="btn-primary" style={{ fontSize: 17, padding: '15px 32px' }}>Começar pelo Módulo 1</Link>
             <Link to="/entrar" className="btn-secondary" style={{ borderColor: 'rgba(255,255,255,0.25)', color: 'white', background: 'rgba(255,255,255,0.12)', fontSize: 17, padding: '15px 32px' }}>Já tenho conta</Link>
             <a href="#sobre" className="btn-secondary" style={{ borderColor: 'rgba(255,255,255,0.2)', color: 'white', background: 'transparent', fontSize: 17, padding: '15px 32px' }}>Sobre o Instituto</a>
           </div>
