@@ -1,41 +1,11 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import LeadForm from '../components/LeadForm'
-import '../landing-instituto.css'
-
-const faqItems = [
-  {
-    q: 'O PareDeJogar substitui acompanhamento psicológico ou médico?',
-    a: 'Não. O programa oferece educação e ferramentas de reorganização comportamental. Em casos de sofrimento intenso ou comorbidades, busque profissionais de saúde.',
-  },
-  {
-    q: 'O que significa o acrônimo ISTOP?',
-    aJsx: (
-      <p>
-        <strong>I</strong>nterrupção, <strong>S</strong>ensibilização, <strong>T</strong>ransformação, <strong>O</strong>rganização e <strong>P</strong>revenção — as cinco frentes do método de reorganização.
-      </p>
-    ),
-  },
-  {
-    q: 'O programa é gratuito?',
-    a: 'O cadastro e acesso inicial ao conteúdo base estão disponíveis gratuitamente; eventuais expansões futuras serão comunicadas com clareza.',
-  },
-  {
-    q: 'Como funciona o contrato de interrupção?',
-    a: 'É um compromisso consigo mesmo, registrado na plataforma, que formaliza sua decisão de interromper o ciclo do jogo e seguir as etapas do método.',
-  },
-]
+import '../instituto.css'
 
 export default function LandingPage() {
-  const [openFaq, setOpenFaq] = useState(0)
-
-  const toggleFaq = (index) => {
-    setOpenFaq((prev) => (prev === index ? null : index))
-  }
-
   return (
-    <div className="landing-page-root">
-      <header className="hero-creme">
+    <div className="instituto-app">
+      <header className="hero">
         <div className="hero-inner">
           <div>
             <div className="badge">
@@ -43,7 +13,7 @@ export default function LandingPage() {
               <span style={{ color: 'rgba(27,53,88,0.55)' }}>Instituto · Reorganização Comportamental</span>
             </div>
             <h1>
-              <span className="hero-title-pare">PARE</span> de apostar. <span className="hero-title-viva">VIVA</span> de novo.
+              <span className="istop-pare">PARE</span> de apostar. <span className="istop-viva">VIVA</span> de novo.
             </h1>
             <p>
               Um caminho para parar de apostar, elaborar suas perdas e reconstruir sua vida — com base em ciência e acolhimento humano, na linha do <strong>Instituto ISTOP</strong>.
@@ -52,7 +22,7 @@ export default function LandingPage() {
               <a href="#contato" className="btn-primary">
                 Começar agora — gratuito
               </a>
-              <a href="#metodo" className="btn-secondary">
+              <a href="#programa" className="btn-secondary">
                 Conhecer o método
               </a>
             </div>
@@ -61,53 +31,53 @@ export default function LandingPage() {
             <h2>ISTOP</h2>
             <p className="sub">Método de Reorganização</p>
             <div className="istop-row">
-              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(224,123,53,0.25), rgba(224,123,53,0.1))' }}>
+              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(224,123,53,0.35), rgba(224,123,53,0.15))' }}>
                 🛑
               </div>
               <div>
                 <strong>Interrupção</strong>
                 <br />
-                <small style={{ color: '#6b7280' }}>Parar o ciclo</small>
+                <span className="istop-sub">Parar o ciclo</span>
               </div>
             </div>
             <div className="istop-row">
-              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(245,158,11,0.25), rgba(245,158,11,0.1))' }}>
+              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(245,158,11,0.35), rgba(245,158,11,0.15))' }}>
                 🧠
               </div>
               <div>
                 <strong>Sensibilização</strong>
                 <br />
-                <small style={{ color: '#6b7280' }}>Tomar consciência</small>
+                <span className="istop-sub">Tomar consciência</span>
               </div>
             </div>
             <div className="istop-row">
-              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(52,211,153,0.25), rgba(52,211,153,0.1))' }}>
+              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(52,211,153,0.35), rgba(52,211,153,0.15))' }}>
                 💪
               </div>
               <div>
                 <strong>Transformação</strong>
                 <br />
-                <small style={{ color: '#6b7280' }}>Mudar hábitos</small>
+                <span className="istop-sub">Mudar hábitos</span>
               </div>
             </div>
             <div className="istop-row">
-              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(96,165,250,0.25), rgba(96,165,250,0.1))' }}>
+              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(96,165,250,0.35), rgba(96,165,250,0.15))' }}>
                 📅
               </div>
               <div>
                 <strong>Organização</strong>
                 <br />
-                <small style={{ color: '#6b7280' }}>Nova rotina</small>
+                <span className="istop-sub">Nova rotina</span>
               </div>
             </div>
             <div className="istop-row">
-              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(167,139,250,0.25), rgba(167,139,250,0.1))' }}>
+              <div className="istop-icon" style={{ background: 'linear-gradient(145deg, rgba(167,139,250,0.35), rgba(167,139,250,0.15))' }}>
                 🛡️
               </div>
               <div>
                 <strong>Prevenção</strong>
                 <br />
-                <small style={{ color: '#6b7280' }}>Evitar recaída</small>
+                <span className="istop-sub">Evitar recaída</span>
               </div>
             </div>
           </aside>
@@ -151,7 +121,7 @@ export default function LandingPage() {
                 <p>Substituir hábitos de forma gradual, com apoio e estrutura.</p>
               </article>
               <article className="pillar-card">
-                <div className="letter" style={{ background: 'linear-gradient(145deg, #60A5FA, #2563EB)' }}>
+                <div className="letter" style={{ background: 'linear-gradient(145deg, #34D399, #0f766e)' }}>
                   O
                 </div>
                 <h3>Organização</h3>
@@ -168,42 +138,42 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="metodo" className="section anchor">
+        <section id="programa" className="section anchor">
           <div className="container">
             <h2 className="section-title">4 etapas para recuperar o controle</h2>
             <p className="section-sub">O caminho da recuperação no programa PareDeJogar.</p>
             <div className="steps">
               <article className="step-card">
-                <div className="bar" style={{ background: 'linear-gradient(90deg, #1B3558, #264573)' }} />
-                <div className="num" style={{ background: 'linear-gradient(145deg, #1B3558, #264573)' }}>
+                <div className="bar" style={{ background: 'linear-gradient(90deg, #3B6D11, #2d5510)' }} />
+                <div className="num" style={{ background: 'linear-gradient(145deg, #3B6D11, #2d5510)' }}>
                   1
                 </div>
-                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--lp-navy)', marginBottom: 8 }}>Parar de jogar</h3>
-                <p style={{ color: 'var(--lp-muted)', fontSize: '0.9rem' }}>Interromper o ciclo com técnicas baseadas em neurociência.</p>
+                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--navy)', marginBottom: 8 }}>Parar de jogar</h3>
+                <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>Interromper o ciclo com técnicas baseadas em neurociência.</p>
               </article>
               <article className="step-card">
                 <div className="bar" style={{ background: 'linear-gradient(90deg, #1A6B72, #2A8A93)' }} />
                 <div className="num" style={{ background: 'linear-gradient(145deg, #1A6B72, #2A8A93)' }}>
                   2
                 </div>
-                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--lp-navy)', marginBottom: 8 }}>Elaborar perdas</h3>
-                <p style={{ color: 'var(--lp-muted)', fontSize: '0.9rem' }}>Processar impacto emocional e financeiro com acolhimento.</p>
+                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--navy)', marginBottom: 8 }}>Elaborar perdas</h3>
+                <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>Processar impacto emocional e financeiro com acolhimento.</p>
               </article>
               <article className="step-card">
                 <div className="bar" style={{ background: 'linear-gradient(90deg, #2E7D52, #3D9B6A)' }} />
                 <div className="num" style={{ background: 'linear-gradient(145deg, #2E7D52, #3D9B6A)' }}>
                   3
                 </div>
-                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--lp-navy)', marginBottom: 8 }}>Reconstruir identidade</h3>
-                <p style={{ color: 'var(--lp-muted)', fontSize: '0.9rem' }}>Redescobrir quem você é além do jogo.</p>
+                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--navy)', marginBottom: 8 }}>Reconstruir identidade</h3>
+                <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>Redescobrir quem você é além do jogo.</p>
               </article>
               <article className="step-card">
                 <div className="bar" style={{ background: 'linear-gradient(90deg, #E07B35, #C5631C)' }} />
                 <div className="num" style={{ background: 'linear-gradient(145deg, #E07B35, #C5631C)' }}>
                   4
                 </div>
-                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--lp-navy)', marginBottom: 8 }}>Manter vínculos</h3>
-                <p style={{ color: 'var(--lp-muted)', fontSize: '0.9rem' }}>Reparar relacionamentos e rede de apoio.</p>
+                <h3 style={{ fontFamily: "'DM Serif Display',serif", color: 'var(--navy)', marginBottom: 8 }}>Manter vínculos</h3>
+                <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>Reparar relacionamentos e rede de apoio.</p>
               </article>
             </div>
           </div>
@@ -259,20 +229,7 @@ export default function LandingPage() {
                 <span>⚠️</span> Pensa em apostas mesmo quando não está jogando.
               </div>
             </div>
-            <p
-              style={{
-                textAlign: 'center',
-                marginTop: '2.5rem',
-                fontFamily: "'DM Serif Display',serif",
-                fontSize: '1.35rem',
-                background: 'linear-gradient(135deg, var(--teal), var(--navy))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Você não está sozinho. É possível sair desse ciclo.
-            </p>
+            <p className="sinais-destaque">Você não está sozinho. É possível sair desse ciclo.</p>
           </div>
         </section>
 
@@ -283,14 +240,14 @@ export default function LandingPage() {
                 <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(1.75rem,3vw,2.25rem)', marginBottom: '1.25rem' }}>
                   Além do dinheiro, o jogo deixa outros lutos.
                 </h2>
-                <ul id="lutos-list" style={{ listStyle: 'none' }}>
+                <ul id="lutos-list">
                   <li>● Perda de dinheiro e segurança financeira</li>
                   <li>● Perda de confiança — de si mesmo e dos outros</li>
                   <li>● Perda de autoestima e dignidade</li>
                   <li>● Perda de relacionamentos importantes</li>
                 </ul>
               </div>
-              <div id="contato" className="form-contact-card">
+              <div id="contato" className="form-contact">
                 <h3>Dê o primeiro passo</h3>
                 <p className="lead">Fale conosco. Receba orientação gratuita.</p>
                 <LeadForm />
@@ -306,26 +263,26 @@ export default function LandingPage() {
             <div className="grid">
               <div className="glass-card" style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: 12 }}>📊</div>
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--lp-navy)', marginBottom: 8 }}>Teste de dependência</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--lp-muted)' }}>Avalie seu nível de envolvimento com o jogo.</p>
+                <h3 style={{ fontSize: '1.1rem', color: 'var(--navy)', marginBottom: 8 }}>Teste de dependência</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>Avalie seu nível de envolvimento com o jogo.</p>
               </div>
               <div className="glass-card" style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: 12 }}>📋</div>
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--lp-navy)', marginBottom: 8 }}>Contrato de interrupção</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--lp-muted)' }}>Compromisso consigo pelo método ISTOP.</p>
+                <h3 style={{ fontSize: '1.1rem', color: 'var(--navy)', marginBottom: 8 }}>Contrato de interrupção</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>Compromisso consigo pelo método ISTOP.</p>
               </div>
               <div className="glass-card" style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: 12 }}>✅</div>
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--lp-navy)', marginBottom: 8 }}>Check-in diário</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--lp-muted)' }}>Monitore estado emocional e risco de recaída.</p>
+                <h3 style={{ fontSize: '1.1rem', color: 'var(--navy)', marginBottom: 8 }}>Check-in diário</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>Monitore estado emocional e risco de recaída.</p>
               </div>
               <div className="glass-card" style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: 12 }}>👨‍👩‍👧</div>
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--lp-navy)', marginBottom: 8 }}>Apoio para famílias</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--lp-muted)' }}>Guia para familiares de pessoas com jogo problemático.</p>
+                <h3 style={{ fontSize: '1.1rem', color: 'var(--navy)', marginBottom: 8 }}>Apoio para famílias</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>Guia para familiares de pessoas com jogo problemático.</p>
               </div>
             </div>
-            <div className="recursos-quiz-btns">
+            <div className="recursos-extra">
               <Link to="/quiz" className="btn-primary">
                 Fazer o teste
               </Link>
@@ -341,15 +298,24 @@ export default function LandingPage() {
             <h2 className="section-title">Perguntas frequentes</h2>
             <p className="section-sub">Transparência sobre o programa e o método ISTOP.</p>
             <div style={{ marginTop: '2rem' }}>
-              {faqItems.map((item, i) => (
-                <div key={item.q} className="faq-item">
-                  <button type="button" className="faq-q" onClick={() => toggleFaq(i)} aria-expanded={openFaq === i}>
-                    <span>{item.q}</span>
-                    <span aria-hidden>{openFaq === i ? '−' : '+'}</span>
-                  </button>
-                  {openFaq === i && (item.aJsx ?? <p>{item.a}</p>)}
-                </div>
-              ))}
+              <details className="faq-item" open>
+                <summary>O PareDeJogar substitui acompanhamento psicológico ou médico?</summary>
+                <p>Não. O programa oferece educação e ferramentas de reorganização comportamental. Em casos de sofrimento intenso ou comorbidades, busque profissionais de saúde.</p>
+              </details>
+              <details className="faq-item">
+                <summary>O que significa o acrônimo ISTOP?</summary>
+                <p>
+                  <strong>I</strong>nterrupção, <strong>S</strong>ensibilização, <strong>T</strong>ransformação, <strong>O</strong>rganização e <strong>P</strong>revenção — as cinco frentes do método de reorganização.
+                </p>
+              </details>
+              <details className="faq-item">
+                <summary>O programa é gratuito?</summary>
+                <p>O cadastro e acesso inicial ao conteúdo base estão disponíveis gratuitamente; eventuais expansões futuras serão comunicadas com clareza.</p>
+              </details>
+              <details className="faq-item">
+                <summary>Como funciona o contrato de interrupção?</summary>
+                <p>É um compromisso consigo mesmo, registrado na plataforma, que formaliza sua decisão de interromper o ciclo do jogo e seguir as etapas do método.</p>
+              </details>
             </div>
           </div>
         </section>
@@ -358,9 +324,9 @@ export default function LandingPage() {
           <h2>Dê o primeiro passo para uma nova vida.</h2>
           <p>O processo de mudança começa com uma decisão consciente. Estamos aqui para ajudar.</p>
           <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/cadastrar" className="btn-primary">
-              Começar pelo Módulo 1
-            </Link>
+            <a href="#contato" className="btn-primary">
+              Iniciar programa gratuito
+            </a>
             <a href="#sobre" className="btn-secondary">
               Conhecer o instituto
             </a>
@@ -368,8 +334,8 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="landing-footer">
-        <p>© Instituto ISTOP · PareDeJogar — Método de reorganização comportamental.</p>
+      <footer className="istop-footer">
+        <p>© Instituto ISTOP · PareDeJogar — Referência estática para desenvolvimento. Versão React em produção.</p>
       </footer>
     </div>
   )

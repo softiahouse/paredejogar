@@ -18,7 +18,7 @@ export default function Footer() {
             <div style={{ fontWeight: 700, marginBottom: 16, fontSize: 14, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)' }}>Programa</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <Link to="/#sobre" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Instituto ISTOP</Link>
-              <Link to="/#metodo" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Método ISTOP</Link>
+              <Link to="/#programa" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Método ISTOP</Link>
               <Link to="/contrato" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Contrato de Interrupção</Link>
               <Link to="/painel" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: 14 }}>Acessar Programa</Link>
             </div>

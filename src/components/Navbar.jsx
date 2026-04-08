@@ -1,12 +1,12 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import './navbar-istop.css'
+import '../instituto.css'
 
 export default function Navbar() {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const verProgramaHref = pathname === '/' ? '#metodo' : '/#metodo'
+  const programaHref = pathname === '/' ? '#programa' : '/#programa'
 
   const handleSignOut = async () => {
     await signOut()
@@ -14,24 +14,34 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="navbar-istop">
-      <div className="navbar-istop-inner">
-        <Link to="/" className="navbar-istop-logo">
+    <nav className="istop-nav">
+      <div className="istop-nav-inner">
+        <Link to="/" className="istop-nav-logo">
           Instituto ISTOP
         </Link>
-
-        <div className="navbar-istop-actions">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           {user ? (
             <>
-              <Link to="/painel" className="navbar-istop-link">
+              <Link to="/painel" style={{ fontSize: 14, color: 'var(--muted)', textDecoration: 'none' }}>
                 Meu painel
               </Link>
-              <button type="button" className="navbar-istop-link" onClick={handleSignOut}>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: 14,
+                  color: 'var(--muted)',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                }}
+              >
                 Sair
               </button>
             </>
           ) : (
-            <a href={verProgramaHref} className="navbar-istop-cta">
+            <a href={programaHref} className="istop-nav-cta">
               Ver o programa
             </a>
           )}
