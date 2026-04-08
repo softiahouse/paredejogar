@@ -9,20 +9,19 @@ import '../../quiz/quiz.css'
 export default function QuizFlow({ title, subtitle, questions, quizType }) {
   const navigate = useNavigate()
   const total = questions.length
-  const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState([])
 
+  const index = answers.length
   const answered = answers.length
   const progress = total > 0 ? (answered / total) * 100 : 0
 
   const handleSelect = (value) => {
     const next = [...answers, value]
-    setAnswers(next)
     if (next.length === total) {
       const score = next.reduce((a, b) => a + b, 0)
       navigate('/resultado', { state: { score, quizType } })
     } else {
-      setIndex((i) => i + 1)
+      setAnswers(next)
     }
   }
 
