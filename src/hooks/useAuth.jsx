@@ -32,7 +32,9 @@ export function AuthProvider({ children }) {
   const signOut = () => supabase.auth.signOut()
 
   const resetPassword = (email) =>
-    supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/auth/reset-password` })
+    supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/callback`,
+    })
 
   return (
     <AuthContext.Provider value={{ user, loading, signUp, signIn, signInWithGoogle, signOut, resetPassword }}>
