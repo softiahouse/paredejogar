@@ -38,10 +38,14 @@ export default function QuizResultPage() {
   return (
     <div className="result-shell">
       <div className="result-inner">
-        <h1 className="result-title">Seu resultado</h1>
+        <h1 className="result-title">
+          {quizType === 'family' ? 'Indicador do seu familiar' : 'Seu resultado'}
+        </h1>
         <p className="result-score-line">
-          Pontuação: <strong>{score}</strong> de 48
-          {quizType === 'family' ? ' · visão familiar' : ' · autoavaliação'}
+          {quizType === 'family'
+            ? <>Pontuação indicada: <strong>{score}</strong> de 48 · baseado na sua percepção</>
+            : <>Pontuação: <strong>{score}</strong> de 48 · autoavaliação</>
+          }
         </p>
 
         <div className="result-thermo-wrap">
