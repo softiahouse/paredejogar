@@ -16,9 +16,9 @@ const modulos = [
   {
     id: 2,
     etapa: "S",
-    nome: "Sensibilização",
+    nome: "Compreendendo os Gatilhos do Jogo",
     descricao:
-      "Você identifica o que aciona o impulso: emoções, pensamentos, ambientes. O comportamento ganha nome — e perde força.",
+      "Identifique os momentos e emoções que despertam o impulso de apostar.",
     aulas: 5,
     ferramenta: "Mapa de Gatilhos ISTOP",
     cor: "#3B6D11",

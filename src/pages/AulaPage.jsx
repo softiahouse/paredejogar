@@ -91,7 +91,7 @@ export default function AulaPage() {
           <span style={styles.duracao}>⏱ {aula.duracao} de leitura</span>
         </div>
 
-        {/* Blocos de conteúdo */}
+        {/* Blocos da aula — ordem fixa: conteudo → quiz → exercicio → checkin → encerramento */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           {aula.conteudo.map((bloco, i) => {
             if (bloco.tipo === "intro") {
@@ -108,6 +108,13 @@ export default function AulaPage() {
                 </h2>
               );
             }
+            if (bloco.tipo === "subtitulo") {
+              return (
+                <h3 key={i} style={styles.subtituloSecao}>
+                  {bloco.texto}
+                </h3>
+              );
+            }
             if (bloco.tipo === "paragrafo") {
               return (
                 <p key={i} style={styles.paragrafo}>
@@ -122,28 +129,105 @@ export default function AulaPage() {
                 </div>
               );
             }
+            if (bloco.tipo === "imagem") {
+              return (
+                <figure key={i} style={styles.figuraImagem}>
+                  <img
+                    src={bloco.src}
+                    alt={bloco.alt || ""}
+                    style={styles.imagemConteudo}
+                    loading="lazy"
+                  />
+                  {bloco.legenda && (
+                    <figcaption style={styles.legendaImagem}>{bloco.legenda}</figcaption>
+                  )}
+                </figure>
+              );
+            }
             if (bloco.tipo === "lista") {
               return (
                 <div key={i} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  {bloco.itens.map((item, j) => (
-                    <div key={j} style={styles.itemLista}>
-                      <strong style={styles.itemTitulo}>{item.titulo}</strong>
-                      <p style={styles.itemDescricao}>{item.descricao}</p>
-                    </div>
-                  ))}
+                  {bloco.itens.map((item, j) => {
+                    if (typeof item === "string") {
+                      return (
+                        <div key={j} style={styles.itemLista}>
+                          <p style={{ ...styles.itemDescricao, paddingLeft: "0.5rem", borderLeft: "3px solid #3B6D11" }}>
+                            {item}
+                          </p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={j} style={styles.itemLista}>
+                        <strong style={styles.itemTitulo}>{item.titulo}</strong>
+                        <p style={styles.itemDescricao}>{item.descricao}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               );
             }
             if (bloco.tipo === "reflexao") {
               return (
                 <div key={i} style={styles.reflexao}>
-                  <span style={styles.reflexaoLabel}>{bloco.pergunta}</span>
+                  <span style={styles.reflexaoLabel}>{bloco.pergunta || "Reflexão"}</span>
                   <p style={styles.reflexaoTexto}>{bloco.texto}</p>
                 </div>
               );
             }
             return null;
           })}
+
+          {aula.quiz && aula.quiz.length > 0 && (
+            <div style={styles.quizWrap}>
+              <h2 style={styles.quizTitulo}>Quiz — confira o que aprendeu</h2>
+              {aula.quiz.map((q) => (
+                <div key={q.id} style={styles.quizItem}>
+                  <p style={styles.paragrafo}>{q.pergunta}</p>
+                  <details style={styles.quizDetails}>
+                    <summary style={styles.quizSummary}>Ver resposta sugerida</summary>
+                    <p style={styles.quizResposta}>
+                      <strong>{q.respostaCorreta}</strong>
+                      <span style={styles.quizTipo}> ({q.tipo.replace(/_/g, " ")})</span>
+                    </p>
+                  </details>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {aula.exercicio && (
+            <div className="exercicio-modulo">
+              <h3>{aula.exercicio.titulo}</h3>
+              <p>{aula.exercicio.instrucao}</p>
+              <ul>
+                {aula.exercicio.itens.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+              {aula.exercicio.descricao && (
+                <p className="exercicio-descricao">{aula.exercicio.descricao}</p>
+              )}
+            </div>
+          )}
+
+          {aula.checkin && (
+            <div className="checkin-modulo">
+              <h3>{aula.checkin.titulo}</h3>
+              <p>{aula.checkin.instrucao}</p>
+              <ol>
+                {aula.checkin.perguntas.map((pergunta, i) => (
+                  <li key={i}>{pergunta}</li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {aula.encerramento && (
+            <div style={styles.encerramento}>
+              <p style={styles.encerramentoTexto}>{aula.encerramento}</p>
+            </div>
+          )}
         </div>
 
         {/* Navegação entre aulas */}
@@ -266,6 +350,14 @@ const styles = {
     color: "#1a1a1a",
     marginTop: "0.5rem",
   },
+  subtituloSecao: {
+    fontFamily: "DM Serif Display, serif",
+    fontSize: "1.1rem",
+    color: "#2a2a2a",
+    marginTop: "0.35rem",
+    marginBottom: 0,
+    fontWeight: 600,
+  },
   paragrafo: {
     fontFamily: "DM Sans, sans-serif",
     fontSize: "1rem",
@@ -285,6 +377,26 @@ const styles = {
     color: "#2A5009",
     lineHeight: 1.55,
     margin: 0,
+  },
+  figuraImagem: {
+    margin: "1rem 0",
+    textAlign: "center",
+  },
+  imagemConteudo: {
+    maxWidth: "100%",
+    height: "auto",
+    borderRadius: 10,
+    border: "1px solid #E8E4DC",
+    display: "block",
+    margin: "0 auto",
+  },
+  legendaImagem: {
+    fontFamily: "DM Sans, sans-serif",
+    fontSize: "0.82rem",
+    color: "#777",
+    marginTop: "0.6rem",
+    lineHeight: 1.5,
+    fontStyle: "italic",
   },
   itemLista: {
     background: "#fff",
@@ -328,6 +440,59 @@ const styles = {
     color: "#664420",
     lineHeight: 1.6,
     margin: 0,
+  },
+  encerramento: {
+    background: "#fff",
+    border: "1px solid #C8DFB0",
+    borderRadius: 10,
+    padding: "1.25rem 1.5rem",
+    marginTop: "0.5rem",
+  },
+  encerramentoTexto: {
+    fontFamily: "DM Serif Display, serif",
+    fontSize: "1.02rem",
+    color: "#2A5009",
+    lineHeight: 1.65,
+    margin: 0,
+  },
+  quizWrap: {
+    marginTop: "0.5rem",
+    padding: "1.5rem",
+    background: "#fafafa",
+    border: "1px solid #E8E4DC",
+    borderRadius: 12,
+  },
+  quizTitulo: {
+    fontFamily: "DM Serif Display, serif",
+    fontSize: "1.2rem",
+    color: "#1a1a1a",
+    marginBottom: "1rem",
+    marginTop: 0,
+  },
+  quizItem: {
+    marginBottom: "1.25rem",
+  },
+  quizDetails: {
+    marginTop: "0.5rem",
+  },
+  quizSummary: {
+    fontFamily: "DM Sans, sans-serif",
+    fontSize: "0.85rem",
+    color: "#3B6D11",
+    cursor: "pointer",
+    fontWeight: 600,
+  },
+  quizResposta: {
+    fontFamily: "DM Sans, sans-serif",
+    fontSize: "0.9rem",
+    color: "#444",
+    margin: "0.5rem 0 0",
+    lineHeight: 1.5,
+  },
+  quizTipo: {
+    color: "#888",
+    fontWeight: 400,
+    fontSize: "0.82rem",
   },
   navAulas: {
     display: "flex",

@@ -13,11 +13,62 @@ Aplicação web **React + Vite** para o programa **PareDeJogar**, alinhado ao **
 
 ## Stack
 
-- React 19, Vite 8  
-- React Router 6  
-- Tailwind CSS 4 (`@tailwindcss/vite`)  
-- Supabase (auth + tabela `leads`)  
-- Deploy sugerido: Vercel (`vercel.json` com SPA rewrite)
+- **React 19** + **Vite** + **Tailwind CSS** (`@tailwindcss/vite`)
+- **React Router** (rotas SPA)
+- **Supabase** (auth, `leads`, `contratos`, `progresso_usuario`, RLS)
+- **Google OAuth** (app no Google Cloud — Instituto ISTOP)
+- **Deploy:** Vercel (`vercel.json` com SPA rewrite)
+
+## Comandos
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+## Variáveis de ambiente
+
+Criar `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (não commitar).
+
+---
+
+## Estado atual — 10/04/2026
+
+**Handoff para a próxima sessão:** use esta secção como contexto inicial.
+
+### Infra e repositório
+
+| Item | Valor |
+|------|--------|
+| **Repositório** | [softiahouse/paredejogar](https://github.com/softiahouse/paredejogar) (`main`) |
+| **Domínio** | paredejogar.com |
+| **Supabase** | `gybzuhopxhlbewhjihnd.supabase.co` |
+
+### Concluído (sessões recentes)
+
+- **Painel.jsx** — 5 módulos ISTOP com progresso real do Supabase (`progresso_usuario`).
+- **modulosContent.js** — conteúdo dos módulos **1–5** (aulas e metadados).
+- **AulaPage.jsx** — aulas dinâmicas por rota; **scroll suave para o topo** ao mudar módulo/aula (`mId`, `aId`).
+- **Contrato.jsx** — contrato com checkbox **CONTRATO PESSOAL**, cláusulas, persistência em Supabase; **marco de jornada** e **tela de conclusão** do Módulo 1 após assinar (antes de voltar ao painel).
+- **QuizResultPage.jsx** — botão WhatsApp com texto humano; fluxo sem login duplicado; guia para familiares.
+- **Navbar.jsx** — botão **Entrar** no lugar de “Ver o programa”.
+- **LandingPage.jsx** — visual alinhado ao HTML de referência.
+- **Supabase** — tabelas **`contratos`** e **`progresso_usuario`** com RLS.
+- **Módulo 1 — aulas 1, 2 e 3** — texto reescrito e expandido em `modulosContent.js`.
+
+### Rotas ativas
+
+| Rota | Descrição |
+|------|-----------|
+| `/` | Landing |
+| `/entrar`, `/cadastrar` | Auth |
+| `/quiz`, `/quiz/familias`, `/resultado` | Quiz e resultado |
+| `/painel` | Painel logado |
+| `/modulo/:id` | Entrada do módulo (redireciona para primeira aula quando aplicável) |
+| `/modulo/:moduloId/aula/:aulaId` | Aulas |
+| `/contrato` | Contrato de Interrupção (Módulo 1) |
+| `/auth/callback`, `/nova-senha` | OAuth e redefinição de senha |
 
 ## Estrutura da landing (ordem das seções)
 
@@ -32,74 +83,28 @@ Aplicação web **React + Vite** para o programa **PareDeJogar**, alinhado ao **
 9. **FAQ** — Perguntas frequentes (`#faq`).  
 10. **CTA final** — Cadastro / login.
 
-## Comandos
-
-```bash
-npm install
-npm run dev
-npm run build
-```
-
-## Variáveis de ambiente
-
-Criar `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (não commitar).
-
-## Rotas principais
-
-- `/` — Landing  
-- `/entrar`, `/cadastrar` — Auth  
-- `/esqueci-senha`, `/auth/callback`, `/nova-senha` — Recuperação de senha e callback OAuth  
-- `/painel`, `/contrato`, `/modulo/...` — Área logada  
-
 ## Fluxo completo — Módulo 1 (Interrupção)
 
-Ordem esperada na navegação (URLs reais da app):
+Ordem esperada na navegação:
 
 1. **`/painel`** — Lista de módulos; utilizador abre o Módulo 1.  
-2. **`/modulo/1`** — Redireciona automaticamente para a primeira aula (`ModuloEntry` → `Navigate` para `/modulo/1/aula/1`).  
-3. **`/modulo/1/aula/1`** — Aula 1 (`AulaPage` + conteúdo em `modulosContent.js`).  
-4. **`/modulo/1/aula/2`** — Aula 2.  
-5. **`/modulo/1/aula/3`** — Aula 3; botão “próximo” leva ao contrato (`proximoPasso.rota` em `modulosContent.js`).  
-6. **`/contrato`** — Contrato de Interrupção (`Contrato.jsx`); após assinar, volta ao painel.  
-7. **`/painel`** — Jornada do Módulo 1 concluída (mensagem de sucesso no contrato referencia o fecho do módulo).
+2. **`/modulo/1`** — Redireciona para a primeira aula (`ModuloEntry` → `/modulo/1/aula/1`).  
+3. **`/modulo/1/aula/1`** … **`/modulo/1/aula/3`** — Aulas (`AulaPage` + `modulosContent.js`).  
+4. **`/contrato`** — Contrato; após assinar, **tela de conclusão do Módulo 1** e depois **Ir para o painel**.  
+5. **`/painel`** — Módulo 1 concluído no progresso.
 
-Nota: não existem rotas soltas `/aula/2` ou `/aula/3`; as aulas são sempre **`/modulo/:moduloId/aula/:aulaId`**.
+Nota: as aulas usam sempre **`/modulo/:moduloId/aula/:aulaId`**.
 
 ### Após assinar o contrato (Supabase + painel)
 
-1. **Assinatura em `/contrato`** (`Contrato.jsx`):  
-   - `INSERT` em **`contratos`** (nome, cláusulas aceites).  
-   - `INSERT` em **`progresso_usuario`** com **`modulo_id: 1`** (duplicado `23505` ignorado se já existir).  
-   - **Tela de sucesso** (“Compromisso firmado…”).
+1. **`Contrato.jsx`:** `INSERT` em **`contratos`**; `INSERT` em **`progresso_usuario`** com **`modulo_id: 1`** (duplicado `23505` ignorado).  
+2. **`Painel.jsx`:** `SELECT` em **`progresso_usuario`** → módulos concluídos, bloqueios e barra `concluidos.length / 5`.
 
-2. **Ao voltar ao `/painel`** (`Painel.jsx` → `carregarProgresso`):  
-   - `SELECT` em **`progresso_usuario`** por `user_id` → por exemplo **`concluidos: [1]`**.  
-   - **`moduloAtual`** = maior `modulo_id` concluído + 1 → com só o módulo 1 feito, fica **2**.  
-   - **Módulo 1**: estado **concluído** (✓ verde).  
-   - **Módulo 2**: **Disponível** (é o atual).  
-   - **Módulos 3–5**: bloqueados até o utilizador completar o anterior.  
-   - **Barra de progresso**: `concluidos.length / 5` → com um módulo feito = **20%**.
+## Próximas tarefas (sugestão)
 
-## Estado atual (10/04/2026)
-
-### Concluído
-
-- Landing page Instituto ISTOP (design creme, PARE/VIVA, 5 círculos)
-- Navbar com botão "Entrar" (Google OAuth via `signInWithOAuth`)
-- `src/lib/supabaseClient.js` configurado
-- `src/pages/AuthCallback.jsx` com `onAuthStateChange` (detecta `PASSWORD_RECOVERY`)
-- `src/pages/NovaSenha.jsx` — formulário de redefinição de senha
-- `src/pages/Painel.jsx` — módulos ISTOP, progresso via **`progresso_usuario`** (Supabase)
-- `src/pages/Contrato.jsx` — assinatura grava **`contratos`** + **`progresso_usuario`** (módulo 1)
-- `src/hooks/useAuth.jsx` — função `resetPassword` com `redirectTo`
-- Rotas: `/auth/callback`, `/nova-senha`, `/painel` registradas no `App.jsx`
-- Build funcionando (`npm run build`)
-
-### Próximas tarefas
-
-- [ ] Conteúdo e rotas dos **módulos 2–5** (aulas em `modulosContent.js`, etc.)
-- [ ] Integrar **`/checkin`** ou outras peças ao progresso, se fizer sentido
+- [ ] Integrar **`/checkin`** ou outras peças ao progresso, se fizer sentido.
+- [ ] Revisar copy/UX conforme feedback clínico ou do Instituto ISTOP.
 
 ---
 
-*Documento gerado para alinhar desenvolvimento ao arquivo de referência `instituto-istop.html`.*
+*Documento de alinhamento ao `instituto-istop.html` e ao estado do repositório `paredejogar`.*

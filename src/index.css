@@ -25,6 +25,10 @@
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   --focus-ring: rgba(59, 109, 17, 0.15);
   --red: #c0392b;
+  /* Blocos de aula (exercício / check-in) */
+  --cor-glass: rgba(255, 255, 255, 0.72);
+  --cor-destaque: #f59e0b;
+  --cor-primaria: #3b6d11;
 }
 
 * {
@@ -179,6 +183,96 @@ h4 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Aula — exercício / check-in (borda lateral + glass leve) */
+.exercicio-modulo {
+  background: var(--cor-glass, rgba(255, 255, 255, 0.05));
+  border-left: 4px solid var(--cor-destaque, #f59e0b);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.exercicio-modulo h3 {
+  font-family: "DM Serif Display", ui-serif, Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.exercicio-modulo > p:first-of-type {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.exercicio-modulo ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.exercicio-modulo li {
+  margin-bottom: 0.4rem;
+}
+
+.exercicio-descricao {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 0.75rem;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.checkin-modulo {
+  background: var(--cor-glass, rgba(255, 255, 255, 0.05));
+  border-left: 4px solid var(--cor-primaria, #10b981);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.checkin-modulo h3 {
+  font-family: "DM Serif Display", ui-serif, Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.checkin-modulo > p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+.checkin-modulo ol {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.checkin-modulo li {
+  margin-bottom: 0;
+  padding-left: 0.25rem;
 }
 
 @media (max-width: 768px) {

@@ -385,104 +385,381 @@ export const modulos = {
   },
 
   2: {
-    nome: "Sensibilização",
+    nome: "Compreendendo os Gatilhos do Jogo",
+    descricao: "Identifique os momentos e emoções que despertam o impulso de apostar.",
     etapa: "S",
     aulas: [
       {
         id: 1,
-        titulo: "Nomeando o comportamento",
-        duracao: "8 min",
+        titulo: "Quando o impulso aparece",
+        duracao: "18 min",
         conteudo: [
-          { tipo: "intro", texto: "O comportamento compulsivo prospera na sombra. Nomeá-lo é o primeiro ato de poder sobre ele." },
-          { tipo: "titulo", texto: "Por que nomear importa" },
-          { tipo: "paragrafo", texto: "Enquanto o problema permanece vago — \"às vezes exagero\", \"jogo só quando estou mal\" — ele escapa da consciência. Quando você consegue descrevê-lo com precisão, ele perde parte de sua força automática." },
-          { tipo: "paragrafo", texto: "Sensibilização não é sobre se culpar. É sobre enxergar com clareza o que está acontecendo — sem julgamento, sem minimização." },
-          { tipo: "destaque", texto: "Você não pode mudar o que não consegue ver." },
-          { tipo: "titulo", texto: "O que estamos observando" },
-          { tipo: "lista", itens: [
-            { titulo: "Frequência", descricao: "Quantas vezes por semana o impulso aparece? Quantas vezes você age sobre ele?" },
-            { titulo: "Duração", descricao: "Quanto tempo, em média, dura uma sessão de jogo?" },
-            { titulo: "Contexto", descricao: "Onde você está? Que horas são? O que estava fazendo antes?" },
-            { titulo: "Estado emocional", descricao: "Como você se sentia antes de começar — e como se sentiu ao terminar?" },
-          ]},
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Se você fosse descrever seu comportamento de jogo para um médico — sem omitir nada — o que diria? Tente escrever três frases honestas." },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No módulo anterior falamos sobre o funcionamento do jogo online e como ele pode criar um ciclo difícil de interromper. Agora vamos olhar com mais atenção para um ponto fundamental desse processo: os momentos em que surge o impulso de apostar.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Muitas pessoas acreditam que jogam apenas por decisão própria. Mas ao observar com mais atenção, percebe-se que o impulso de apostar costuma aparecer em situações específicas da vida. Essas situações são chamadas de gatilhos.",
+          },
+          {
+            tipo: "destaque",
+            texto: "Reconhecer esses gatilhos é um passo importante para compreender o próprio comportamento.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O impulso nem sempre aparece por acaso",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O comportamento de apostar geralmente não surge de forma aleatória. Ele costuma aparecer após um dia difícil, em momentos de solidão, durante períodos de estresse ou quando a pessoa sente tédio ou vazio.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em muitos casos, o jogo começa como entretenimento. Mas aos poucos pode se tornar uma forma de lidar com emoções ou situações difíceis. Quando isso acontece, o impulso de jogar passa a estar ligado não apenas ao jogo em si, mas às experiências emocionais da pessoa.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Uma história real",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No livro disponibilizado na plataforma, Jogos online — vício de bolso, aparece o caso de Maria, que começou a jogar durante um período de isolamento social. No início, o jogo parecia apenas uma distração.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Depois de algum tempo, ela percebeu que jogava principalmente à noite, quando o silêncio da casa fazia surgir uma sensação de vazio. O jogo oferecia distração, estímulo e a expectativa de ganhar algo. Mas com o passar do tempo, o comportamento começou a se repetir cada vez mais.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A aposta deixou de ser apenas diversão e passou a funcionar como uma forma de escapar de sentimentos difíceis. Esse tipo de situação é mais comum do que parece.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Quando o jogo se torna uma tentativa de alívio",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Muitas pessoas recorrem ao jogo em momentos de desconforto emocional — muitas vezes de forma inconsciente. O jogo oferece estímulo, expectativa, distração e uma sensação momentânea de controle.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Mas esse alívio costuma ser temporário. Depois da aposta, surgem novas preocupações, perdas financeiras ou sentimentos de culpa. O comportamento então pode se repetir, criando um ciclo difícil de interromper.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O vazio emocional e a busca por distração",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em algumas situações, o impulso de jogar aparece ligado a algo mais profundo: a sensação de vazio ou perda de sentido. No livro O Luto, disponível na plataforma, é descrito como o sofrimento humano pode envolver tristeza profunda, culpa, confusão e desorientação diante de perdas importantes.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essas experiências fazem parte da vida humana. Mas quando não encontram espaço para serem compreendidas, algumas pessoas buscam formas rápidas de aliviar o desconforto. O jogo pode se tornar uma dessas tentativas — não porque a pessoa deseja perder dinheiro, mas porque naquele momento ele parece oferecer uma pausa para o sofrimento.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Reconhecendo seus próprios momentos de impulso",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Cada pessoa possui uma história diferente com o jogo. Por isso, é importante observar com curiosidade e sem julgamento:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Em que momentos a vontade de apostar costuma surgir?",
+              "Existe algum horário do dia em que isso acontece com mais frequência?",
+              "Que emoções estão presentes nesses momentos?",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Responder a essas perguntas ajuda a transformar o impulso de algo automático em algo mais compreensível e observável.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Reserve alguns instantes para pensar: em que momentos da sua rotina a vontade de apostar aparece com mais frequência? Pode ser ao final do dia, após uma frustração, em momentos de solidão ou quando surge preocupação financeira. Não existe resposta certa ou errada — o objetivo é apenas observar com atenção sua própria experiência.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "O impulso de apostar costuma surgir em momentos específicos do dia?",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+          {
+            id: 2,
+            pergunta: "Emoções como estresse, solidão ou ansiedade podem aumentar a vontade de jogar?",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "O jogo pode funcionar como uma forma de distração diante de sentimentos difíceis?",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta: "Observar quando surge o impulso pode ajudar a compreender melhor o comportamento de jogo?",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "O impulso de apostar raramente aparece por acaso. Na maioria das vezes ele surge ligado a momentos específicos da vida, emoções ou situações do cotidiano. Ao observar esses momentos com mais atenção, você começa a compreender melhor seu próprio comportamento — e compreender é um passo importante para recuperar o controle sobre suas escolhas.",
       },
       {
         id: 2,
-        titulo: "Mapeando seus gatilhos",
-        duracao: "10 min",
+        titulo: "Gatilhos Emocionais",
+        duracao: "15 min",
         conteudo: [
-          { tipo: "intro", texto: "Cada pessoa tem um mapa único de gatilhos. Conhecer o seu é uma vantagem decisiva." },
-          { tipo: "titulo", texto: "Como construir seu mapa" },
-          { tipo: "paragrafo", texto: "Um gatilho é qualquer estímulo — interno ou externo — que aumenta a probabilidade de você jogar. Eles não causam o comportamento diretamente, mas reduzem sua capacidade de resistir." },
-          { tipo: "lista", itens: [
-            { titulo: "Gatilhos internos", descricao: "Tédio, ansiedade, tristeza, euforia, raiva, solidão, sensação de fracasso." },
-            { titulo: "Gatilhos externos", descricao: "Notificações de apps, propagandas, ver alguém mencionar apostas, receber salário ou pagamento." },
-            { titulo: "Gatilhos relacionais", descricao: "Discussões familiares, pressão no trabalho, sentir que decepcionou alguém." },
-            { titulo: "Gatilhos de horário", descricao: "Final do dia, fins de semana, madrugada — momentos em que o controle tende a ser menor." },
-          ]},
-          { tipo: "destaque", texto: "Seu gatilho mais perigoso é aquele que você ainda não identificou." },
-          { tipo: "titulo", texto: "A ferramenta: Mapa de Gatilhos ISTOP" },
-          { tipo: "paragrafo", texto: "Ao longo desta semana, anote cada vez que sentir o impulso de jogar — mesmo que não jogue. Registre: hora, local, emoção e o que aconteceu antes. Esse registro é o seu Mapa de Gatilhos." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Qual é o gatilho que aparece com mais frequência para você? Há um horário ou emoção que se repete?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Muitas pessoas recorrem ao jogo quando estão lidando com emoções difíceis. Entre os gatilhos emocionais mais comuns estão ansiedade, frustração, solidão, tristeza e estresse.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O jogo pode oferecer uma sensação momentânea de distração ou alívio. Por alguns instantes, a mente se concentra na aposta, no resultado ou na expectativa de ganhar. Mas esse alívio costuma ser temporário.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No livro O Luto, disponível na plataforma, descreve-se como emoções humanas profundas — como tristeza, confusão ou sensação de vazio — podem surgir após perdas ou mudanças importantes na vida. Quando essas emoções não encontram espaço para serem compreendidas, algumas pessoas buscam maneiras rápidas de aliviar o desconforto. O jogo pode se tornar uma dessas tentativas.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Pense com atenção: existe alguma emoção que costuma aparecer antes da vontade de apostar?",
+          },
+        ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Emoções difíceis podem aumentar o impulso de jogar?",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "Algumas pessoas utilizam o jogo como forma de aliviar o estresse.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Identificar emoções associadas ao jogo pode ajudar a compreender o comportamento.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
         ],
       },
       {
         id: 3,
-        titulo: "Emoções que alimentam o jogo",
-        duracao: "9 min",
+        titulo: "Pensamentos que alimentam o jogo",
+        duracao: "15 min",
         conteudo: [
-          { tipo: "intro", texto: "O jogo não é apenas sobre dinheiro. Para muitas pessoas, é uma tentativa de regular emoções que parecem insuportáveis." },
-          { tipo: "titulo", texto: "A função emocional do jogo" },
-          { tipo: "paragrafo", texto: "Para alguns, jogar é uma fuga da ansiedade. Para outros, é a única forma de sentir emoção e adrenalina em uma vida que parece vazia. Para outros ainda, é uma punição disfarçada — uma forma inconsciente de se machucar." },
-          { tipo: "paragrafo", texto: "Compreender qual função o jogo cumpre para você é essencial. Porque enquanto essa necessidade existir, o impulso vai continuar aparecendo — mesmo depois de parar de jogar." },
-          { tipo: "lista", itens: [
-            { titulo: "Fuga", descricao: "Jogar para não pensar, não sentir, não estar presente em uma situação difícil." },
-            { titulo: "Estimulação", descricao: "Jogar para sentir algo — adrenalina, emoção, a sensação de estar vivo." },
-            { titulo: "Controle", descricao: "A ilusão de que, naquele ambiente, você tem poder sobre algo." },
-            { titulo: "Pertencimento", descricao: "Grupos de apostas, comunidades online — uma sensação de fazer parte de algo." },
-          ]},
-          { tipo: "destaque", texto: "A recuperação real começa quando você encontra outras formas de atender às necessidades que o jogo tentava suprir." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Qual dessas funções ressoa mais com sua experiência? O que o jogo estava tentando fazer por você?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Além das emoções, certos pensamentos também podem estimular o comportamento de apostar.",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              '"Desta vez pode dar certo."',
+              '"Preciso recuperar o que perdi."',
+              '"Agora estou perto de ganhar."',
+              '"Só mais uma tentativa."',
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esses pensamentos podem parecer convincentes no momento, mas frequentemente mantêm a pessoa dentro do ciclo do jogo.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No livro Jogo Online, Vício de Bolso, disponível na plataforma, vários relatos mostram como a tentativa de recuperar perdas se torna um dos fatores mais fortes que mantém o comportamento de apostar. Reconhecer esses pensamentos é importante para perceber quando a mente está tentando justificar uma nova aposta.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais pensamentos costumam aparecer quando você sente vontade de apostar?",
+          },
+        ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Pensar em recuperar perdas pode estimular novas apostas.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: 'Pensamentos como "só mais uma vez" são comuns no comportamento de jogo.',
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Observar os próprios pensamentos pode ajudar a interromper o impulso.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
         ],
       },
       {
         id: 4,
-        titulo: "O impacto que você talvez não veja",
-        duracao: "8 min",
+        titulo: "Gatilhos Ambientais",
+        duracao: "15 min",
         conteudo: [
-          { tipo: "intro", texto: "O custo do jogo compulsivo vai muito além do dinheiro perdido." },
-          { tipo: "titulo", texto: "Dimensões do impacto" },
-          { tipo: "lista", itens: [
-            { titulo: "Financeiro", descricao: "Dívidas, empréstimos, uso de reservas de emergência, atrasos em contas essenciais." },
-            { titulo: "Relacional", descricao: "Distanciamento de família e amigos, mentiras para esconder o comportamento, perda de confiança." },
-            { titulo: "Profissional", descricao: "Distração, faltas, queda de desempenho, riscos ao emprego ou negócio." },
-            { titulo: "Emocional", descricao: "Culpa, vergonha, ansiedade, irritabilidade, sensação de perda de controle." },
-            { titulo: "Físico", descricao: "Privação de sono, negligência com alimentação e saúde, tensão crônica." },
-          ]},
-          { tipo: "paragrafo", texto: "Muitas pessoas só percebem a dimensão real do impacto quando fazem um balanço honesto — não da última sessão, mas dos últimos meses ou anos." },
-          { tipo: "destaque", texto: "Ver o impacto com clareza não é para se punir. É para ter combustível real para a mudança." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Em qual dessas dimensões o impacto foi mais significativo para você? Há algo que você perdeu — ou está prestes a perder — que ainda não nomeou para si mesmo?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O ambiente também exerce grande influência sobre o comportamento de jogo. Hoje o jogo online está presente em diversos espaços do cotidiano:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Propagandas em redes sociais",
+              "Aplicativos de apostas",
+              "Transmissões esportivas patrocinadas",
+              "Notificações de bônus ou promoções",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esses estímulos podem funcionar como lembretes constantes do jogo. Em alguns casos, basta ver um anúncio ou uma notificação para despertar o impulso de apostar.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Reconhecer esses estímulos ajuda a perceber como o ambiente pode influenciar o comportamento.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais situações ou ambientes costumam estimular sua vontade de apostar?",
+          },
+        ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "O ambiente digital pode estimular o comportamento de apostar.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "Notificações ou propagandas podem despertar o impulso de jogar.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Reduzir exposição a esses estímulos pode ajudar no controle do comportamento.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
         ],
       },
       {
         id: 5,
-        titulo: "Preparando o Mapa de Gatilhos",
-        duracao: "7 min",
+        titulo: "Reconhecendo seus próprios gatilhos",
+        duracao: "15 min",
         conteudo: [
-          { tipo: "intro", texto: "Você chegou ao final do Módulo 2. Agora é hora de consolidar o que aprendeu em uma ferramenta prática." },
-          { tipo: "titulo", texto: "O que é o Mapa de Gatilhos ISTOP" },
-          { tipo: "paragrafo", texto: "O Mapa de Gatilhos é um registro pessoal dos padrões que precedem o impulso de jogar. Ele não precisa ser perfeito — precisa ser honesto. Quanto mais completo, mais útil." },
-          { tipo: "lista", itens: [
-            { titulo: "Passo 1", descricao: "Liste os 3 gatilhos emocionais mais frequentes para você." },
-            { titulo: "Passo 2", descricao: "Liste os 3 gatilhos externos ou situacionais mais comuns." },
-            { titulo: "Passo 3", descricao: "Identifique os horários e contextos de maior vulnerabilidade." },
-            { titulo: "Passo 4", descricao: "Para cada gatilho, escreva uma ação alternativa — o que você pode fazer no lugar de jogar." },
-          ]},
-          { tipo: "destaque", texto: "Um mapa que você construiu é mais poderoso do que qualquer lista genérica. Ele é seu." },
-          { tipo: "reflexao", pergunta: "Antes de continuar", texto: "Você completou o Módulo 2. O próximo passo é o Módulo 3 — Autorregulação: aprender a criar uma pausa real entre o gatilho e a ação." },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Cada pessoa possui uma história diferente com o jogo. Algumas apostam quando estão estressadas. Outras quando estão entediadas. Outras quando sentem esperança de recuperar perdas financeiras.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Por isso, o passo mais importante deste módulo é observar seus próprios padrões. Pergunte a si mesmo:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Em que momentos surge a vontade de apostar?",
+              "Que emoções estão presentes nesses momentos?",
+              "Existe algum pensamento recorrente antes da aposta?",
+              "Existem ambientes ou situações que facilitam o jogo?",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Responder a essas perguntas ajuda a transformar o impulso de algo automático em algo mais compreensível.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Cada pessoa possui gatilhos diferentes para o comportamento de jogo.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "Identificar esses gatilhos pode ajudar a compreender melhor o próprio comportamento.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+          {
+            id: 3,
+            pergunta: "Observar padrões pessoais é um passo importante para recuperar o controle.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        exercicio: {
+          titulo: "Mapa de Gatilhos ISTOP",
+          instrucao: "Anote com atenção:",
+          itens: [
+            "Momentos em que o impulso aparece",
+            "Emoções presentes nesses momentos",
+            "Pensamentos que surgem antes da aposta",
+            "Ambientes ou estímulos que facilitam o jogo",
+          ],
+          descricao:
+            "Esse exercício ajuda a perceber padrões que muitas vezes passam despercebidos.",
+        },
+        checkin: {
+          titulo: "Check-in do Módulo 2",
+          instrucao: "Perguntas rápidas para momentos de impulso:",
+          perguntas: [
+            "Estou diante de um gatilho que costuma estimular o jogo?",
+            "Existe alguma emoção forte presente agora?",
+            "Estou pensando em recuperar perdas?",
+            "O ambiente atual facilita o comportamento de apostar?",
+            "Posso esperar alguns minutos antes de tomar qualquer decisão?",
+          ],
+        },
+        encerramento:
+          "Você chegou ao final do segundo módulo. Agora você começou a perceber que o impulso de jogar não surge por acaso — ele costuma estar ligado a emoções, pensamentos e situações específicas. Reconhecer esses padrões é um passo importante para compreender melhor sua relação com o jogo. Cada etapa dessa jornada representa um movimento em direção a escolhas mais conscientes.",
       },
     ],
     proximoPasso: {
@@ -491,25 +768,128 @@ export const modulos = {
       rota: "/painel",
     },
   },
-
   3: {
     nome: "Autorregulação",
     etapa: "T",
     aulas: [
       {
         id: 1,
-        titulo: "O que é autorregulação",
-        duracao: "8 min",
+        titulo: "O momento da escolha",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Autorregulação é a capacidade de escolher sua resposta — em vez de reagir automaticamente." },
-          { tipo: "titulo", texto: "A janela de tolerância" },
-          { tipo: "paragrafo", texto: "Todos temos uma faixa de ativação emocional em que funcionamos bem. Quando saímos dessa faixa — por estresse, emoção intensa ou exaustão — o cérebro primitivo assume o controle. É quando o impulso de jogar tem mais força." },
-          { tipo: "paragrafo", texto: "Autorregulação não é suprimir emoções. É aprender a retornar à sua janela de tolerância antes de tomar decisões." },
-          { tipo: "destaque", texto: "Entre o estímulo e a resposta existe um espaço. Nesse espaço está sua liberdade." },
-          { tipo: "titulo", texto: "Por que é difícil" },
-          { tipo: "paragrafo", texto: "O jogo treinou seu cérebro para responder rápido. A recompensa era imediata. Construir autorregulação é o processo inverso: criar um intervalo onde antes havia automatismo." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Quando você perde o controle emocional com mais frequência? Que situações tiram você da sua janela de tolerância?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando um impulso surge, ele costuma ser acompanhado por uma sensação de urgência. Do ponto de vista neurobiológico, essa experiência está relacionada à ativação do sistema límbico, responsável por respostas emocionais rápidas. Esse sistema responde imediatamente a estímulos associados a recompensa.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No entanto, o comportamento humano não é determinado apenas por esse sistema. O cérebro possui uma estrutura responsável pela avaliação de consequências e pelo controle da ação: o córtex pré-frontal. Essa região está envolvida em funções executivas como:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Tomada de decisão",
+              "Planejamento",
+              "Controle inibitório",
+              "Avaliação de riscos",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Entre o impulso inicial e a ação comportamental existe um pequeno intervalo de tempo. Esse intervalo pode ser chamado de momento da escolha.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "A importância desse intervalo",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em situações de comportamento impulsivo, esse intervalo costuma ser extremamente curto. A pessoa percebe o impulso e, quase imediatamente, executa o comportamento.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O treinamento da autorregulação consiste justamente em ampliar esse intervalo. Quando o indivíduo aprende a reconhecer o impulso e criar uma pausa antes da ação, ele permite que sistemas cognitivos mais reflexivos participem da decisão. Esse processo aumenta a probabilidade de escolhas mais alinhadas com objetivos pessoais de longo prazo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Reconhecimento do impulso",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O primeiro passo para lidar com comportamentos impulsivos é o reconhecimento consciente do impulso. Em vez de reagir automaticamente, o indivíduo aprende a identificar mentalmente o estado interno.",
+          },
+          {
+            tipo: "destaque",
+            texto:
+              '"Neste momento estou experimentando um impulso de apostar."',
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essa simples identificação já ativa processos de metacognição — ou seja, a capacidade de observar os próprios estados mentais.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Pausa comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Após reconhecer o impulso, a estratégia seguinte consiste em introduzir uma pausa deliberada antes de qualquer ação. Essa pausa pode durar alguns minutos. Durante esse intervalo, ocorre uma redução gradual da intensidade do impulso.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Estudos em psicologia comportamental demonstram que muitos impulsos têm duração relativamente curta quando não são imediatamente reforçados. Criar esse intervalo permite que o indivíduo recupere maior capacidade de decisão consciente.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Por essa razão, estratégias de pausa, reconhecimento cognitivo e redirecionamento da atenção são amplamente utilizadas em abordagens terapêuticas para comportamentos compulsivos.",
+          },
+          {
+            tipo: "imagem",
+            src: "/imagens/espaco-da-escolha.png",
+            alt: "Infográfico O Espaço da Escolha — entre o impulso de apostar e a ação existe sempre um momento de decisão",
+            legenda: "O Espaço da Escolha — entre o impulso e a ação existe sempre um momento de decisão.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Em momentos de vontade intensa de apostar, existe espaço para criar uma pequena pausa antes da ação? Mesmo alguns minutos podem modificar significativamente o processo decisório.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "Impulsos comportamentais costumam estar associados à ativação de sistemas emocionais do cérebro.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "O córtex pré-frontal está relacionado à tomada de decisão e ao controle do comportamento.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "Criar uma pausa entre impulso e ação pode aumentar a capacidade de escolha consciente.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A capacidade de lidar com impulsos não significa eliminá-los. Impulsos fazem parte da experiência humana. O objetivo do treinamento comportamental é ampliar o espaço entre impulso e ação, permitindo que decisões sejam tomadas de forma mais consciente. Esse espaço é o que chamamos de momento da escolha.",
       },
       {
         id: 2,
