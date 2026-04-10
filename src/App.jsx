@@ -18,6 +18,7 @@ import CheckIn from './pages/modules/CheckIn'
 import QuizPage from './pages/QuizPage'
 import FamilyQuizPage from './pages/FamilyQuizPage'
 import QuizResultPage from './pages/QuizResultPage'
+import CertificadoPage from './pages/CertificadoPage'
 
 function Layout({ children, noFooter }) {
   return (
@@ -61,6 +62,7 @@ export default function App() {
             }
           />
           <Route path="/painel" element={<ProtectedRoute><Painel /></ProtectedRoute>} />
+          <Route path="/certificado" element={<CertificadoPage />} />
           <Route path="/modulo/:id" element={<ProtectedRoute><ModuloEntry /></ProtectedRoute>} />
           <Route path="/checkin" element={<ProtectedRoute><Layout><CheckIn /></Layout></ProtectedRoute>} />
           <Route path="*" element={<Layout><div style={{ padding: '120px 24px', textAlign: 'center' }}><h2>Página não encontrada</h2></div></Layout>} />
