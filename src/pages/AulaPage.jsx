@@ -20,6 +20,10 @@ export default function AulaPage() {
     });
   }, [navigate]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [mId, aId]);
+
   if (!modulo || !aula) {
     return (
       <div style={styles.centro}>

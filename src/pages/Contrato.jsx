@@ -69,18 +69,107 @@ export default function Contrato() {
 
   if (assinado) {
     return (
-      <div style={{ minHeight: "100vh", background: "#F7F5F0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={s.cardCentral}>
-          <div style={s.iconeSucesso}>✓</div>
-          <h1 style={s.tituloSucesso}>Compromisso firmado.</h1>
-          <p style={s.textoSucesso}>
-            {nomeAssinatura}, você deu um passo real hoje. Guarde esta data: <strong>{dataHoje}</strong>.
-          </p>
-          <p style={{ ...s.textoSucesso, marginTop: "0.5rem" }}>
-            O Módulo 1 está concluído. O próximo passo é o Módulo 2 — Sensibilização.
-          </p>
-          <button onClick={() => navigate("/painel")} style={s.btnPrimario}>
-            Voltar ao painel →
+      <div style={{ minHeight: "100vh", background: "#F7F5F0" }}>
+        {/* Topbar simples */}
+        <div style={s.topbar}>
+          <span style={s.topbarLabel}>Módulo 1 · Interrupção</span>
+        </div>
+
+        <div style={s.container}>
+          {/* Ícone de conquista */}
+          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+            <div style={s.iconeSucesso}>✓</div>
+            <span style={s.labelEtapa}>Marco de Jornada</span>
+            <h1 style={{ ...s.titulo, textAlign: "center" }}>
+              Conclusão do Módulo 1 — Interrupção
+            </h1>
+          </div>
+
+          {/* Texto principal */}
+          <div style={s.blocoIntro}>
+            <p style={s.introTexto}>
+              Você chegou ao final do primeiro módulo.
+            </p>
+            <p style={{ ...s.introTexto, marginTop: "1rem" }}>
+              Ao longo dessas etapas, você dedicou tempo para compreender melhor como funciona o jogo online, refletiu sobre seu comportamento e iniciou um processo de mudança. Esse é um passo importante.
+            </p>
+            <p style={{ ...s.introTexto, marginTop: "1rem" }}>
+              Muitas pessoas permanecem presas ao ciclo do jogo sem nunca parar para observar o que está acontecendo. Você fez algo diferente: decidiu olhar para isso com atenção e consciência.
+            </p>
+            <p style={{ ...s.introTexto, marginTop: "1rem" }}>
+              Não se trata de perfeição ou de respostas definitivas. Trata-se de um movimento inicial de recuperar o controle sobre suas próprias escolhas. Cada pequeno passo nessa direção tem valor.
+            </p>
+          </div>
+
+          {/* Reconhecimento */}
+          <div style={s.blocoDestaque}>
+            <p style={{ ...s.destaqueTexto, marginBottom: "0.75rem", fontStyle: "normal", fontWeight: 600 }}>
+              Reconhecimento da conquista
+            </p>
+            <p style={s.destaqueTexto}>
+              Antes de seguir para o próximo módulo, reserve alguns momentos para reconhecer:
+            </p>
+            {[
+              "Você dedicou tempo para aprender.",
+              "Refletiu sobre sua própria experiência.",
+              "Iniciou um processo de mudança.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: "0.6rem", marginTop: "0.6rem", alignItems: "flex-start" }}>
+                <span style={{ color: "#3B6D11", fontWeight: 700, flexShrink: 0 }}>✔</span>
+                <span style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.92rem", color: "#2A5009", lineHeight: 1.6 }}>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Reflexão */}
+          <div style={s.declaracaoFinal}>
+            <p style={{ ...s.declaracaoTexto, marginBottom: "0.5rem", fontStyle: "normal", fontWeight: 600 }}>
+              Você pode se perguntar:
+            </p>
+            <p style={s.declaracaoTexto}>
+              O que mais chamou sua atenção durante este módulo?
+            </p>
+            <p style={{ ...s.declaracaoTexto, marginTop: "0.75rem", fontSize: "0.85rem" }}>
+              Não existe resposta certa ou errada. Apenas observe o que surgiu para você durante essa jornada inicial.
+            </p>
+          </div>
+
+          {/* Encerramento */}
+          <div style={s.blocoNeutro}>
+            <p style={s.neutroTexto}>
+              Este foi o primeiro passo do método ISTOP: interromper o ciclo automático do jogo e criar espaço para novas escolhas.
+            </p>
+            <p style={{ ...s.neutroTexto, marginTop: "0.75rem" }}>
+              Nos próximos módulos iremos aprofundar o entendimento sobre os fatores que mantêm o comportamento de jogo e desenvolver estratégias para lidar com eles de forma mais consciente.
+            </p>
+          </div>
+
+          {/* Assinatura e data */}
+          <div style={s.previewContrato}>
+            <p style={s.previewTexto}>
+              Eu, <strong>{nomeAssinatura}</strong>, declaro que reconheço o ciclo do jogo e me comprometo a interrompê-lo com consciência e prática.
+            </p>
+            <div style={s.assinaturaLinha}>
+              <span style={s.assinaturaNome}>{nomeAssinatura}</span>
+              <span style={s.assinaturaData}>{dataHoje}</span>
+            </div>
+          </div>
+
+          {/* Mensagens finais */}
+          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+            <p style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.1rem", color: "#3B6D11", marginBottom: "0.5rem" }}>
+              Compromisso firmado.
+            </p>
+            <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.95rem", color: "#555" }}>
+              Hoje começa seu processo de recuperação do controle.
+            </p>
+            <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#888", marginTop: "0.4rem" }}>
+              O Módulo 1 está concluído. O próximo passo é o Módulo 2 — Sensibilização.
+            </p>
+          </div>
+
+          <button onClick={() => navigate("/painel")} style={s.btnAssinar}>
+            Ir para o painel →
           </button>
         </div>
       </div>
@@ -338,26 +427,9 @@ const s = {
     fontFamily: "DM Sans, sans-serif", fontSize: "0.78rem",
     color: "#aaa", textAlign: "center",
   },
-  cardCentral: {
-    background: "#fff", borderRadius: 16, padding: "3rem 2rem",
-    textAlign: "center", maxWidth: 480, border: "1px solid #C8DFB0",
-  },
   iconeSucesso: {
     width: 60, height: 60, borderRadius: "50%", background: "#3B6D11",
     color: "#fff", fontSize: "1.5rem", display: "flex",
     alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem",
-  },
-  tituloSucesso: {
-    fontFamily: "DM Serif Display, serif", fontSize: "1.75rem",
-    color: "#1a1a1a", marginBottom: "0.75rem",
-  },
-  textoSucesso: {
-    fontFamily: "DM Sans, sans-serif", fontSize: "0.95rem",
-    color: "#555", lineHeight: 1.6, margin: 0,
-  },
-  btnPrimario: {
-    background: "#3B6D11", color: "#fff", fontFamily: "DM Sans, sans-serif",
-    fontWeight: 600, fontSize: "0.9rem", padding: "0.75rem 1.5rem",
-    borderRadius: 10, border: "none", cursor: "pointer", marginTop: "1.75rem",
   },
 };
