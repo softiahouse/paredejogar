@@ -309,6 +309,58 @@ h4 {
   line-height: 1.2;
 }
 
+/* Painel — banner certificado (5 módulos concluídos) */
+.painel-certificado-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: linear-gradient(135deg, #1a3a5c, #b8975a22);
+  border: 1.5px solid #b8975a;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.painel-certificado-texto {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.painel-certificado-icone {
+  font-size: 1.8rem;
+  color: #b8975a;
+}
+
+.painel-certificado-titulo {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.painel-certificado-sub {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+.painel-certificado-btn {
+  background: #b8975a;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.painel-certificado-btn:hover {
+  opacity: 0.85;
+}
+
 /* ── CERTIFICADO PAGE ── */
 .certificado-pagina {
   min-height: 100vh;

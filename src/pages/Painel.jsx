@@ -334,6 +334,27 @@ export default function Painel() {
           </div>
         </div>
 
+        {totalConcluidos === 5 && (
+          <div className="painel-certificado-banner">
+            <div className="painel-certificado-texto">
+              <span className="painel-certificado-icone">✦</span>
+              <div>
+                <p className="painel-certificado-titulo">Programa concluído</p>
+                <p className="painel-certificado-sub">
+                  Você completou o Método ISTOP. Seu certificado está disponível.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="painel-certificado-btn"
+              onClick={() => navigate("/certificado")}
+            >
+              Ver meu certificado →
+            </button>
+          </div>
+        )}
+
         {/* Grid de módulos */}
         <h2
           style={{
