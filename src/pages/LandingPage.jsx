@@ -347,7 +347,7 @@ export default function LandingPage() {
           <p className="lp-hero-subtitle">"Quando o jogo deixa de ser diversão e começa a controlar sua vida."</p>
           <p className="lp-hero-desc">Um caminho para parar de apostar, elaborar suas perdas e reconstruir sua vida — com base científica e acolhimento real.</p>
           <div className="lp-hero-btns">
-            <Link to="/cadastrar" className="lp-btn-primary">Começar agora</Link>
+            <Link to="/quiz" className="lp-btn-primary">Teste para Jogador</Link>
             <button type="button" className="lp-btn-secondary" onClick={() => scrollTo('programa')}>Ver o programa</button>
           </div>
         </div>
@@ -534,7 +534,7 @@ export default function LandingPage() {
         <h2 className="lp-section-title">O primeiro passo não precisa ser grande.</h2>
         <p>Comece pelo Módulo 1. Entenda como o ciclo funciona. Dê o primeiro passo.</p>
         <div className="lp-cta-btns">
-          <Link to="/cadastrar" className="lp-btn-light">Começar pelo Módulo 1 — R$ 29,90</Link>
+          <Link to="/quiz" className="lp-btn-light">Teste para Jogador</Link>
           <button type="button" className="lp-btn-outline-light" onClick={() => scrollTo('familiares')}>Sou familiar</button>
         </div>
       </section>
