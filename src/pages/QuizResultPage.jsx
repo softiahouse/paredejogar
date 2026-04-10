@@ -103,6 +103,59 @@ export default function QuizResultPage() {
             </Link>
           )}
         </div>
+
+        {quizType === 'family' && (
+          <div style={{
+            marginTop: 48,
+            maxWidth: 640,
+            textAlign: 'left',
+            fontFamily: "'DM Sans', sans-serif",
+            color: '#5F5E5A',
+            lineHeight: 1.75,
+          }}>
+            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 24, color: '#2C2C2A', marginBottom: 24 }}>
+              Guia para familiares de pessoas com problemas com jogos online
+            </h2>
+
+            {[
+              {
+                titulo: '1. Entendendo o problema',
+                texto: 'O jogo pode começar como entretenimento, mas em algumas pessoas passa a ocupar um espaço cada vez maior na vida. A medicina reconhece que o jogo compulsivo pode se tornar um transtorno — o transtorno do jogo. Nesse processo ocorre ativação intensa do sistema de recompensa do cérebro. A expectativa de ganho, mesmo diante da perda, pode gerar repetição do comportamento. Por isso muitas pessoas dizem que vão parar e acabam voltando a jogar. Não se trata apenas de falta de caráter ou força de vontade — existe um processo psicológico e comportamental envolvido. Compreender isso ajuda a família a lidar com a situação de forma mais consciente.',
+              },
+              {
+                titulo: '2. Como o jogo costuma afetar a família',
+                texto: 'Quando o jogo se torna um problema, raramente apenas a pessoa que joga é afetada. Muitos familiares relatam preocupação constante com dinheiro, perda de confiança dentro de casa, discussões frequentes, tensão emocional e sensação de estar sempre tentando controlar a situação. Esse desgaste pode gerar ansiedade, tristeza e impotência. Reconhecer esse impacto é importante para que a família também busque apoio.',
+              },
+              {
+                titulo: '3. Algo importante de lembrar',
+                texto: 'Muitos familiares se perguntam: "Será que eu causei isso?" O desenvolvimento de um comportamento compulsivo envolve vários fatores — características individuais, contexto emocional, facilidade de acesso e fatores sociais. A família não é responsável pelo problema. Mas pode ter um papel importante no processo de recuperação.',
+              },
+              {
+                titulo: '4. Comportamentos que podem piorar a situação',
+                texto: 'Muitas vezes, tentando ajudar, o familiar acaba reforçando o problema sem perceber. Pagar dívidas repetidamente, emprestar dinheiro esperando que seja a última vez, esconder o problema ou assumir responsabilidades financeiras que eram do jogador — esse processo é chamado de facilitação involuntária. A intenção é ajudar, mas o efeito pode ser o oposto.',
+              },
+              {
+                titulo: '5. O que pode ajudar de forma mais saudável',
+                texto: 'Algumas atitudes contribuem para enfrentar o problema de forma mais construtiva: estabelecer limites claros em relação ao dinheiro, evitar financiar o comportamento de jogo, incentivar a busca de ajuda profissional, manter diálogo respeitoso sem acusações constantes e reconhecer pequenas mudanças positivas. Mudanças duradouras acontecem de forma gradual, com reorganização de hábitos e rotinas.',
+              },
+              {
+                titulo: '6. Cuidar de si também é importante',
+                texto: 'Muitos familiares acabam vivendo apenas em função do problema do outro — e isso gera desgaste emocional intenso, ansiedade constante e sensação de perda da própria vida. Cuidar de si não significa abandonar o outro. Significa preservar sua própria saúde emocional: conversar com pessoas de confiança, buscar orientação profissional, participar de grupos de apoio e manter atividades pessoais.',
+              },
+            ].map((s, i) => (
+              <div key={i} style={{ marginBottom: 32 }}>
+                <h3 style={{
+                  fontFamily: "'DM Serif Display', serif",
+                  fontSize: 18, color: '#2C2C2A',
+                  marginBottom: 10,
+                }}>
+                  {s.titulo}
+                </h3>
+                <p style={{ fontSize: 15 }}>{s.texto}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
