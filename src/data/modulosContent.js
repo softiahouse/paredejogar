@@ -2423,7 +2423,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
     proximoPasso: {
       tipo: "conclusao",
       label: "Concluir o programa",
-      rota: "/painel",
+      rota: "/certificado",
     },
   },
 };
