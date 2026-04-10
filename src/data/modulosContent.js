@@ -893,62 +893,397 @@ export const modulos = {
       },
       {
         id: 2,
-        titulo: "Técnicas de regulação imediata",
-        duracao: "10 min",
+        titulo: "A Pausa Consciente",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Existem técnicas simples e comprovadas para reduzir a intensidade de um impulso nos primeiros minutos." },
-          { tipo: "titulo", texto: "Regulação pelo corpo" },
-          { tipo: "lista", itens: [
-            { titulo: "Respiração 4-4-6", descricao: "Inspire em 4 tempos, segure por 4, expire em 6. Repita 5 vezes. Ativa o sistema nervoso parassimpático." },
-            { titulo: "Movimento físico", descricao: "30 segundos de agachamentos, caminhada rápida ou qualquer movimento intenso interrompe o ciclo de pensamento." },
-            { titulo: "Frio", descricao: "Água fria no rosto ou nos pulsos reduz a ativação fisiológica em segundos." },
-            { titulo: "Ancoragem sensorial", descricao: "5 coisas que você vê, 4 que ouve, 3 que pode tocar. Traz você de volta ao presente." },
-          ]},
-          { tipo: "titulo", texto: "Regulação pelo pensamento" },
-          { tipo: "lista", itens: [
-            { titulo: "Nomear a emoção", descricao: "\"Estou sentindo ansiedade\" — nomear reduz a intensidade da emoção em até 50%, segundo pesquisas." },
-            { titulo: "Questionar o pensamento", descricao: "\"Isso é um fato ou um impulso?\" \"O que acontece se eu esperar 15 minutos?\"" },
-            { titulo: "Lembrar o custo", descricao: "Visualize concretamente o que jogar vai custar — não em abstrato, mas em detalhes reais." },
-          ]},
-          { tipo: "destaque", texto: "Você não precisa usar todas as técnicas. Precisa encontrar as duas ou três que funcionam para você — e praticá-las antes de precisar delas." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Qual dessas técnicas você conseguiria usar agora mesmo, sem nenhuma preparação? Comece por ela." },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Após reconhecer o impulso de apostar, o próximo passo no processo de autorregulação consiste em criar uma pausa deliberada antes da ação. Esse procedimento é conhecido em psicologia comportamental como interrupção do comportamento automático.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em comportamentos compulsivos, a resposta ao impulso costuma ocorrer de forma rápida e pouco reflexiva. O indivíduo percebe o estímulo e reage quase imediatamente. A pausa consciente introduz um intervalo que permite a participação de processos cognitivos mais reflexivos no processo de decisão.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Impulso e comportamento automático",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O comportamento impulsivo está frequentemente associado à predominância de respostas rápidas do sistema emocional do cérebro. Quando um estímulo associado à recompensa aparece — como uma notificação de aposta ou um pensamento de recuperar perdas — ocorre ativação do sistema de recompensa, que estimula a repetição do comportamento.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esse processo pode reduzir temporariamente a participação do controle executivo, que envolve funções cognitivas como:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Avaliação de consequências",
+              "Planejamento",
+              "Inibição de respostas impulsivas",
+              "Tomada de decisão",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essas funções são mediadas principalmente pelo córtex pré-frontal. Criar uma pausa entre o impulso e a ação permite que esse sistema tenha tempo para participar do processo decisório.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O efeito temporal do impulso",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Pesquisas em psicologia do comportamento indicam que muitos impulsos apresentam curva temporal limitada. Isso significa que a intensidade do impulso tende a aumentar rapidamente e depois diminuir gradualmente quando não é reforçada.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando o indivíduo responde imediatamente ao impulso, ele fortalece o comportamento. Quando ele cria uma pausa, ocorre um fenômeno chamado extinção parcial do impulso, em que a intensidade da vontade tende a diminuir com o tempo. Essa dinâmica explica por que estratégias de pausa são amplamente utilizadas em programas de tratamento de comportamentos impulsivos.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "A prática da pausa consciente",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A pausa consciente consiste em interromper deliberadamente a sequência automática entre impulso e comportamento. Esse processo pode ser realizado em três etapas simples.",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "1. Reconhecer o impulso",
+                descricao:
+                  "O indivíduo identifica mentalmente o estado interno: \"Estou experimentando vontade de apostar.\" Esse reconhecimento cria um primeiro distanciamento psicológico em relação ao comportamento.",
+              },
+              {
+                titulo: "2. Criar um intervalo de tempo",
+                descricao:
+                  "O indivíduo estabelece um período curto — 5, 10 ou 15 minutos — antes de tomar qualquer decisão. O objetivo não é eliminar o impulso imediatamente, mas permitir que ele diminua de intensidade.",
+              },
+              {
+                titulo: "3. Retomar a decisão de forma consciente",
+                descricao:
+                  "Após a pausa, o indivíduo avalia novamente a situação, considerando consequências da ação, objetivos pessoais e impacto financeiro e emocional. Esse processo aumenta a probabilidade de uma decisão mais deliberada.",
+              },
+            ],
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Você recebe uma notificação de um aplicativo de apostas ou percebe um forte desejo de apostar. Pergunte a si mesmo: é possível criar alguns minutos de pausa antes de tomar qualquer decisão? Mesmo um intervalo curto pode modificar significativamente a intensidade do impulso.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "Criar uma pausa entre impulso e ação pode ajudar a reduzir comportamentos impulsivos.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "O córtex pré-frontal participa do controle do comportamento e da tomada de decisão.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "Muitos impulsos diminuem de intensidade quando não são imediatamente reforçados.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta:
+              "Estabelecer um intervalo de alguns minutos pode ajudar a recuperar o controle da decisão.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A pausa consciente não elimina a presença do impulso. O objetivo dessa estratégia é criar tempo para que processos cognitivos mais reflexivos participem da decisão. Ao ampliar o intervalo entre impulso e ação, o indivíduo aumenta sua capacidade de escolha. Essa habilidade constitui um dos pilares da autorregulação comportamental.",
       },
       {
         id: 3,
-        titulo: "Construindo seu Plano de Manejo",
-        duracao: "9 min",
+        titulo: "Regulando o impulso: compreendendo a dinâmica da vontade",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Um plano feito com antecedência é mais eficaz do que qualquer decisão tomada no momento do impulso." },
-          { tipo: "titulo", texto: "A estrutura do Plano" },
-          { tipo: "paragrafo", texto: "O Plano Pessoal de Manejo do Impulso é um documento simples que você prepara agora — para usar quando estiver sob pressão. Nesse momento, sua capacidade de pensar claramente estará reduzida. O plano pensa por você." },
-          { tipo: "lista", itens: [
-            { titulo: "Gatilho identificado", descricao: "\"Quando eu sentir/ver/estiver em...\"" },
-            { titulo: "Ação imediata", descricao: "\"Vou fazer [técnica específica] por [X minutos].\"" },
-            { titulo: "Pessoa de contato", descricao: "\"Se não conseguir, vou ligar para [nome].\"" },
-            { titulo: "Frase de ancoragem", descricao: "Uma frase sua, para você — que lembre por que está mudando." },
-          ]},
-          { tipo: "destaque", texto: "Não existe plano perfeito. Existe o plano que você vai realmente usar." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Escreva agora sua frase de ancoragem. O que você quer proteger? O que está em jogo se você jogar hoje?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Após compreender o momento da escolha e a estratégia da pausa consciente, o próximo passo no processo de autorregulação consiste em compreender a natureza dinâmica do impulso. Impulsos comportamentais não são estados estáticos — eles surgem, aumentam de intensidade e, com o tempo, tendem a diminuir.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando o indivíduo acredita que o impulso é permanente ou incontrolável, a probabilidade de agir sobre ele aumenta. Quando compreende que o impulso possui uma curva temporal, torna-se possível atravessá-lo sem necessariamente executar o comportamento.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "A dinâmica temporal do impulso",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Estudos em psicologia do comportamento demonstram que impulsos associados a recompensas seguem um padrão relativamente previsível:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Ativação inicial — surge a vontade de realizar o comportamento",
+              "Aumento de intensidade — o impulso atinge seu pico",
+              "Declínio gradual — a intensidade diminui quando não é reforçada",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esse padrão é observado em diferentes comportamentos impulsivos, incluindo dependências comportamentais. No livro Jogo Online — Vício de Bolso, disponível na plataforma, a expectativa de recompensa ativa o sistema dopaminérgico mesolímbico, responsável pela motivação e pela antecipação do prazer. No entanto, quando o comportamento não é imediatamente executado, a ativação desse sistema tende a diminuir com o tempo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "A metáfora da onda",
+          },
+          {
+            tipo: "coluna_imagem",
+            texto: `Uma forma simples de compreender essa dinâmica é imaginar o impulso como uma onda.
+
+No início, a onda começa a se formar. Em seguida, atinge um ponto mais alto. Depois, naturalmente perde força.
+
+Se o indivíduo reage imediatamente ao impulso, ele reforça o ciclo comportamental. Se ele aprende a **observar e atravessar o impulso**, a intensidade tende a diminuir.
+
+Essa habilidade é frequentemente chamada em psicologia comportamental de **tolerância ao impulso**.`,
+            src: "/imagens/curva-do-impulso.png",
+            alt: "Gráfico A Curva do Impulso — dinâmica temporal mostrando surgimento, aumento, pico e declínio natural",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Observando o impulso sem agir",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Um aspecto central da autorregulação consiste em desenvolver a capacidade de observar estados internos sem responder automaticamente a eles. Isso envolve reconhecer que pensamentos surgem, emoções surgem e impulsos surgem — mas a presença desses estados não determina necessariamente a ação.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essa distinção entre experiência interna e comportamento é um ponto central em abordagens contemporâneas de regulação emocional.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Impulso e sofrimento emocional",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em muitos casos, o comportamento de jogo não está associado apenas à busca de recompensa financeira, mas também à tentativa de aliviar estados emocionais difíceis. Experiências humanas complexas, como tristeza, frustração ou sensação de vazio, podem gerar desconforto psicológico significativo, conforme o livro O Luto, disponível na plataforma.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando esses estados não encontram formas adequadas de elaboração, comportamentos de recompensa imediata podem funcionar como tentativas de alívio. Compreender essa relação ajuda o indivíduo a perceber que o impulso muitas vezes está ligado a processos emocionais mais amplos.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Exercício de observação do impulso",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Reconheça mentalmente a presença do impulso",
+              "Observe como essa sensação se manifesta no corpo e na mente",
+              "Permaneça alguns minutos sem agir",
+              "Observe se a intensidade do impulso muda com o tempo",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esse exercício não tem o objetivo de eliminar o impulso imediatamente. O objetivo é desenvolver a capacidade de atravessar a experiência sem responder automaticamente a ela.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "É possível observar a vontade de apostar por alguns minutos sem agir imediatamente sobre ela? Essa prática pode revelar que muitos impulsos possuem duração limitada.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Impulsos comportamentais costumam apresentar variações de intensidade ao longo do tempo.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "Quando o impulso não é imediatamente reforçado, sua intensidade tende a diminuir.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Observar o impulso sem agir pode ajudar a desenvolver maior controle sobre o comportamento.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+          {
+            id: 4,
+            pergunta: "Impulsos podem estar associados a estados emocionais mais amplos.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+        ],
+        encerramento:
+          "O impulso de apostar pode parecer intenso no momento em que surge. No entanto, compreender sua natureza dinâmica permite desenvolver uma nova relação com essa experiência. Ao aprender a observar o impulso e permitir que ele diminua naturalmente, o indivíduo amplia sua capacidade de autorregulação. Esse processo constitui um passo importante no desenvolvimento do controle comportamental.",
       },
       {
         id: 4,
-        titulo: "Lidar com a recaída sem se perder",
-        duracao: "8 min",
+        titulo: "Redirecionamento da atenção e substituição comportamental",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Recaídas fazem parte do processo de mudança. O que define o resultado é o que você faz depois." },
-          { tipo: "titulo", texto: "O que a recaída não significa" },
-          { tipo: "paragrafo", texto: "Uma recaída não apaga o progresso. Não prova que você \"não tem jeito\". Não significa que o processo falhou. Ela é informação — sobre um gatilho que você não havia mapeado, uma situação para a qual o plano não estava pronto." },
-          { tipo: "lista", itens: [
-            { titulo: "Não catastrofize", descricao: "\"Tudo perdido\" é um pensamento — não um fato. O próximo momento ainda está disponível para você." },
-            { titulo: "Não minimize", descricao: "Reconheça o que aconteceu sem esconder. A honestidade é o que permite aprender." },
-            { titulo: "Analise", descricao: "O que precedeu a recaída? Qual gatilho o plano não cobria? O que pode ser ajustado?" },
-            { titulo: "Retome", descricao: "Volte ao programa. O próximo passo é o próximo passo — não uma grande jornada de reparação." },
-          ]},
-          { tipo: "destaque", texto: "A diferença entre quem muda e quem não muda raramente está em não recair. Está em como responde à recaída." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Como você costuma reagir quando \"falha\" em algo? Há um padrão de autocrítica que tende a piorar a situação?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Após reconhecer o impulso e compreender sua dinâmica temporal, surge uma questão prática importante: o que fazer durante o período em que o impulso está presente?",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A pausa consciente e a observação do impulso são estratégias fundamentais para interromper o comportamento automático. No entanto, em muitos casos é útil utilizar também estratégias de redirecionamento da atenção — deslocar temporariamente o foco mental para outras atividades ou estímulos, reduzindo a probabilidade de execução do comportamento impulsivo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Atenção e comportamento",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A atenção desempenha um papel central no comportamento humano. Estímulos associados a recompensa — como notificações de apostas ou pensamentos sobre recuperar perdas — tendem a capturar a atenção de forma automática. Quando a atenção permanece focada nesses estímulos, a probabilidade de execução do comportamento aumenta.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Por outro lado, quando o indivíduo redireciona deliberadamente sua atenção para outras atividades, ocorre uma redução gradual da ativação associada ao impulso. Esse processo contribui para enfraquecer a ligação entre o estímulo e o comportamento.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O princípio da substituição comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Na psicologia comportamental, um princípio frequentemente utilizado é o da substituição comportamental. Esse princípio parte da ideia de que não é suficiente apenas interromper um comportamento problemático — em muitos casos, é necessário introduzir novas respostas que possam ocupar o espaço anteriormente preenchido pelo comportamento compulsivo.",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "No contexto do jogo online, algumas alternativas podem incluir:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Caminhar ou realizar atividade física breve",
+              "Realizar uma atividade manual",
+              "Conversar com alguém de confiança",
+              "Dedicar alguns minutos a uma tarefa produtiva",
+              "Realizar exercícios de respiração ou relaxamento",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essas alternativas funcionam como respostas concorrentes — comportamentos que competem com o impulso de apostar.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O papel da recompensa imediata",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Um dos motivos pelos quais o jogo online pode se tornar altamente repetitivo é a presença de recompensas imediatas e imprevisíveis. Essas recompensas ativam circuitos de motivação e expectativa, fortalecendo o comportamento ao longo do tempo, conforme as informações trazidas pelo livro Jogo Online — Vício de Bolso, disponível na plataforma.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando o indivíduo introduz atividades alternativas, ele começa gradualmente a desenvolver novas fontes de estímulo e recompensa que não estão associadas ao comportamento de jogo. Esse processo pode contribuir para reorganizar padrões comportamentais.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Impulso e regulação emocional",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em algumas situações, o impulso de apostar pode estar relacionado à tentativa de aliviar estados emocionais difíceis. Sentimentos como frustração, tristeza ou sensação de vazio podem gerar desconforto psicológico significativo, conforme as informações trazidas pelo livro O Luto, disponível na plataforma.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando o comportamento de jogo se torna uma estratégia recorrente para lidar com essas experiências, ele pode adquirir função de regulação emocional. Nesse contexto, o desenvolvimento de novas estratégias de enfrentamento torna-se particularmente importante.",
+          },
+          {
+            tipo: "exercicio",
+            titulo: "Exercício prático",
+            instrucao: "Quando perceber o impulso de apostar, experimente realizar o seguinte procedimento:",
+            itens: [
+              "Reconheça a presença do impulso",
+              "Crie um intervalo de alguns minutos",
+              "Escolha uma atividade alternativa simples",
+              "Observe se a intensidade do impulso diminui após alguns minutos",
+            ],
+            descricao:
+              "Esse exercício tem como objetivo fortalecer a capacidade de interromper o ciclo automático entre impulso e comportamento.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais atividades simples poderiam ser utilizadas como alternativa quando surge a vontade de apostar? Identificar essas alternativas previamente pode facilitar sua utilização em momentos de impulso.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Redirecionar a atenção pode ajudar a reduzir a intensidade de impulsos comportamentais.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "A substituição comportamental consiste em introduzir novas atividades no lugar de comportamentos problemáticos.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "Atividades alternativas podem funcionar como respostas concorrentes ao impulso de apostar.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta: "Desenvolver novas estratégias de enfrentamento pode ajudar na regulação emocional.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "O redirecionamento da atenção e a substituição comportamental são ferramentas importantes no processo de autorregulação. Ao introduzir novas respostas diante do impulso, o indivíduo começa a construir padrões comportamentais diferentes daqueles associados ao ciclo do jogo. Esse processo contribui para ampliar a capacidade de escolha e fortalecer o controle sobre o comportamento.",
       },
       {
         id: 5,
@@ -976,100 +1311,504 @@ export const modulos = {
   },
 
   4: {
-    nome: "Reorganização",
+    nome: "Reorganização comportamental e consolidação de novos padrões",
+    descricao:
+      "Compreenda como hábitos se formam e aprenda a reorganizar rotinas e padrões comportamentais para consolidar mudanças duradouras.",
     etapa: "O",
     aulas: [
       {
         id: 1,
-        titulo: "Por que a rotina importa",
-        duracao: "8 min",
+        titulo: "Hábitos e comportamento repetitivo",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "O comportamento compulsivo ocupa espaço — físico, temporal e emocional. Reorganizar é preencher esse espaço com intenção." },
-          { tipo: "titulo", texto: "O vácuo que o jogo deixa" },
-          { tipo: "paragrafo", texto: "Quando alguém para de jogar, surge um vácuo. Tempo livre que antes era ocupado. Rituais que desaparecem. Uma forma de sentir adrenalina que some. Se esse vácuo não for preenchido conscientemente, ele vai puxar você de volta." },
-          { tipo: "paragrafo", texto: "Reorganização não é apenas parar de fazer algo ruim. É começar a fazer algo que sustente a mudança." },
-          { tipo: "destaque", texto: "Natureza abomina o vácuo. Sua recuperação também." },
-          { tipo: "titulo", texto: "Os três pilares da reorganização" },
-          { tipo: "lista", itens: [
-            { titulo: "Estrutura de tempo", descricao: "Horários previsíveis reduzem a janela de vulnerabilidade. O caos favorece o impulso." },
-            { titulo: "Atividades substitutivas", descricao: "Comportamentos que atendem às mesmas necessidades — estimulação, pertencimento, controle — de forma saudável." },
-            { titulo: "Ambiente modificado", descricao: "Remover apps, notificações e acessos que facilitam o jogo. Tornar o impulso mais difícil de seguir." },
-          ]},
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Quais horários do seu dia são mais vulneráveis? Onde há mais espaço vazio que o jogo costumava preencher?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Grande parte do comportamento humano é organizada em forma de hábitos. Hábitos são padrões comportamentais que se tornam automáticos após repetidas associações entre determinados estímulos e respostas.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Do ponto de vista neurobiológico, esse processo envolve a formação de circuitos neurais que facilitam a execução rápida de determinadas ações em contextos específicos. No caso do comportamento de jogo, a repetição de apostas ao longo do tempo pode estabelecer cadeias comportamentais relativamente estáveis, nas quais determinados estímulos — como emoções, pensamentos ou ambientes específicos — passam a desencadear automaticamente a resposta de apostar.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O ciclo do hábito",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A literatura em psicologia comportamental frequentemente descreve o hábito como um ciclo composto por três elementos principais:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "1. Estímulo ou gatilho",
+                descricao: "Evento interno ou externo que inicia o comportamento.",
+              },
+              {
+                titulo: "2. Resposta comportamental",
+                descricao: "Ação executada pelo indivíduo.",
+              },
+              {
+                titulo: "3. Consequência ou recompensa",
+                descricao: "Resultado que reforça o comportamento.",
+              },
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando esse ciclo se repete inúmeras vezes, a associação entre estímulo e resposta tende a se fortalecer.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Automatização do comportamento",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "À medida que os comportamentos se tornam habituais, eles passam a exigir menor esforço cognitivo para serem executados. Esse processo de automatização é funcional em diversas situações da vida cotidiana.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Entretanto, quando hábitos disfuncionais se estabelecem — como padrões repetitivos de jogo — essa automatização pode dificultar a interrupção do comportamento. Por essa razão, intervenções voltadas à mudança comportamental frequentemente buscam modificar ou reorganizar os ciclos de hábito existentes.",
+          },
         ],
       },
       {
         id: 2,
-        titulo: "Construindo sua Estrutura de Rotina",
-        duracao: "10 min",
+        titulo: "Interrupção e reorganização de hábitos",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Uma rotina não precisa ser rígida. Precisa ser sua — construída em torno do que você quer proteger." },
-          { tipo: "titulo", texto: "Como montar sua estrutura" },
-          { tipo: "lista", itens: [
-            { titulo: "Âncoras do dia", descricao: "Defina 3 momentos fixos: manhã, meio do dia e noite. O que você vai fazer nesses momentos, sempre." },
-            { titulo: "Zonas de risco", descricao: "Identifique os horários de maior vulnerabilidade e planeje o que vai fazer neles antes que cheguem." },
-            { titulo: "Atividade de descarga", descricao: "Uma atividade física regular — caminhada, academia, esporte — que libere dopamina de forma saudável." },
-            { titulo: "Conexão social", descricao: "Pelo menos um contato humano real por dia. Não precisa ser profundo — precisa acontecer." },
-          ]},
-          { tipo: "paragrafo", texto: "A Estrutura de Rotina não é uma agenda perfeita. É um mapa de intenções — que você revisa e ajusta conforme avança." },
-          { tipo: "destaque", texto: "Pequenas estruturas consistentes são mais poderosas do que grandes planos abandonados." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Qual seria sua primeira âncora do dia — um hábito simples que você consegue manter amanhã mesmo?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A interrupção de um hábito não ocorre apenas pela supressão do comportamento indesejado. Frequentemente, torna-se necessário introduzir novos comportamentos que possam ocupar o espaço anteriormente preenchido pelo hábito problemático. Esse processo é conhecido como substituição ou reorganização comportamental.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Ao introduzir respostas alternativas em contextos previamente associados ao jogo, o indivíduo gradualmente enfraquece as associações anteriores e fortalece novos padrões comportamentais.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Existem momentos específicos da rotina em que o comportamento de apostar costumava ocorrer com maior frequência? Identificar esses momentos pode ajudar a compreender os padrões habituais associados ao comportamento.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "Hábitos são comportamentos que se tornam automáticos após repetidas associações entre estímulos e respostas.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "O ciclo do hábito geralmente envolve gatilho, comportamento e recompensa.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "A interrupção de hábitos disfuncionais frequentemente requer a introdução de novos comportamentos alternativos.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta: "Comportamentos repetitivos podem se tornar automatizados ao longo do tempo.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A compreensão da formação de hábitos constitui um passo importante no processo de reorganização comportamental. Ao reconhecer como determinados padrões foram estabelecidos ao longo do tempo, torna-se possível iniciar um processo deliberado de modificação dessas estruturas comportamentais. Esse processo de reorganização constitui um elemento central na consolidação de mudanças duradouras.",
       },
       {
         id: 3,
-        titulo: "Modificando o ambiente",
-        duracao: "8 min",
+        titulo: "Plasticidade comportamental e formação de novos hábitos",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Seu ambiente influencia seu comportamento mais do que sua força de vontade. Mude o ambiente, mude as probabilidades." },
-          { tipo: "titulo", texto: "Barreiras de fricção" },
-          { tipo: "paragrafo", texto: "Barreiras de fricção são obstáculos intencionais que tornam o comportamento indesejado mais difícil de executar. Você não precisa eliminar o impulso — só tornar mais trabalhoso agir sobre ele." },
-          { tipo: "lista", itens: [
-            { titulo: "Digital", descricao: "Desinstale apps de apostas. Remova cartões salvos. Ative bloqueadores de sites. Cancele notificações." },
-            { titulo: "Financeiro", descricao: "Limite o acesso a dinheiro disponível. Transfira para conta sem cartão. Peça a alguém de confiança para guardar um cartão." },
-            { titulo: "Social", descricao: "Saia de grupos relacionados a apostas. Reduza o contato com pessoas que incentivam o comportamento." },
-            { titulo: "Físico", descricao: "Se há locais associados ao jogo, evite-os temporariamente. O ambiente físico ativa memória de comportamento." },
-          ]},
-          { tipo: "destaque", texto: "Cada barreira que você coloca é um segundo a mais para que a razão alcance o impulso." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Quais barreiras você pode instalar hoje — agora, neste momento — sem depender de ninguém?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Mudanças duradouras no comportamento humano envolvem processos graduais de reorganização das estruturas cognitivas e comportamentais. Esse processo é frequentemente descrito na literatura científica como plasticidade comportamental — conceito que se refere à capacidade do organismo de modificar padrões de resposta ao longo do tempo em função da experiência.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No contexto da mudança de hábitos, essa plasticidade envolve tanto adaptações cognitivas quanto alterações nos circuitos neurais associados ao comportamento. Assim, a substituição de padrões comportamentais disfuncionais — como o comportamento repetitivo de apostar — requer a formação progressiva de novos padrões de ação que possam se tornar estáveis ao longo do tempo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O conceito de plasticidade",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O termo plasticidade é amplamente utilizado em neurociência para descrever a capacidade do sistema nervoso de reorganizar suas conexões em resposta à experiência. Processos de aprendizagem, repetição comportamental e exposição a novos contextos podem modificar a eficiência das conexões neurais envolvidas na execução de determinados comportamentos.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No caso de hábitos estabelecidos, circuitos neurais associados à repetição do comportamento tornam-se progressivamente mais eficientes — o que explica por que determinados comportamentos podem se tornar automáticos após repetição prolongada. Da mesma forma, a introdução de novos comportamentos pode gradualmente fortalecer circuitos neurais alternativos.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Aprendizagem e reorganização comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Mudanças comportamentais sustentáveis raramente ocorrem de forma abrupta. A reorganização de hábitos costuma envolver três processos complementares:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Interrupção do padrão anterior",
+              "Introdução de novas respostas comportamentais",
+              "Repetição dessas novas respostas em contextos semelhantes",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Ao longo do tempo, a repetição dessas novas respostas contribui para a formação de padrões mais estáveis. Esse processo é consistente com princípios clássicos da aprendizagem comportamental, nos quais a frequência de um comportamento tende a aumentar quando ele é repetidamente executado em determinado contexto.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O papel da consistência comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A formação de novos hábitos depende significativamente da consistência das ações ao longo do tempo. Pequenas mudanças repetidas de forma regular podem produzir efeitos cumulativos relevantes. Em contraste, tentativas de mudança baseadas apenas em decisões isoladas ou esforços intensos de curta duração tendem a apresentar menor estabilidade.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Por essa razão, muitas intervenções comportamentais enfatizam a importância de mudanças graduais e consistentes. Esse princípio é particularmente relevante na reorganização de comportamentos associados ao jogo online, onde padrões repetitivos podem ter sido reforçados durante longos períodos.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Reforço e consolidação de novos comportamentos",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Para que novos padrões comportamentais se consolidem, é importante que eles estejam associados a experiências de reforço. O reforço não precisa necessariamente ser imediato ou intenso. Em muitos casos, experiências simples de progresso, controle ou estabilidade emocional podem funcionar como reforçadores importantes, contribuindo para fortalecer a probabilidade de repetição do novo comportamento.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais pequenas mudanças comportamentais poderiam ser repetidas de forma consistente em sua rotina cotidiana? Mudanças graduais e repetidas podem desempenhar papel importante na reorganização de padrões comportamentais.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "O conceito de plasticidade comportamental refere-se à capacidade de modificar padrões de comportamento ao longo do tempo.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "A repetição de um comportamento em determinado contexto pode fortalecer circuitos neurais associados a essa ação.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Mudanças comportamentais duradouras geralmente ocorrem por meio de processos graduais.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta: "Pequenas mudanças consistentes podem contribuir para a formação de novos hábitos.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A compreensão da plasticidade comportamental ajuda a explicar por que mudanças de hábito requerem tempo, repetição e consistência. Ao introduzir novas respostas comportamentais e praticá-las de forma gradual em diferentes contextos, o indivíduo contribui para a reorganização de seus padrões de comportamento. Esse processo constitui um elemento fundamental na consolidação de mudanças comportamentais duradouras.",
       },
       {
         id: 4,
-        titulo: "Reconstruindo vínculos",
-        duracao: "9 min",
+        titulo: "Regulação emocional e comportamento compensatório",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "O jogo compulsivo isola. A recuperação reconecta." },
-          { tipo: "titulo", texto: "O isolamento como risco" },
-          { tipo: "paragrafo", texto: "Isolamento social é um dos maiores preditores de recaída. Não porque as pessoas sejam frágeis — mas porque o ser humano é um animal de vínculo. Sem conexão real, o impulso tem muito mais espaço." },
-          { tipo: "paragrafo", texto: "Reconstruir vínculos não significa contar tudo para todos. Significa ter pelo menos uma pessoa com quem você pode ser honesto sobre o que está vivendo." },
-          { tipo: "lista", itens: [
-            { titulo: "Honestidade seletiva", descricao: "Escolha uma pessoa de confiança e seja honesto sobre o processo. Não precisa ser completo — precisa ser real." },
-            { titulo: "Reparação gradual", descricao: "Relações danificadas pelo jogo não se reconstroem com grandes gestos. Reconstroem-se com pequenas consistências ao longo do tempo." },
-            { titulo: "Novos vínculos", descricao: "Grupos de apoio, atividades em comunidade, cursos presenciais — ambientes onde novas conexões são possíveis." },
-          ]},
-          { tipo: "destaque", texto: "Você não precisa se recuperar sozinho. Isso não é fraqueza — é inteligência." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Há alguém em sua vida — um amigo, familiar, colega — com quem você poderia ser mais honesto sobre o que está passando?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Comportamentos humanos frequentemente desempenham funções psicológicas específicas. Em diversos contextos, determinadas ações são utilizadas como estratégias para lidar com estados emocionais intensos ou desconfortáveis. Na literatura científica, esse fenômeno é frequentemente descrito como comportamento compensatório ou comportamento de regulação emocional.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No contexto do jogo online, o comportamento de apostar pode, em alguns casos, assumir a função de modular experiências emocionais negativas, como ansiedade, frustração ou sensação de vazio. Compreender essa função psicológica do comportamento constitui um passo importante no processo de reorganização comportamental.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Emoção e tomada de decisão",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Estados emocionais exercem influência significativa sobre processos de tomada de decisão. Em situações de estresse ou desconforto emocional, indivíduos podem apresentar maior tendência a buscar comportamentos que ofereçam alívio imediato ou distração momentânea. Nesses casos, o comportamento não está necessariamente orientado por avaliação racional de consequências, mas pela tentativa de reduzir o desconforto emocional no curto prazo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O conceito de comportamento compensatório",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O comportamento compensatório pode ser compreendido como uma tentativa de equilibrar ou neutralizar experiências emocionais percebidas como negativas. Por exemplo, sentimentos de frustração ou perda de controle podem estimular a busca por atividades que produzam sensação momentânea de excitação, controle ou recompensa.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No caso do jogo online, a possibilidade de ganho financeiro imediato pode funcionar como estímulo psicológico compensatório, mesmo quando o indivíduo reconhece racionalmente os riscos envolvidos. Esse mecanismo contribui para a manutenção do comportamento ao longo do tempo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Regulação emocional adaptativa",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A regulação emocional refere-se à capacidade de reconhecer, compreender e modular experiências emocionais. Estratégias adaptativas de regulação emocional incluem:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Identificação consciente das emoções",
+              "Reflexão sobre experiências internas",
+              "Utilização de estratégias comportamentais alternativas",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essas estratégias permitem que o indivíduo lide com estados emocionais intensos sem recorrer necessariamente a comportamentos potencialmente prejudiciais.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Compreensão funcional do comportamento",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Em psicologia comportamental, um princípio importante consiste em analisar a função de um comportamento, e não apenas sua forma. Isso significa perguntar: que função psicológica esse comportamento está desempenhando?",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Quando um comportamento de apostar está associado à tentativa de aliviar estados emocionais negativos, sua manutenção pode estar relacionada à eficácia momentânea dessa função compensatória. A identificação dessa função torna possível desenvolver estratégias alternativas de regulação emocional.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Desenvolvimento de alternativas comportamentais",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A reorganização comportamental envolve a construção gradual de alternativas que possam desempenhar funções psicológicas semelhantes de forma mais adaptativa. Entre possíveis estratégias alternativas podem ser consideradas:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Atividades físicas ou recreativas",
+              "Interação social significativa",
+              "Atividades criativas ou intelectuais",
+              "Práticas de relaxamento ou respiração",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Essas atividades podem contribuir para a regulação emocional sem reforçar ciclos comportamentais disfuncionais.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Em quais situações emocionais a vontade de apostar tende a surgir com maior intensidade? Refletir sobre essa relação pode ajudar a compreender melhor a função psicológica do comportamento.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Estados emocionais intensos podem influenciar processos de tomada de decisão.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "Alguns comportamentos podem funcionar como estratégias de regulação emocional.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "O comportamento compensatório pode ocorrer quando o indivíduo busca aliviar emoções negativas.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta:
+              "Desenvolver alternativas de regulação emocional pode ajudar na reorganização comportamental.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A compreensão da relação entre emoções e comportamento constitui um componente essencial na reorganização de padrões comportamentais. Ao reconhecer a função psicológica que determinados comportamentos desempenham, torna-se possível desenvolver estratégias alternativas mais adaptativas para lidar com experiências emocionais desafiadoras. Esse processo contribui para a construção gradual de maior estabilidade emocional e comportamental.",
       },
       {
         id: 5,
-        titulo: "Sua nova identidade",
-        duracao: "8 min",
+        titulo: "Estruturação da rotina e preparação para manutenção da mudança",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "A mudança duradoura não é sobre parar de fazer algo. É sobre se tornar alguém que naturalmente não faz mais isso." },
-          { tipo: "titulo", texto: "Identidade como âncora" },
-          { tipo: "paragrafo", texto: "Pesquisas sobre mudança de comportamento mostram que as pessoas que mudam com mais durabilidade não são aquelas com mais força de vontade — são as que construíram uma nova identidade. \"Eu sou alguém que cuida das próprias finanças.\" \"Eu sou alguém que escolhe estar presente para minha família.\"" },
-          { tipo: "paragrafo", texto: "Cada pequena ação consistente com essa identidade é um voto para quem você está se tornando." },
-          { tipo: "destaque", texto: "Você não está tentando parar de jogar. Você está se tornando alguém diferente." },
-          { tipo: "titulo", texto: "Construindo a nova narrativa" },
-          { tipo: "lista", itens: [
-            { titulo: "Defina em positivo", descricao: "Não \"quem para de jogar\" — mas \"quem reconstrói o controle da própria vida\"." },
-            { titulo: "Ações identitárias", descricao: "Pequenas escolhas diárias que confirmam quem você está se tornando." },
-            { titulo: "Celebre o progresso", descricao: "Reconheça cada dia, cada semana, cada mês sem o comportamento compulsivo. Não é pequeno." },
-          ]},
-          { tipo: "reflexao", pergunta: "Antes de continuar", texto: "Você concluiu o Módulo 4. O último módulo é Manutenção — consolidar o que conquistou e construir proteção para o futuro." },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Mudanças comportamentais duradouras não dependem apenas da interrupção de um comportamento problemático. Elas exigem a construção gradual de estruturas de rotina que sustentem novos padrões de ação ao longo do tempo.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Ao longo deste módulo foram discutidos diferentes fatores envolvidos na reorganização comportamental — a formação de hábitos, a influência do ambiente, a plasticidade comportamental e a relação entre emoção e comportamento. Esses elementos convergem para um ponto central: a necessidade de organizar a rotina cotidiana de maneira que favoreça a estabilidade das mudanças comportamentais.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "A importância da previsibilidade comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Rotinas estruturadas reduzem a probabilidade de decisões impulsivas em momentos de vulnerabilidade. Quando atividades cotidianas estão organizadas em padrões relativamente previsíveis, o indivíduo tende a apresentar menor exposição a situações de ambiguidade ou ociosidade prolongada — situações frequentemente associadas ao aumento da probabilidade de comportamentos impulsivos.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Rotina e estabilidade psicológica",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A literatura em psicologia da saúde indica que rotinas estruturadas podem contribuir para maior estabilidade emocional e cognitiva. Entre os fatores associados a essa estabilidade estão:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Regularidade de horários",
+              "Organização de atividades produtivas",
+              "Equilíbrio entre trabalho, lazer e descanso",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esses elementos podem reduzir a frequência de estados emocionais que frequentemente precedem comportamentos impulsivos.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Vulnerabilidade e recaída comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Um aspecto amplamente discutido em programas de mudança comportamental refere-se ao conceito de vulnerabilidade à recaída. Mesmo após períodos de interrupção do comportamento problemático, determinados fatores podem aumentar a probabilidade de retorno ao padrão anterior:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Exposição repetida a estímulos associados ao comportamento anterior",
+              "Estados emocionais intensos",
+              "Ausência de estratégias estruturadas de enfrentamento",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Por essa razão, a reorganização da rotina representa apenas uma etapa inicial de um processo mais amplo de manutenção da mudança.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Preparação para manutenção da mudança",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A consolidação de novos padrões comportamentais envolve um processo contínuo de monitoramento, adaptação e fortalecimento das estratégias aprendidas. Após a fase inicial de reorganização comportamental, torna-se necessário desenvolver estratégias específicas voltadas à manutenção da mudança e à prevenção de recaídas:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Monitoramento contínuo do comportamento",
+              "Identificação precoce de sinais de risco",
+              "Fortalecimento de redes de apoio",
+              "Desenvolvimento de planos estruturados de enfrentamento",
+            ],
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais elementos da sua rotina atual contribuem para fortalecer os novos padrões comportamentais que você está construindo? Refletir sobre esses elementos pode ajudar a consolidar mudanças já iniciadas.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Rotinas estruturadas podem reduzir a probabilidade de decisões impulsivas.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "A reorganização da rotina pode contribuir para maior estabilidade comportamental.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Mesmo após mudanças iniciais, pode existir vulnerabilidade à recaída.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta:
+              "Estratégias de manutenção da mudança são importantes para consolidar novos padrões comportamentais.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        checkin: {
+          titulo: "Check-list do Módulo 4 — Reorganização comportamental",
+          instrucao: "Ao longo deste módulo foram discutidos os seguintes conteúdos:",
+          perguntas: [
+            "Formação e modificação de hábitos",
+            "Influência do ambiente sobre o comportamento",
+            "Plasticidade comportamental",
+            "Relação entre emoções e comportamento",
+            "Estruturação da rotina como base para mudanças sustentáveis",
+          ],
+        },
+        encerramento:
+          "Esses elementos representam etapas importantes no processo de transformação comportamental. Entretanto, a manutenção dessas mudanças ao longo do tempo envolve desafios adicionais.",
+        marcoJornada:
+          "O próximo módulo abordará um dos aspectos mais importantes do processo de mudança comportamental: a manutenção da mudança e a prevenção de recaídas. O foco será compreender como identificar sinais precoces de risco, fortalecer estratégias de proteção comportamental e sustentar mudanças ao longo do tempo. Essa etapa representa a consolidação do processo iniciado nos módulos anteriores.",
       },
     ],
     proximoPasso: {
@@ -1080,101 +1819,605 @@ export const modulos = {
   },
 
   5: {
-    nome: "Manutenção",
+    nome: "Manutenção da Mudança e Prevenção de Recaídas",
+    descricao:
+      "Consolide as mudanças comportamentais iniciadas no programa e desenvolva estratégias estruturadas para reduzir o risco de recaída ao longo do tempo.",
     etapa: "P",
     aulas: [
       {
         id: 1,
-        titulo: "O que é manutenção",
-        duracao: "7 min",
+        titulo: "Compreendendo o processo de recaída",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Chegar até aqui já é uma conquista real. Manutenção é sobre proteger o que você construiu." },
-          { tipo: "titulo", texto: "Por que a manutenção é uma etapa" },
-          { tipo: "paragrafo", texto: "Muitas pessoas conseguem parar. Menos conseguem permanecer. Não porque sejam mais fracas — mas porque a manutenção exige um conjunto diferente de habilidades: vigilância sem paranoia, confiança sem descuido, flexibilidade sem permissividade." },
-          { tipo: "paragrafo", texto: "A manutenção é uma prática ativa, não um estado passivo de \"já resolvi\"." },
-          { tipo: "destaque", texto: "Recuperação não é um destino. É uma direção que você escolhe continuar seguindo." },
-          { tipo: "titulo", texto: "Os três pilares da manutenção" },
-          { tipo: "lista", itens: [
-            { titulo: "Monitoramento", descricao: "Continuar observando seus estados internos, gatilhos e padrões — mesmo quando está bem." },
-            { titulo: "Ajuste", descricao: "Revisar e atualizar seu Plano de Manejo conforme sua vida muda." },
-            { titulo: "Apoio", descricao: "Manter conexões que sustentam a mudança — pessoas, práticas, comunidade." },
-          ]},
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "O que você quer proteger agora que chegou até aqui? O que mudou em você ao longo desse processo?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Mudanças comportamentais sustentáveis frequentemente envolvem períodos de estabilidade intercalados com momentos de maior vulnerabilidade. No campo da psicologia clínica e da medicina comportamental, o retorno a padrões anteriores de comportamento é descrito pelo conceito de recaída.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Entretanto, a recaída não deve ser compreendida como um evento súbito ou como falha individual isolada. A literatura científica contemporânea descreve a recaída como um processo gradual, resultante da interação entre fatores cognitivos, emocionais e ambientais. A compreensão desse processo constitui um componente fundamental em programas de mudança comportamental e prevenção de recaídas.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O modelo processual da recaída",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Um dos modelos mais influentes na compreensão da recaída foi proposto por Marlatt e Gordon no campo da psicologia das dependências. Nesse modelo, a recaída é compreendida como um processo progressivo, no qual diferentes fatores podem aumentar gradualmente a probabilidade de retorno ao comportamento anterior:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Exposição a situações de alto risco",
+              "Estados emocionais negativos intensos",
+              "Habilidades insuficientes de enfrentamento",
+              "Expectativa de recompensa associada ao comportamento anterior",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esse modelo permite compreender a recaída não como falha moral, mas como resultado de condições comportamentais identificáveis.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Lapso e recaída",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "Lapso",
+                descricao:
+                  "Um episódio isolado de retorno ao comportamento anterior após um período de interrupção. Pode ocorrer em situações de elevada vulnerabilidade e não necessariamente implica retorno completo ao padrão anterior.",
+              },
+              {
+                titulo: "Recaída",
+                descricao:
+                  "A retomada consistente e repetida do comportamento anterior ao longo do tempo. Na prática clínica, compreender essa distinção é importante porque um lapso pode ser utilizado como oportunidade de aprendizado e ajuste das estratégias de enfrentamento.",
+              },
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O efeito da violação da abstinência",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Um conceito importante descrito na literatura de prevenção de recaídas é o chamado efeito da violação da abstinência. Esse fenômeno ocorre quando um episódio isolado de comportamento problemático gera sentimentos intensos de culpa ou fracasso, levando o indivíduo a interpretar o lapso como prova de incapacidade de mudança e aumentando o risco de abandono das estratégias previamente adotadas.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Compreender a recaída como processo permite reduzir esse efeito e favorecer respostas mais adaptativas.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Vulnerabilidade comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A vulnerabilidade à recaída não ocorre de maneira uniforme ao longo do tempo. Determinadas condições podem aumentar temporariamente essa vulnerabilidade:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Estresse emocional intenso",
+              "Mudanças significativas na rotina",
+              "Exposição a estímulos associados ao comportamento anterior",
+              "Redução de estratégias de enfrentamento",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A identificação precoce dessas condições permite o desenvolvimento de estratégias preventivas.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Em quais situações você percebe maior vulnerabilidade ao retorno do comportamento de apostar? Refletir sobre essas situações pode contribuir para o reconhecimento de fatores de risco pessoais.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "A recaída é frequentemente descrita na literatura científica como um processo gradual.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "Um lapso representa necessariamente o retorno completo ao padrão anterior de comportamento.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Falso",
+          },
+          {
+            id: 3,
+            pergunta: "Estados emocionais intensos podem aumentar a vulnerabilidade à recaída.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta:
+              "Compreender o processo de recaída pode ajudar no desenvolvimento de estratégias preventivas.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A compreensão científica do processo de recaída permite abordar o fenômeno de forma mais objetiva e menos moralizada. Ao reconhecer que recaídas podem resultar da interação entre diferentes fatores psicológicos e contextuais, torna-se possível desenvolver estratégias mais eficazes de prevenção e enfrentamento.",
       },
       {
         id: 2,
-        titulo: "Reconhecendo situações de risco",
-        duracao: "9 min",
+        titulo: "Identificação de situações de alto risco",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Situações de risco elevado são previsíveis. Reconhecê-las antes que aconteçam é sua maior proteção." },
-          { tipo: "titulo", texto: "Categorias de risco elevado" },
-          { tipo: "lista", itens: [
-            { titulo: "HALT", descricao: "Hungry (com fome), Angry (com raiva), Lonely (sozinho), Tired (cansado). Quando qualquer um desses está presente, o risco aumenta." },
-            { titulo: "Estresse acumulado", descricao: "Períodos de pressão prolongada — profissional, financeira, relacional — desgastam a capacidade de autorregulação." },
-            { titulo: "Comemorações", descricao: "Paradoxalmente, momentos de celebração e euforia também podem ser gatilhos — especialmente se o jogo era uma forma de comemorar." },
-            { titulo: "Exposição inesperada", descricao: "Ver propaganda, ouvir alguém falando sobre apostas, receber uma oferta de bônus. A exposição acidental pode ser surpreendentemente intensa." },
-          ]},
-          { tipo: "paragrafo", texto: "Reconhecer uma situação de risco não significa que você vai recair. Significa que você precisa acionar seu plano — agora, não depois." },
-          { tipo: "destaque", texto: "A melhor defesa é o reconhecimento precoce. Quando você percebe cedo, age com mais recursos." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Qual das categorias de risco é mais comum na sua vida agora? Como está seu nível de HALT neste momento?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A manutenção de mudanças comportamentais requer a capacidade de reconhecer contextos nos quais a probabilidade de retorno ao comportamento anterior aumenta. Na literatura científica sobre prevenção de recaídas, esses contextos são frequentemente descritos como situações de alto risco.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "O conceito de situação de alto risco foi amplamente desenvolvido no Relapse Prevention Model, proposto por Marlatt e colaboradores, que descreve a recaída como resultado da interação entre fatores individuais e contextuais. A identificação precoce dessas situações permite que o indivíduo se prepare cognitivamente e comportamentalmente para lidar com possíveis desafios.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Definição de situações de alto risco",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Situações de alto risco podem ser definidas como contextos internos ou externos que aumentam significativamente a probabilidade de retorno ao comportamento anterior. Essas situações não possuem necessariamente a mesma intensidade para todos os indivíduos — elas variam de acordo com experiências pessoais, padrões comportamentais anteriores e fatores ambientais.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Categorias de situações de risco",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "1. Estados emocionais negativos",
+                descricao:
+                  "Estados emocionais intensos como ansiedade, frustração, tristeza, sensação de vazio e estresse prolongado podem aumentar a motivação para buscar comportamentos que ofereçam alívio imediato.",
+              },
+              {
+                titulo: "2. Estados emocionais positivos intensos",
+                descricao:
+                  "Situações de celebração, euforia ou sensação de conquista podem reduzir temporariamente a percepção de risco e aumentar a disposição para comportamentos impulsivos. Em alguns casos, o indivíduo pode interpretar esses estados como justificativa para retomar temporariamente comportamentos previamente interrompidos.",
+              },
+              {
+                titulo: "3. Contextos ambientais e sociais",
+                descricao:
+                  "Ambientes associados ao comportamento anterior — como exposição a plataformas de apostas, eventos esportivos com estímulo intenso ao jogo ou ambientes sociais onde o comportamento de apostar é incentivado — podem reativar padrões comportamentais previamente estabelecidos.",
+              },
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O papel da antecipação cognitiva",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A identificação de situações de alto risco permite o desenvolvimento de antecipação cognitiva — a capacidade de prever situações potencialmente vulneráveis e preparar respostas comportamentais adequadas antes que o impulso se intensifique. Esse processo aumenta significativamente a probabilidade de aplicação das estratégias aprendidas ao longo do programa.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Monitoramento situacional",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Uma estratégia frequentemente utilizada em programas de prevenção de recaídas consiste no monitoramento sistemático de situações de risco. Esse monitoramento pode envolver:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Observação da própria rotina",
+              "Registro de estados emocionais relevantes",
+              "Identificação de contextos ambientais associados ao comportamento anterior",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esse processo contribui para o desenvolvimento de maior consciência situacional.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Em quais situações você percebe maior vulnerabilidade ao impulso de apostar? Existem contextos específicos da sua rotina que aumentam a probabilidade desse comportamento? Refletir sobre essas situações pode contribuir para o desenvolvimento de estratégias preventivas mais eficazes.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "Situações de alto risco são contextos que aumentam a probabilidade de retorno ao comportamento anterior.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "Estados emocionais negativos podem aumentar a vulnerabilidade à recaída.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta: "Estados emocionais positivos intensos também podem representar situações de risco.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta: "Identificar situações de risco pode ajudar na aplicação de estratégias preventivas.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A identificação de situações de alto risco representa um passo fundamental na prevenção de recaídas. Ao reconhecer contextos nos quais a vulnerabilidade comportamental aumenta, o indivíduo pode preparar respostas cognitivas e comportamentais mais adequadas para lidar com esses momentos.",
       },
       {
         id: 3,
-        titulo: "Construindo sistemas de proteção",
-        duracao: "9 min",
+        titulo: "Estratégias de enfrentamento em situações de alto risco",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Sistemas de proteção são estruturas que funcionam mesmo quando você está no seu pior dia." },
-          { tipo: "titulo", texto: "Proteção em camadas" },
-          { tipo: "paragrafo", texto: "Um único sistema de proteção pode falhar. Proteção real funciona em camadas — cada uma delas reduz a probabilidade de uma recaída e limita o dano caso ela ocorra." },
-          { tipo: "lista", itens: [
-            { titulo: "Primeira camada — ambiente", descricao: "Barreiras digitais e físicas que já foram instaladas. Revise-as regularmente." },
-            { titulo: "Segunda camada — plano", descricao: "Seu Plano de Manejo atualizado e acessível. Você sabe o que fazer nos primeiros 15 minutos." },
-            { titulo: "Terceira camada — pessoas", descricao: "Pelo menos uma pessoa que sabe o que você está vivendo e pode ser chamada em momento de crise." },
-            { titulo: "Quarta camada — comunidade", descricao: "Grupos de apoio, acompanhamento profissional, ou qualquer estrutura de suporte externo." },
-          ]},
-          { tipo: "destaque", texto: "Você não precisa ser forte o tempo todo. Seus sistemas precisam ser fortes o suficiente para os momentos em que você não está." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Qual das quatro camadas está mais frágil agora? O que você pode fazer esta semana para fortalecê-la?" },
+          {
+            tipo: "imagem",
+            src: "/imagens/estrategias-enfrentamento.png",
+            alt: "Infográfico Estratégias de Enfrentamento em Situações de Alto Risco — Pausa Consciente, Mude de Foco e Reestruturação Cognitiva",
+            legenda: "Estratégias de Enfrentamento ISTOP — Pausa Consciente, Redirecionamento e Reestruturação Cognitiva.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A identificação de situações de alto risco constitui um passo importante no processo de prevenção de recaídas. Entretanto, reconhecer essas situações não é suficiente por si só. A literatura científica sobre prevenção de recaídas enfatiza a importância do desenvolvimento de estratégias de enfrentamento eficazes, capazes de ser utilizadas no momento em que o indivíduo se encontra exposto a contextos de vulnerabilidade.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Estratégias de enfrentamento podem ser definidas como respostas cognitivas e comportamentais utilizadas para lidar com situações desafiadoras ou potencialmente ameaçadoras ao processo de mudança comportamental. No modelo de prevenção de recaídas, a presença de estratégias de enfrentamento adequadas reduz significativamente a probabilidade de retorno ao comportamento anterior.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O papel das habilidades de enfrentamento",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "De acordo com o modelo proposto por Marlatt, a recaída tende a ocorrer com maior probabilidade quando o indivíduo se encontra em uma situação de alto risco e não dispõe de habilidades de enfrentamento adequadas. Quando estratégias de enfrentamento são aplicadas de forma eficaz, ocorre um aumento da percepção de controle sobre o comportamento — o que contribui para o fortalecimento da auto-eficácia, conceito central na manutenção de mudanças comportamentais.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Categorias de estratégias de enfrentamento",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "1. Estratégias cognitivas",
+                descricao:
+                  "Envolvem processos mentais que permitem reinterpretar ou reavaliar uma situação potencialmente desafiadora — como o questionamento de pensamentos automáticos, a reavaliação de expectativas irreais e a lembrança de consequências negativas associadas ao comportamento anterior.",
+              },
+              {
+                titulo: "2. Estratégias comportamentais",
+                descricao:
+                  "Envolvem a execução de ações concretas que reduzem a exposição ao comportamento de risco — como afastamento de ambientes associados ao comportamento anterior, realização de atividades alternativas e redirecionamento da atenção para outras tarefas.",
+              },
+              {
+                titulo: "3. Estratégias de regulação emocional",
+                descricao:
+                  "Estados emocionais intensos podem reduzir temporariamente a capacidade de tomada de decisão. Técnicas de respiração e relaxamento, práticas de atenção plena e atividades físicas moderadas ajudam a reduzir a intensidade da ativação emocional associada ao impulso.",
+              },
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Integração das estratégias",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Na prática clínica, estratégias cognitivas, comportamentais e emocionais raramente são utilizadas de forma isolada. O enfrentamento eficaz de situações de alto risco geralmente envolve a combinação dessas diferentes estratégias — por exemplo, reconhecer um pensamento automático relacionado ao jogo, afastar-se de um ambiente associado ao comportamento e aplicar uma técnica de regulação emocional. Essa integração aumenta significativamente a eficácia do enfrentamento.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais estratégias poderiam ser utilizadas por você em momentos de maior vulnerabilidade ao comportamento de apostar? Refletir sobre essas possibilidades permite preparar respostas antecipadas para situações de risco.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "Estratégias de enfrentamento podem reduzir a probabilidade de recaída em situações de alto risco.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "Estratégias cognitivas envolvem a reavaliação de pensamentos associados ao comportamento.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "Estratégias comportamentais podem incluir afastamento de ambientes associados ao jogo.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta: "Estratégias de regulação emocional ajudam a reduzir a intensidade do impulso.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "O desenvolvimento de estratégias de enfrentamento constitui um componente central da prevenção de recaídas. Ao ampliar o repertório de respostas cognitivas, comportamentais e emocionais disponíveis diante de situações de risco, o indivíduo fortalece sua capacidade de manter mudanças comportamentais ao longo do tempo.",
       },
       {
         id: 4,
-        titulo: "Quando buscar ajuda profissional",
-        duracao: "8 min",
+        titulo: "Construção de sistemas de proteção comportamental",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Este programa é psicoeducacional. Há situações em que o suporte profissional não é opcional — é necessário." },
-          { tipo: "titulo", texto: "Sinais de que você precisa de mais suporte" },
-          { tipo: "lista", itens: [
-            { titulo: "Recaídas frequentes", descricao: "Se as recaídas estão se repetindo mesmo com o uso das ferramentas, o padrão está além do que um programa de autoajuda pode resolver sozinho." },
-            { titulo: "Sintomas de saúde mental", descricao: "Depressão intensa, ansiedade paralisante, pensamentos de autolesão — essas condições exigem acompanhamento especializado." },
-            { titulo: "Dívidas graves", descricao: "Situações financeiras críticas podem precisar de orientação jurídica ou financeira especializada além do suporte emocional." },
-            { titulo: "Impacto familiar severo", descricao: "Quando as relações mais próximas estão em risco sério, terapia de casal ou familiar pode ser necessária." },
-          ]},
-          { tipo: "paragrafo", texto: "Buscar ajuda profissional não é um sinal de fraqueza ou de que o programa falhou. É reconhecer que você merece o nível de suporte que sua situação exige." },
-          { tipo: "destaque", texto: "Pedir ajuda é um ato de responsabilidade — consigo mesmo e com quem você ama." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Há algo em sua situação que este programa não está conseguindo alcançar? Existe resistência a buscar suporte profissional — e de onde ela vem?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A prevenção de recaídas não depende exclusivamente da força de vontade ou da capacidade individual de resistir a impulsos momentâneos. Pesquisas em psicologia comportamental e medicina comportamental indicam que mudanças sustentáveis são mais prováveis quando o indivíduo desenvolve estruturas externas de suporte ao comportamento desejado. Essas estruturas podem ser descritas como sistemas de proteção comportamental.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "O conceito de proteção comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "No campo da prevenção de recaídas, a proteção comportamental envolve a criação deliberada de condições que favoreçam a manutenção de novos padrões de comportamento. Essas condições podem incluir:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Ambientes que reduzam exposição a estímulos de risco",
+              "Rotinas estruturadas que diminuam períodos de vulnerabilidade",
+              "Redes de apoio que ofereçam suporte emocional e social",
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Componentes de um sistema de proteção",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "1. Proteção ambiental",
+                descricao:
+                  "Envolve a organização do ambiente físico e digital de modo a reduzir a exposição a estímulos associados ao comportamento anterior — como remoção de aplicativos de apostas, bloqueio de plataformas de jogo e redução de exposição a conteúdos relacionados ao jogo.",
+              },
+              {
+                titulo: "2. Proteção estrutural",
+                descricao:
+                  "Refere-se à organização da rotina cotidiana de forma que favoreça estabilidade comportamental — com horários regulares de atividades, equilíbrio entre trabalho, lazer e descanso, e planejamento de atividades significativas. Rotinas estruturadas reduzem períodos prolongados de ociosidade, frequentemente associados a comportamentos impulsivos.",
+              },
+              {
+                titulo: "3. Proteção social",
+                descricao:
+                  "O apoio social desempenha papel importante na manutenção de mudanças comportamentais. Relações interpessoais podem oferecer suporte emocional, incentivo à continuidade da mudança e auxílio em momentos de dificuldade. Redes de apoio podem incluir familiares, amigos, profissionais de saúde ou grupos de apoio.",
+              },
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Monitoramento comportamental",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Outro elemento importante em sistemas de proteção comportamental é o monitoramento contínuo do comportamento. O monitoramento envolve observar regularmente:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Estados emocionais relevantes",
+              "Exposição a situações de risco",
+              "Frequência de impulsos relacionados ao comportamento anterior",
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Esse processo aumenta a consciência sobre fatores que podem influenciar a manutenção da mudança.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais elementos do seu ambiente atual contribuem para proteger sua mudança comportamental? Existem ajustes adicionais que poderiam fortalecer esse sistema de proteção? Refletir sobre essas questões pode ajudar a consolidar estruturas de suporte mais robustas.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta: "Sistemas de proteção comportamental ajudam a reduzir a probabilidade de recaída.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta: "A organização do ambiente pode influenciar o comportamento humano.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "Redes de apoio social podem contribuir para a manutenção da mudança comportamental.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta:
+              "Monitorar estados emocionais e situações de risco pode ajudar na prevenção de recaídas.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        encerramento:
+          "A construção de sistemas de proteção comportamental representa um passo importante na consolidação de mudanças sustentáveis. Ao estruturar o ambiente, a rotina e as relações sociais de forma coerente com os objetivos de mudança, o indivíduo reduz significativamente a probabilidade de retorno ao comportamento anterior.",
       },
       {
         id: 5,
-        titulo: "Consolidando a mudança",
-        duracao: "10 min",
+        titulo: "Consolidação da mudança e fortalecimento da auto-eficácia",
+        duracao: "20 min",
         conteudo: [
-          { tipo: "intro", texto: "Você chegou ao final do Método ISTOP. Este não é o fim da jornada — é o início de uma nova fase." },
-          { tipo: "titulo", texto: "O que você construiu" },
-          { tipo: "paragrafo", texto: "Ao longo dos 5 módulos, você desenvolveu: consciência sobre o ciclo do jogo, capacidade de identificar seus gatilhos, ferramentas de autorregulação, uma nova estrutura de rotina e sistemas de proteção para o futuro." },
-          { tipo: "paragrafo", texto: "Isso não é pouco. É exatamente o que a maioria das pessoas que recuperam o controle da própria vida construiu — um passo de cada vez." },
-          { tipo: "destaque", texto: "Você não é mais a mesma pessoa que começou este programa. Isso é real." },
-          { tipo: "titulo", texto: "O Protocolo de Prevenção de Recaída" },
-          { tipo: "lista", itens: [
-            { titulo: "Revisão mensal", descricao: "Uma vez por mês, revise seu Mapa de Gatilhos e Plano de Manejo. Atualize o que mudou." },
-            { titulo: "Check-in semanal", descricao: "Toda semana: como estou? Nível de HALT? Algum sinal de risco elevado?" },
-            { titulo: "Rede de apoio ativa", descricao: "Mantenha contato regular com sua pessoa de confiança — não apenas em crise." },
-            { titulo: "Celebração de marcos", descricao: "30 dias, 90 dias, 6 meses, 1 ano. Reconheça cada marco. Você merece." },
-          ]},
-          { tipo: "reflexao", pergunta: "Para concluir", texto: "O que você quer dizer para si mesmo daqui a um ano — olhando para trás para este momento em que decidiu mudar?" },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A manutenção de mudanças comportamentais representa uma das etapas mais desafiadoras no processo de transformação pessoal. Embora a interrupção inicial de um comportamento problemático possa ocorrer em períodos relativamente curtos, a consolidação dessa mudança exige a integração progressiva de novos padrões comportamentais à rotina cotidiana.",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Na literatura científica, esse processo está associado ao conceito de auto-eficácia, proposto por Albert Bandura. A auto-eficácia refere-se à percepção que o indivíduo possui sobre sua capacidade de lidar com desafios e manter comportamentos alinhados com seus objetivos de longo prazo. Fortalecer essa percepção constitui um elemento fundamental para sustentar mudanças comportamentais ao longo do tempo.",
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Auto-eficácia e manutenção da mudança",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "A teoria da auto-eficácia sugere que indivíduos que acreditam possuir recursos para enfrentar situações difíceis tendem a apresentar maior persistência diante de obstáculos. No contexto da prevenção de recaídas, a auto-eficácia está associada a:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              "Maior utilização de estratégias de enfrentamento",
+              "Maior capacidade de interromper impulsos",
+              "Maior persistência na manutenção da mudança",
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Integração das habilidades desenvolvidas",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              {
+                titulo: "Consciência comportamental",
+                descricao:
+                  "Compreensão do funcionamento do comportamento de apostar e dos fatores que contribuem para sua manutenção.",
+              },
+              {
+                titulo: "Reconhecimento de gatilhos",
+                descricao:
+                  "Identificação de situações emocionais, cognitivas e ambientais associadas ao impulso de apostar.",
+              },
+              {
+                titulo: "Autorregulação do impulso",
+                descricao:
+                  "Desenvolvimento de estratégias para reconhecer e manejar impulsos comportamentais antes da execução da ação.",
+              },
+              {
+                titulo: "Reorganização comportamental",
+                descricao:
+                  "Construção de novos padrões de rotina e introdução de comportamentos alternativos.",
+              },
+              {
+                titulo: "Prevenção de recaídas",
+                descricao:
+                  "Desenvolvimento de estratégias estruturadas para lidar com situações de risco.",
+              },
+            ],
+          },
+          {
+            tipo: "subtitulo",
+            texto: "Mudança como processo contínuo",
+          },
+          {
+            tipo: "paragrafo",
+            texto:
+              "Mudanças comportamentais duradouras não devem ser compreendidas como eventos pontuais, mas como processos contínuos de adaptação e aprendizagem. Mesmo após períodos prolongados de estabilidade, podem surgir situações desafiadoras. Nesses momentos, a utilização das estratégias aprendidas ao longo do programa torna-se particularmente importante.",
+          },
+          {
+            tipo: "reflexao",
+            texto:
+              "Quais mudanças você já percebe em sua relação com o comportamento de apostar? Quais estratégias aprendidas ao longo do programa têm sido mais úteis para você? Refletir sobre esses aspectos pode contribuir para o fortalecimento da percepção de progresso.",
+          },
         ],
+        quiz: [
+          {
+            id: 1,
+            pergunta:
+              "A autoeficácia refere-se à percepção de capacidade pessoal para lidar com desafios.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 2,
+            pergunta:
+              "Fortalecer a autoeficácia pode contribuir para a manutenção de mudanças comportamentais.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 3,
+            pergunta:
+              "Mudanças comportamentais duradouras costumam envolver processos contínuos de adaptação.",
+            tipo: "verdadeiro_falso",
+            respostaCorreta: "Verdadeiro",
+          },
+          {
+            id: 4,
+            pergunta:
+              "A utilização das estratégias aprendidas pode ajudar a enfrentar situações de risco futuras.",
+            tipo: "sim_nao",
+            respostaCorreta: "Sim",
+          },
+        ],
+        checkin: {
+          titulo: "Check-list Final — Consolidação do Método ISTOP",
+          instrucao:
+            "Leia cada afirmação com atenção e reflita sobre sua situação atual (Sim / Parcialmente / Ainda preciso trabalhar esse aspecto):",
+          perguntas: [
+            "Compreendo melhor como o comportamento de apostar se desenvolve ao longo do tempo",
+            "Consigo reconhecer fatores que contribuíram para o desenvolvimento desse comportamento em minha vida",
+            "Consigo identificar situações emocionais que podem aumentar minha vontade de apostar",
+            "Reconheço ambientes ou contextos que funcionam como estímulos para o comportamento de apostar",
+            "Consigo reconhecer o impulso de apostar antes de agir automaticamente",
+            "Tenho maior capacidade de criar uma pausa entre o impulso e a ação",
+            "Fiz ajustes na minha rotina para reduzir situações que favoreciam o comportamento de apostar",
+            "Introduzi atividades alternativas que contribuem para o equilíbrio da minha rotina",
+            "Tenho maior clareza sobre como lidar com situações de alto risco",
+            "Realizei mudanças no meu ambiente para reduzir exposição ao jogo",
+            "Compreendo que recaídas podem ocorrer como parte de um processo comportamental",
+            "Tenho um plano estruturado para lidar com possíveis lapsos",
+            "Percebo que desenvolvi habilidades para lidar com situações de risco",
+            "Sinto maior confiança em minha capacidade de manter mudanças comportamentais",
+          ],
+        },
+        encerramento:
+          "Ao longo deste programa foram abordados diferentes aspectos relacionados à compreensão e à reorganização de padrões comportamentais associados ao jogo online — da compreensão do comportamento de apostar à identificação de gatilhos, do desenvolvimento de estratégias de autorregulação à construção de sistemas de prevenção de recaídas. Esses elementos constituem a base para a manutenção de mudanças comportamentais ao longo do tempo.",
+        marcoJornada:
+          "Mudanças comportamentais duradouras são resultado de aprendizado, prática e adaptação contínua. O percurso realizado ao longo do programa ISTOP representa o desenvolvimento de um conjunto de habilidades que podem ser utilizadas para lidar com desafios futuros e fortalecer escolhas mais conscientes. Cada passo nesse processo contribui para a construção de maior autonomia e equilíbrio ao longo do tempo.",
       },
     ],
     proximoPasso: {

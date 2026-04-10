@@ -36,9 +36,9 @@ const modulos = [
   {
     id: 4,
     etapa: "O",
-    nome: "Reorganização",
+    nome: "Reorganização comportamental e consolidação de novos padrões",
     descricao:
-      "Hábitos antigos são substituídos por novos padrões. Você reconstrói sua rotina com base em comportamentos que fortalecem a mudança.",
+      "Compreenda como hábitos se formam e aprenda a reorganizar rotinas e padrões comportamentais para consolidar mudanças duradouras.",
     aulas: 5,
     ferramenta: "Estrutura de Rotina",
     cor: "#3B6D11",
@@ -46,9 +46,9 @@ const modulos = [
   {
     id: 5,
     etapa: "P",
-    nome: "Manutenção",
+    nome: "Manutenção da Mudança e Prevenção de Recaídas",
     descricao:
-      "Você aprende a reconhecer situações de risco, construir sistemas de proteção e consolidar tudo que conquistou.",
+      "Consolide as mudanças comportamentais iniciadas no programa e desenvolva estratégias estruturadas para reduzir o risco de recaída ao longo do tempo.",
     aulas: 5,
     ferramenta: "Protocolo de Prevenção de Recaída",
     cor: "#3B6D11",

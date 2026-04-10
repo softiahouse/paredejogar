@@ -465,7 +465,7 @@ export default function LandingPage() {
               { n: 2, nome: 'Sensibilização', desc: 'Você identifica o que aciona o impulso: emoções, pensamentos, ambientes. O comportamento ganha nome — e perde força.', info: '5 aulas · Mapa de Gatilhos ISTOP', preco: 'R$ 49,90' },
               { n: 3, nome: 'Autorregulação', desc: 'Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real — construído por você, para você.', info: '5 aulas · Plano Pessoal de Manejo', preco: 'R$ 89,00' },
               { n: 4, nome: 'Reorganização', desc: 'Hábitos antigos são substituídos por novos padrões. Você reconstrói sua rotina com base em comportamentos que fortalecem a mudança.', info: '5 aulas · Estrutura de Rotina', preco: 'R$ 149,90' },
-              { n: 5, nome: 'Manutenção', desc: 'Você aprende a reconhecer situações de risco, construir sistemas de proteção e consolidar tudo que conquistou.', info: '5 aulas · Protocolo de Prevenção de Recaída · Certificado', preco: 'R$ 199,90' },
+              { n: 5, nome: 'Manutenção da Mudança e Prevenção de Recaídas', desc: 'Consolide as mudanças iniciadas no programa e desenvolva estratégias para reduzir o risco de recaída ao longo do tempo.', info: '5 aulas · Protocolo de Prevenção de Recaída · Certificado', preco: 'R$ 199,90' },
             ].map(m => (
               <div key={m.n} className="lp-modulo-card">
                 <div className="lp-modulo-num">Módulo {m.n}</div>

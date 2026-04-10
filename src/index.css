@@ -275,6 +275,36 @@ h4 {
   padding-left: 0.25rem;
 }
 
+/* Contrato / conclusão de módulo — marco de jornada */
+.marco-jornada {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--cor-glass, rgba(255, 255, 255, 0.05));
+  border: 2px solid var(--cor-destaque, #f59e0b);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.marco-icone {
+  font-size: 1.5rem;
+  color: var(--cor-destaque, #f59e0b);
+  margin-top: 2px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.marco-jornada h3 {
+  font-family: "DM Serif Display", ui-serif, Georgia, serif;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  color: var(--text);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  line-height: 1.2;
+}
+
 @media (max-width: 768px) {
   .hidden-mobile {
     display: none !important;

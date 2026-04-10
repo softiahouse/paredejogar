@@ -76,13 +76,14 @@ export default function Contrato() {
         </div>
 
         <div style={s.container}>
-          {/* Ícone de conquista */}
-          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-            <div style={s.iconeSucesso}>✓</div>
-            <span style={s.labelEtapa}>Marco de Jornada</span>
-            <h1 style={{ ...s.titulo, textAlign: "center" }}>
-              Conclusão do Módulo 1 — Interrupção
-            </h1>
+          <div className="marco-jornada">
+            <span className="marco-icone" aria-hidden>
+              ✓
+            </span>
+            <div>
+              <span style={s.labelEtapa}>Marco de Jornada</span>
+              <h3>Conclusão do Módulo 1 — Interrupção</h3>
+            </div>
           </div>
 
           {/* Texto principal */}
@@ -426,10 +427,5 @@ const s = {
   avisoIncompleto: {
     fontFamily: "DM Sans, sans-serif", fontSize: "0.78rem",
     color: "#aaa", textAlign: "center",
-  },
-  iconeSucesso: {
-    width: 60, height: 60, borderRadius: "50%", background: "#3B6D11",
-    color: "#fff", fontSize: "1.5rem", display: "flex",
-    alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem",
   },
 };

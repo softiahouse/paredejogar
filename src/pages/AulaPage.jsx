@@ -3,6 +3,18 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { modulos } from "../data/modulosContent";
 
+/** Fragmentos de texto com trechos **negrito** (sem markdown completo). */
+function partesComNegrito(texto) {
+  if (!texto) return null;
+  const partes = texto.split(/(\*\*[^*]+\*\*)/g);
+  return partes.map((parte, idx) => {
+    if (parte.startsWith("**") && parte.endsWith("**")) {
+      return <strong key={idx}>{parte.slice(2, -2)}</strong>;
+    }
+    return <span key={idx}>{parte}</span>;
+  });
+}
+
 export default function AulaPage() {
   const { moduloId, aulaId } = useParams();
   const navigate = useNavigate();
@@ -91,7 +103,7 @@ export default function AulaPage() {
           <span style={styles.duracao}>⏱ {aula.duracao} de leitura</span>
         </div>
 
-        {/* Blocos da aula — ordem fixa: conteudo → quiz → exercicio → checkin → encerramento */}
+        {/* Ordem: conteudo (pode incluir bloco tipo exercicio) → quiz → exercicio|checkin em aula → encerramento → marcoJornada */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           {aula.conteudo.map((bloco, i) => {
             if (bloco.tipo === "intro") {
@@ -142,6 +154,44 @@ export default function AulaPage() {
                     <figcaption style={styles.legendaImagem}>{bloco.legenda}</figcaption>
                   )}
                 </figure>
+              );
+            }
+            if (bloco.tipo === "coluna_imagem") {
+              const paragrafos = (bloco.texto || "").split(/\n\n+/).filter(Boolean);
+              return (
+                <div key={i} style={styles.colunaImagemWrap}>
+                  <div style={styles.colunaImagemTexto}>
+                    {paragrafos.map((par, j) => (
+                      <p key={j} style={styles.paragrafo}>
+                        {partesComNegrito(par)}
+                      </p>
+                    ))}
+                  </div>
+                  <figure style={styles.colunaImagemFig}>
+                    <img
+                      src={bloco.src}
+                      alt={bloco.alt || ""}
+                      style={styles.imagemConteudo}
+                      loading="lazy"
+                    />
+                  </figure>
+                </div>
+              );
+            }
+            if (bloco.tipo === "exercicio") {
+              return (
+                <div key={i} className="exercicio-modulo">
+                  <h3>{bloco.titulo}</h3>
+                  <p>{bloco.instrucao}</p>
+                  <ul>
+                    {bloco.itens.map((item, j) => (
+                      <li key={j}>{item}</li>
+                    ))}
+                  </ul>
+                  {bloco.descricao && (
+                    <p className="exercicio-descricao">{bloco.descricao}</p>
+                  )}
+                </div>
               );
             }
             if (bloco.tipo === "lista") {
@@ -226,6 +276,18 @@ export default function AulaPage() {
           {aula.encerramento && (
             <div style={styles.encerramento}>
               <p style={styles.encerramentoTexto}>{aula.encerramento}</p>
+            </div>
+          )}
+
+          {aula.marcoJornada && (
+            <div className="marco-jornada">
+              <span className="marco-icone" aria-hidden>
+                →
+              </span>
+              <div>
+                <span style={styles.marcoJornadaLabel}>Marco de Jornada</span>
+                <p style={styles.marcoJornadaTexto}>{aula.marcoJornada}</p>
+              </div>
             </div>
           )}
         </div>
@@ -398,6 +460,24 @@ const styles = {
     lineHeight: 1.5,
     fontStyle: "italic",
   },
+  colunaImagemWrap: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: "1.5rem",
+    alignItems: "flex-start",
+    margin: "0.5rem 0",
+  },
+  colunaImagemTexto: {
+    flex: "1 1 280px",
+    minWidth: 0,
+  },
+  colunaImagemFig: {
+    flex: "0 1 300px",
+    margin: 0,
+    maxWidth: "100%",
+    alignSelf: "center",
+  },
   itemLista: {
     background: "#fff",
     border: "1px solid #E8E4DC",
@@ -452,6 +532,23 @@ const styles = {
     fontFamily: "DM Serif Display, serif",
     fontSize: "1.02rem",
     color: "#2A5009",
+    lineHeight: 1.65,
+    margin: 0,
+  },
+  marcoJornadaLabel: {
+    fontFamily: "DM Sans, sans-serif",
+    fontSize: "0.72rem",
+    color: "#B07030",
+    textTransform: "uppercase",
+    letterSpacing: "0.08em",
+    fontWeight: 600,
+    display: "block",
+    marginBottom: "0.5rem",
+  },
+  marcoJornadaTexto: {
+    fontFamily: "DM Sans, sans-serif",
+    fontSize: "0.95rem",
+    color: "#333",
     lineHeight: 1.65,
     margin: 0,
   },
