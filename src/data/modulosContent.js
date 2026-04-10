@@ -7,56 +7,373 @@ export const modulos = {
     aulas: [
       {
         id: 1,
-        titulo: "O ciclo do jogo",
-        duracao: "8 min",
+        titulo: "O vício invisível: quando o jogo deixa de ser diversão",
+        duracao: "15 min",
         conteudo: [
-          { tipo: "intro", texto: "O jogo online não é aleatório na forma como nos afeta. Ele foi projetado — com precisão — para manter você jogando." },
-          { tipo: "titulo", texto: "Como o ciclo se instala" },
-          { tipo: "paragrafo", texto: "Todo comportamento compulsivo segue uma lógica: gatilho → impulso → ação → alívio temporário → culpa → novo gatilho. No jogo, esse ciclo é acelerado e amplificado pela tecnologia. A cada rodada, seu cérebro recebe uma descarga de dopamina — independente do resultado." },
-          { tipo: "destaque", texto: "Você não é fraco. Você está respondendo a um sistema desenhado para criar dependência." },
-          { tipo: "titulo", texto: "A ilusão de controle" },
-          { tipo: "paragrafo", texto: "Uma das armadilhas mais poderosas do jogo é a sensação de que \"desta vez vai ser diferente\". Essa crença — chamada de viés do jogador — é automática. Não é escolha. É como o cérebro tenta encontrar padrões onde não existem." },
-          { tipo: "paragrafo", texto: "Reconhecer esse mecanismo não elimina o impulso imediatamente, mas cria algo valioso: uma fresta de consciência entre o gatilho e a ação." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Pense na última vez que jogou. O que aconteceu antes? Que emoção ou situação precedeu o impulso?" },
+          {
+            tipo: "intro",
+            texto: "O primeiro passo para interromper o ciclo do jogo não é força de vontade — é compreensão.",
+          },
+          {
+            tipo: "titulo",
+            texto: "1. O jogo online não é apenas entretenimento",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Durante muito tempo, o jogo foi visto apenas como lazer. Porém, a ciência moderna mostra que ele pode ativar os mesmos mecanismos cerebrais envolvidos nas dependências químicas.",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "No cérebro humano existe um sistema chamado circuito de recompensa, responsável por gerar sensação de prazer e motivação. Quando algo é percebido como recompensador, o cérebro libera dopamina — neurotransmissor ligado ao prazer e à expectativa de recompensa. Esse sistema foi essencial para a evolução humana. O problema surge quando ele é estimulado de forma artificial e repetitiva.",
+          },
+          {
+            tipo: "titulo",
+            texto: "2. O cérebro do jogador",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Nos jogos online e aplicativos de apostas, pequenas vitórias, quase acertos e recompensas inesperadas liberam dopamina em pequenas doses sucessivas. Cada clique pode produzir uma nova expectativa de recompensa. Com o tempo, o comportamento deixa de ser apenas escolha consciente e passa a ser condicionado neurologicamente.",
+          },
+          {
+            tipo: "destaque",
+            texto: "O cérebro aprende que apostar pode trazer prazer — e começa a pedir mais.",
+          },
+          {
+            tipo: "titulo",
+            texto: "3. O reforço intermitente: o mecanismo que prende o jogador",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Um dos fatores mais poderosos no comportamento de jogo é o reforço intermitente — conceito descrito em experimentos clássicos de psicologia comportamental. A recompensa aparece de forma imprevisível: às vezes a pessoa ganha, às vezes perde. E justamente essa imprevisibilidade faz o comportamento se tornar extremamente difícil de interromper.",
+          },
+          {
+            tipo: "destaque",
+            texto: "O cérebro permanece esperando que a próxima tentativa seja a vencedora. É o mesmo princípio utilizado em caça-níqueis e em muitos aplicativos digitais.",
+          },
+          {
+            tipo: "titulo",
+            texto: "4. Quando o prazer desaparece e sobra a compulsão",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "No início do jogo existe excitação e prazer. Mas com a repetição ocorre um fenômeno conhecido na neurociência: a adaptação dopaminérgica. O cérebro começa a se acostumar com o estímulo — o prazer diminui, mas o impulso de continuar aumenta.",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Nesse momento o comportamento deixa de ser busca de prazer e passa a ser tentativa de aliviar ansiedade ou recuperar perdas. A pessoa continua jogando não porque está feliz, mas porque não consegue parar.",
+          },
+          {
+            tipo: "titulo",
+            texto: "5. A armadilha do \"quase ganhar\"",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Os jogos digitais exploram um mecanismo psicológico muito poderoso: o quase acerto. Quase acertar um placar, quase ganhar um prêmio, quase completar uma sequência — esses eventos ativam o cérebro de forma semelhante à vitória real. O jogador sente que está perto de ganhar, reforçando a crença: \"na próxima tentativa eu consigo\". Esse mecanismo mantém o jogador preso no ciclo.",
+          },
+          {
+            tipo: "titulo",
+            texto: "6. Por que parar se torna tão difícil",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Quando o jogador tenta parar, o cérebro pode reagir com sintomas semelhantes aos observados em dependências comportamentais: irritação, ansiedade, inquietação e sensação de vazio.",
+          },
+          {
+            tipo: "destaque",
+            texto: "Essas reações não significam fraqueza moral. Elas refletem alterações reais no sistema de recompensa cerebral.",
+          },
+          {
+            tipo: "titulo",
+            texto: "7. Uma droga dentro do bolso",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Acesso permanente", descricao: "O celular coloca o jogo disponível 24 horas por dia — sem sair de casa, sem barreiras sociais." },
+              { titulo: "Estímulos constantes", descricao: "Notificações, visuais chamativos e ofertas de bônus mantêm o jogador sempre conectado." },
+              { titulo: "Recompensas rápidas", descricao: "O resultado é imediato — diferente de outras formas de risco, onde há tempo para reflexão." },
+            ],
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Isso cria uma situação inédita na história humana: um cassino disponível 24 horas por dia no bolso. A aposta está sempre a um clique de distância.",
+          },
+          {
+            tipo: "reflexao",
+            pergunta: "Reflexão",
+            texto: "O jogo ainda é apenas diversão para você? Ou ele começou a ocupar espaço demais em sua vida? Reconhecer essa diferença é o primeiro passo para recuperar o controle.",
+          },
+          {
+            tipo: "titulo",
+            texto: "Exercício da Aula 1",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Observe o impulso", descricao: "Durante os próximos dias, anote quando surge a vontade de apostar." },
+              { titulo: "Identifique a emoção", descricao: "O que você estava sentindo naquele momento?" },
+              { titulo: "Rastreie o gatilho", descricao: "Qual situação desencadeou o impulso?" },
+            ],
+          },
+          {
+            tipo: "destaque",
+            texto: "O jogo não se torna um problema da noite para o dia. Mas o cérebro também pode aprender novos caminhos. E o primeiro passo dessa mudança é compreender o mecanismo do vício.",
+          },
         ],
       },
       {
         id: 2,
-        titulo: "O que alimenta o impulso",
-        duracao: "10 min",
+        titulo: "O ciclo psicológico do jogador",
+        duracao: "14 min",
         conteudo: [
-          { tipo: "intro", texto: "O impulso de jogar raramente vem do nada. Ele tem raízes — emocionais, situacionais, relacionais." },
-          { tipo: "titulo", texto: "Os três tipos de gatilho" },
-          { tipo: "lista", itens: [
-            { titulo: "Emocionais", descricao: "Ansiedade, tédio, solidão, frustração, euforia. Estados internos que pedem alívio rápido." },
-            { titulo: "Situacionais", descricao: "Estar sozinho, ter dinheiro disponível, ver anúncios, receber notificações de bônus." },
-            { titulo: "Relacionais", descricao: "Conflitos em casa, pressão financeira, isolamento social — contextos que amplificam a vulnerabilidade." },
-          ]},
-          { tipo: "paragrafo", texto: "Nenhum desses gatilhos é culpa sua. Mas identificá-los é o primeiro passo para interromper o ciclo antes que ele se complete." },
-          { tipo: "titulo", texto: "O papel da dopamina" },
-          { tipo: "paragrafo", texto: "Seu cérebro libera dopamina não apenas quando você ganha — mas quando está prestes a jogar. A antecipação é o verdadeiro vício. É por isso que mesmo sessões sem ganho algum podem ser difíceis de abandonar." },
-          { tipo: "destaque", texto: "Interromper o ciclo não é sobre força de vontade. É sobre criar condições que tornam o impulso mais difícil de seguir." },
-          { tipo: "reflexao", pergunta: "Para refletir", texto: "Quais dos três tipos de gatilho são mais frequentes para você? Há algum padrão de horário, situação ou emoção que aparece antes do impulso?" },
+          {
+            tipo: "intro",
+            texto: "Muitas pessoas acreditam que o problema está apenas no dinheiro perdido. Na realidade, o que mantém o ciclo ativo é um processo psicológico repetitivo. Compreender esse ciclo é essencial para começar a interrompê-lo.",
+          },
+          {
+            tipo: "titulo",
+            texto: "1. O jogo segue um ciclo psicológico",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "O comportamento de jogo raramente é aleatório. Ele tende a seguir um padrão previsível que envolve três elementos centrais: prazer inicial, ilusão de controle e fuga emocional. Esses três fatores se reforçam mutuamente e criam um circuito psicológico difícil de interromper.",
+          },
+          {
+            tipo: "titulo",
+            texto: "2. Fase 1 — A excitação inicial",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Todo ciclo de dependência começa com uma experiência positiva. O jogador pode sentir curiosidade, entusiasmo, sensação de desafio e pequenas vitórias. Nesse momento, o jogo parece apenas entretenimento. O cérebro registra a experiência como algo prazeroso — e essa memória emocional cria a primeira ligação entre jogo e recompensa.",
+          },
+          {
+            tipo: "titulo",
+            texto: "3. Fase 2 — A ilusão de controle",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Após as primeiras experiências positivas, surge uma crença comum: \"Eu consigo controlar\" ou \"Se eu estudar mais, posso ganhar\". Essa sensação é parcialmente reforçada por pequenas vitórias ocasionais. O problema é que os jogos são estruturados matematicamente para favorecer a plataforma, não o jogador.",
+          },
+          {
+            tipo: "destaque",
+            texto: "Mesmo assim, o cérebro continua acreditando que é possível recuperar perdas. Essa crença é chamada na psicologia de ilusão de controle.",
+          },
+          {
+            tipo: "titulo",
+            texto: "4. Fase 3 — A tentativa de recuperar perdas",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Em algum momento começam as perdas. Quando isso acontece, muitos jogadores entram na fase mais perigosa do ciclo: apostar para recuperar o dinheiro perdido — o que a psicologia chama de \"perseguição da perda\". O pensamento típico é: \"Se eu ganhar agora, tudo volta ao normal.\" Mas cada nova aposta aumenta o risco de perdas maiores.",
+          },
+          {
+            tipo: "titulo",
+            texto: "5. Fase 4 — Culpa e sofrimento emocional",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Depois de perdas repetidas, o jogador pode experimentar culpa, vergonha, ansiedade e desesperança. Muitas pessoas dizem a si mesmas: \"Agora eu preciso parar.\" Mas surge um paradoxo psicológico: o jogo, que causou o sofrimento, passa a ser utilizado como forma de escapar do próprio sofrimento.",
+          },
+          {
+            tipo: "titulo",
+            texto: "6. Fase 5 — A fuga emocional",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Quando o jogo passa a ser usado para aliviar emoções negativas, ele deixa de ser apenas um comportamento de risco e se torna um mecanismo de regulação emocional. Algumas pessoas jogam para esquecer problemas, aliviar estresse, fugir da solidão ou escapar da tristeza. O jogo se transforma em uma espécie de anestesia emocional.",
+          },
+          {
+            tipo: "titulo",
+            texto: "7. O ciclo completo",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Curiosidade", descricao: "O jogo começa como entretenimento e desperta interesse." },
+              { titulo: "Ganho inicial", descricao: "Uma vitória reforça a crença de que é possível ganhar." },
+              { titulo: "Ilusão de controle", descricao: "O jogador acredita que pode dominar o resultado." },
+              { titulo: "Perdas", descricao: "As perdas começam a superar os ganhos." },
+              { titulo: "Tentativa de recuperar", descricao: "Novas apostas para compensar o que foi perdido." },
+              { titulo: "Culpa", descricao: "Emoções negativas intensas após as perdas." },
+              { titulo: "Fuga pelo jogo", descricao: "O jogo vira forma de aliviar o próprio sofrimento que causou." },
+            ],
+          },
+          {
+            tipo: "destaque",
+            texto: "Esse ciclo pode se repetir inúmeras vezes. Com o tempo, ele se torna automático.",
+          },
+          {
+            tipo: "titulo",
+            texto: "8. Por que o ciclo se fortalece",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Dopamina", descricao: "O cérebro continua esperando a próxima recompensa, mesmo após perdas consecutivas." },
+              { titulo: "Esperança de recuperar", descricao: "A ideia de \"virada\" mantém o jogador apostando além do que pode." },
+              { titulo: "Fuga emocional", descricao: "O jogo se torna uma válvula de escape para sentimentos difíceis." },
+            ],
+          },
+          {
+            tipo: "titulo",
+            texto: "9. O problema não é apenas dinheiro",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Embora as perdas financeiras sejam graves, o núcleo do problema é comportamental. O jogo afeta a atenção, as emoções, as relações familiares e a tomada de decisão. É por isso que a recuperação exige mudança de padrão psicológico — não apenas controle financeiro.",
+          },
+          {
+            tipo: "reflexao",
+            pergunta: "Exercício da Aula 2",
+            texto: "Responda com sinceridade: Quando você costuma sentir vontade de apostar? O que geralmente acontece antes? Qual emoção está presente naquele momento? O que você espera sentir ao jogar — e o que sente depois? Escrever essas respostas revela seu ciclo individual de jogo.",
+          },
+          {
+            tipo: "destaque",
+            texto: "O ciclo do jogo não é sinal de fraqueza pessoal. É resultado de mecanismos psicológicos e neurológicos projetados para manter o jogador envolvido. Todo ciclo pode ser interrompido quando ele se torna consciente.",
+          },
         ],
       },
       {
         id: 3,
-        titulo: "A decisão de interromper",
-        duracao: "7 min",
+        titulo: "Reconhecendo os sinais de perda de controle",
+        duracao: "14 min",
         conteudo: [
-          { tipo: "intro", texto: "Interromper não significa vencer de uma vez. Significa fazer uma escolha consciente — agora." },
-          { tipo: "titulo", texto: "A pausa como ferramenta" },
-          { tipo: "paragrafo", texto: "O método ISTOP começa com uma técnica simples e comprovada: a pausa de 15 minutos. Quando o impulso surgir, você não precisa resistir para sempre — só por 15 minutos." },
-          { tipo: "paragrafo", texto: "Nesse intervalo, o córtex pré-frontal — responsável pelo raciocínio — tem chance de reequilibrar a resposta emocional. A maioria dos impulsos perde intensidade significativa em menos de 10 minutos." },
-          { tipo: "destaque", texto: "Você não precisa resolver o problema todo. Só precisa atravessar os próximos 15 minutos." },
-          { tipo: "titulo", texto: "O que fazer nos 15 minutos" },
-          { tipo: "lista", itens: [
-            { titulo: "Mude de ambiente", descricao: "Saia do lugar onde o impulso surgiu, se possível." },
-            { titulo: "Mova o corpo", descricao: "Uma caminhada curta ou exercício leve reduz a intensidade do impulso." },
-            { titulo: "Chame alguém", descricao: "Falar com qualquer pessoa — sobre qualquer assunto — interrompe o ciclo." },
-            { titulo: "Respire", descricao: "4 tempos inspirando, 4 retendo, 6 soltando. Repita 3 vezes." },
-          ]},
-          { tipo: "reflexao", pergunta: "Antes de continuar", texto: "Você está pronto para formalizar seu compromisso com a interrupção? O próximo passo é o Contrato — leia com atenção." },
+          {
+            tipo: "intro",
+            texto: "Muitas pessoas convivem com o problema por muito tempo sem perceber. Isso acontece porque o vício em jogo costuma se desenvolver de forma silenciosa e gradual.",
+          },
+          {
+            tipo: "titulo",
+            texto: "1. O vício em jogo começa de forma discreta",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Curiosidade", descricao: "O jogo começa como entretenimento — sem sinais de alarme." },
+              { titulo: "Apostas ocasionais", descricao: "A frequência aumenta gradualmente, ainda dentro do controle aparente." },
+              { titulo: "Aumento da frequência", descricao: "O jogo passa a ocupar mais tempo e pensamento do que antes." },
+              { titulo: "Perdas financeiras", descricao: "Os prejuízos começam a aparecer de forma consistente." },
+              { titulo: "Tentativas de recuperar", descricao: "Novas apostas para compensar o que foi perdido." },
+              { titulo: "Perda de controle", descricao: "Em muitos casos, o jogador só percebe o problema quando os prejuízos já são importantes." },
+            ],
+          },
+          {
+            tipo: "titulo",
+            texto: "2. Sinais emocionais de alerta",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Preocupação constante", descricao: "Pensar em apostas mesmo fora do jogo, durante o trabalho ou em momentos de lazer." },
+              { titulo: "Ansiedade sem o jogo", descricao: "Sentir desconforto, irritação ou inquietação quando não está jogando." },
+              { titulo: "Culpa após apostar", descricao: "Sentimentos intensos de arrependimento que não impedem a próxima sessão." },
+              { titulo: "Sensação de vazio", descricao: "Tédio ou esvaziamento em atividades que antes eram prazerosas." },
+            ],
+          },
+          {
+            tipo: "titulo",
+            texto: "3. Sinais comportamentais",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Dificuldade de parar", descricao: "Começar a jogar com intenção de \"só um pouco\" e continuar por horas." },
+              { titulo: "Valores crescentes", descricao: "Apostar quantias cada vez maiores para sentir a mesma emoção." },
+              { titulo: "Perseguição da perda", descricao: "Tentar recuperar dinheiro perdido com novas apostas, aprofundando o problema." },
+              { titulo: "Ocultação", descricao: "Mentir sobre o tempo ou dinheiro gasto com o jogo." },
+            ],
+          },
+          {
+            tipo: "titulo",
+            texto: "4. Sinais financeiros",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Despesas essenciais comprometidas", descricao: "Usar dinheiro de contas, aluguel ou alimentação para apostar." },
+              { titulo: "Crédito e empréstimos", descricao: "Recorrer a cartões, cheque especial ou empréstimos para continuar jogando." },
+              { titulo: "Patrimônio em risco", descricao: "Vender objetos ou comprometer bens para financiar apostas." },
+              { titulo: "Dívidas ocultas", descricao: "Esconder a situação financeira real da família." },
+            ],
+          },
+          {
+            tipo: "destaque",
+            texto: "Em muitos casos, o jogador acredita que conseguirá resolver tudo com uma grande vitória futura — o que reforça o ciclo de apostas.",
+          },
+          {
+            tipo: "titulo",
+            texto: "5. Impacto nas relações pessoais",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "O jogo problemático raramente afeta apenas o jogador. Mentiras, promessas não cumpridas e dificuldades financeiras geram conflitos familiares, afastamento de amigos e tensão no trabalho. Estudos mostram que rupturas conjugais e conflitos familiares são frequentes entre jogadores problemáticos.",
+          },
+          {
+            tipo: "titulo",
+            texto: "6. Quando o jogo vira fuga emocional",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Outro sinal importante é quando o jogo passa a ser usado para aliviar emoções difíceis — estresse, tristeza, solidão, frustrações. Nesse ponto, o jogo deixa de ser diversão e passa a funcionar como anestesia emocional. Esse padrão aumenta significativamente o risco de dependência.",
+          },
+          {
+            tipo: "titulo",
+            texto: "7. O papel da vergonha e do silêncio",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Muitas pessoas demoram a buscar ajuda por causa de vergonha, culpa e medo de julgamento. Isso leva o jogador a tentar resolver o problema sozinho, mantendo o comportamento em segredo. O silêncio prolonga o ciclo e dificulta a recuperação.",
+          },
+          {
+            tipo: "reflexao",
+            pergunta: "Perguntas de autoavaliação",
+            texto: "Você pensa em apostas mesmo quando não está jogando? Já tentou parar e não conseguiu? Já apostou para recuperar dinheiro perdido? Já escondeu apostas ou perdas de familiares? O jogo já causou conflitos em sua vida? Se respondeu sim para várias dessas perguntas, o jogo pode estar assumindo um papel maior do que deveria.",
+          },
+          {
+            tipo: "titulo",
+            texto: "Exercício da Aula 3 — Linha do tempo do jogo",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Quando começou", descricao: "Quando você começou a apostar e como era no início?" },
+              { titulo: "A virada", descricao: "Quando percebeu que o comportamento mudou?" },
+              { titulo: "O momento mais difícil", descricao: "Qual foi o episódio mais grave relacionado ao jogo?" },
+            ],
+          },
+          {
+            tipo: "destaque",
+            texto: "Reconhecer sinais de perda de controle pode ser desconfortável. Mas essa consciência é essencial para iniciar qualquer mudança. Reconhecer o problema é o primeiro passo para recuperar o controle.",
+          },
+          {
+            tipo: "titulo",
+            texto: "Check-in ISTOP — 1 minuto",
+          },
+          {
+            tipo: "paragrafo",
+            texto: "Ao final de cada dia — ou sempre que surgir vontade de apostar — responda com sinceridade a estas perguntas:",
+          },
+          {
+            tipo: "lista",
+            itens: [
+              { titulo: "Pensamento recorrente", descricao: "Hoje pensei em apostar ou em recuperar dinheiro perdido?" },
+              { titulo: "Impulso imediato", descricao: "Estou sentindo vontade de jogar neste momento?" },
+              { titulo: "Ciclo de recuperação", descricao: "Estou pensando que \"uma aposta pode resolver minhas perdas\"?" },
+              { titulo: "Fuga emocional", descricao: "Estou com alguma emoção difícil agora que me faz querer jogar?" },
+              { titulo: "Consciência do mecanismo", descricao: "Reconheço que o jogo ativa o sistema de recompensa do cérebro?" },
+              { titulo: "Consequências", descricao: "Se eu apostar agora, isso pode trazer prejuízos para mim ou minha família?" },
+              { titulo: "Escolha consciente", descricao: "Estou disposto a adiar a aposta por pelo menos 15 minutos?" },
+            ],
+          },
+          {
+            tipo: "reflexao",
+            pergunta: "Interpretação do check-in",
+            texto: "0–1 respostas \"Sim\": baixo risco momentâneo. 2–3 respostas \"Sim\": atenção — pode haver impulso de jogo. 4 ou mais \"Sim\": momento de risco — afaste-se do celular, espere 15 minutos, respire profundamente e repita o check-in.",
+          },
+          {
+            tipo: "destaque",
+            texto: "Cada vez que você responde a essas perguntas, está treinando seu cérebro a sair do modo automático e recuperar o controle das suas decisões.",
+          },
         ],
       },
     ],
