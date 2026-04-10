@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 
-export default function LeadForm({ dark }) {
+export default function LeadForm({ dark, tipo }) {
   const labelColor = dark ? 'rgba(255,255,255,0.9)' : 'var(--navy)'
   const muted = dark ? 'rgba(255,255,255,0.55)' : 'var(--text-muted)'
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
@@ -10,7 +10,9 @@ export default function LeadForm({ dark }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus('loading')
-    const { error } = await supabase.from('leads').insert([form])
+    const row = { ...form }
+    if (tipo) row.message = `[${tipo}] ${form.message || ''}`.trim()
+    const { error } = await supabase.from('leads').insert([row])
     if (error) { setStatus('error'); return }
     setStatus('success')
     setForm({ name: '', email: '', phone: '', message: '' })
