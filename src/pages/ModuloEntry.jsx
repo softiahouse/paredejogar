@@ -1,12 +1,13 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { modulos } from "../data/modulosContent";
 
-/** Redireciona `/modulo/1` para a primeira aula; demais módulos ainda sem rotas de aula. */
+/** Redireciona `/modulo/:id` para a primeira aula quando o módulo existe em `modulosContent`. */
 export default function ModuloEntry() {
   const { id } = useParams();
   const n = Number(id);
 
-  if (n === 1) {
-    return <Navigate to="/modulo/1/aula/1" replace />;
+  if (modulos[n]?.aulas?.length) {
+    return <Navigate to={`/modulo/${n}/aula/1`} replace />;
   }
 
   return (

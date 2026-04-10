@@ -1,12 +1,10 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import '../instituto.css'
 
 export default function Navbar() {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
-  const { pathname } = useLocation()
-  const programaHref = pathname === '/' ? '#programa' : '/#programa'
 
   const handleSignOut = async () => {
     await signOut()
@@ -41,9 +39,9 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <a href={programaHref} className="istop-nav-cta">
-              Ver o programa
-            </a>
+            <Link to="/entrar" className="istop-nav-cta">
+              Entrar
+            </Link>
           )}
         </div>
       </div>
