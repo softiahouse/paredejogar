@@ -201,7 +201,6 @@ const css = `
   .lp-modulo-nome { font-family: var(--fonte-titulo); font-size: 22px; color: var(--texto); margin-bottom: 12px; }
   .lp-modulo-desc { font-size: 14px; color: var(--texto-sec); line-height: 1.6; flex: 1; margin-bottom: 20px; }
   .lp-modulo-info { font-size: 12px; color: var(--texto-ter); margin-bottom: 16px; }
-  .lp-modulo-preco { font-size: 22px; font-weight: 500; color: var(--verde); }
   .lp-ferramentas { border-top: 1px solid var(--borda); padding-top: 40px; }
   .lp-ferramentas-titulo { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-ter); margin-bottom: 20px; }
   .lp-ferramenta-item {
@@ -461,18 +460,17 @@ export default function LandingPage() {
           <p className="lp-section-sub">Uma jornada de transformação real — no seu ritmo, no seu tempo.</p>
           <div className="lp-modulos-grid">
             {[
-              { n: 1, nome: 'Interrupção', desc: 'Você começa entendendo como o ciclo do jogo se instala — e dá o primeiro passo para sair do piloto automático.', info: '3 aulas · Contrato de Interrupção', preco: 'R$ 29,90' },
-              { n: 2, nome: 'Sensibilização', desc: 'Você identifica o que aciona o impulso: emoções, pensamentos, ambientes. O comportamento ganha nome — e perde força.', info: '5 aulas · Mapa de Gatilhos ISTOP', preco: 'R$ 49,90' },
-              { n: 3, nome: 'Autorregulação', desc: 'Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real — construído por você, para você.', info: '5 aulas · Plano Pessoal de Manejo', preco: 'R$ 89,00' },
-              { n: 4, nome: 'Reorganização', desc: 'Hábitos antigos são substituídos por novos padrões. Você reconstrói sua rotina com base em comportamentos que fortalecem a mudança.', info: '5 aulas · Estrutura de Rotina', preco: 'R$ 149,90' },
-              { n: 5, nome: 'Manutenção da Mudança e Prevenção de Recaídas', desc: 'Consolide as mudanças iniciadas no programa e desenvolva estratégias para reduzir o risco de recaída ao longo do tempo.', info: '5 aulas · Protocolo de Prevenção de Recaída · Certificado', preco: 'R$ 199,90' },
+              { n: 1, nome: 'Interrupção', desc: 'Você começa entendendo como o ciclo do jogo se instala — e dá o primeiro passo para sair do piloto automático.', info: '3 aulas · Contrato de Interrupção' },
+              { n: 2, nome: 'Sensibilização', desc: 'Você identifica o que aciona o impulso: emoções, pensamentos, ambientes. O comportamento ganha nome — e perde força.', info: '5 aulas · Mapa de Gatilhos ISTOP' },
+              { n: 3, nome: 'Autorregulação', desc: 'Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real — construído por você, para você.', info: '5 aulas · Plano Pessoal de Manejo' },
+              { n: 4, nome: 'Reorganização', desc: 'Hábitos antigos são substituídos por novos padrões. Você reconstrói sua rotina com base em comportamentos que fortalecem a mudança.', info: '5 aulas · Estrutura de Rotina' },
+              { n: 5, nome: 'Manutenção da Mudança e Prevenção de Recaídas', desc: 'Consolide as mudanças iniciadas no programa e desenvolva estratégias para reduzir o risco de recaída ao longo do tempo.', info: '5 aulas · Protocolo de Prevenção de Recaída · Certificado' },
             ].map(m => (
               <div key={m.n} className="lp-modulo-card">
                 <div className="lp-modulo-num">Módulo {m.n}</div>
                 <div className="lp-modulo-nome">{m.nome}</div>
                 <div className="lp-modulo-desc">{m.desc}</div>
                 <div className="lp-modulo-info">{m.info}</div>
-                <div className="lp-modulo-preco">{m.preco}</div>
               </div>
             ))}
           </div>
