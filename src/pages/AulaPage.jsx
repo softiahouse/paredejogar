@@ -49,7 +49,22 @@ export default function AulaPage() {
     );
   }
 
-  function irParaProxima() {
+  async function irParaProxima() {
+    // Salva progresso no Supabase ao concluir a última aula (módulos 2–5)
+    if (isUltimaAula && mId !== 1) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase
+          .from("progresso_usuario")
+          .insert({ user_id: user.id, modulo_id: mId })
+          .throwOnError()
+          .catch((e) => {
+            // ignora duplicado (código 23505)
+            if (e?.code !== "23505") console.error("Erro ao salvar progresso:", e);
+          });
+      }
+    }
+
     if (isUltimaAula && modulo.proximoPasso) {
       navigate(modulo.proximoPasso.rota);
     } else {
