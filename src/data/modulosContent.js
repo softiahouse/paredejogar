@@ -12,7 +12,7 @@ export const modulos = {
         conteudo: [
           {
             tipo: "intro",
-            texto: "O primeiro passo para interromper o ciclo do jogo não é força de vontade — é compreensão.",
+            texto: "O primeiro passo para interromper o ciclo do jogo não é força de vontade, é compreensão.",
           },
           {
             tipo: "titulo",
@@ -24,7 +24,7 @@ export const modulos = {
           },
           {
             tipo: "paragrafo",
-            texto: "No cérebro humano existe um sistema chamado circuito de recompensa, responsável por gerar sensação de prazer e motivação. Quando algo é percebido como recompensador, o cérebro libera dopamina — neurotransmissor ligado ao prazer e à expectativa de recompensa. Esse sistema foi essencial para a evolução humana. O problema surge quando ele é estimulado de forma artificial e repetitiva.",
+            texto: "No cérebro humano existe um sistema chamado circuito de recompensa, responsável por gerar sensação de prazer e motivação. Quando algo é percebido como recompensador, o cérebro libera dopamina, neurotransmissor ligado ao prazer e à expectativa de recompensa. Esse sistema foi essencial para a evolução humana. O problema surge quando ele é estimulado de forma artificial e repetitiva.",
           },
           {
             tipo: "titulo",
@@ -36,7 +36,7 @@ export const modulos = {
           },
           {
             tipo: "destaque",
-            texto: "O cérebro aprende que apostar pode trazer prazer — e começa a pedir mais.",
+            texto: "O cérebro aprende que apostar pode trazer prazer, e começa a pedir mais.",
           },
           {
             tipo: "titulo",
@@ -44,7 +44,7 @@ export const modulos = {
           },
           {
             tipo: "paragrafo",
-            texto: "Um dos fatores mais poderosos no comportamento de jogo é o reforço intermitente — conceito descrito em experimentos clássicos de psicologia comportamental. A recompensa aparece de forma imprevisível: às vezes a pessoa ganha, às vezes perde. E justamente essa imprevisibilidade faz o comportamento se tornar extremamente difícil de interromper.",
+            texto: "Um dos fatores mais poderosos no comportamento de jogo é o reforço intermitente, conceito descrito em experimentos clássicos de psicologia comportamental. A recompensa aparece de forma imprevisível: às vezes a pessoa ganha, às vezes perde. E justamente essa imprevisibilidade faz o comportamento se tornar extremamente difícil de interromper.",
           },
           {
             tipo: "destaque",
@@ -56,7 +56,7 @@ export const modulos = {
           },
           {
             tipo: "paragrafo",
-            texto: "No início do jogo existe excitação e prazer. Mas com a repetição ocorre um fenômeno conhecido na neurociência: a adaptação dopaminérgica. O cérebro começa a se acostumar com o estímulo — o prazer diminui, mas o impulso de continuar aumenta.",
+            texto: "No início do jogo existe excitação e prazer. Mas com a repetição ocorre um fenômeno conhecido na neurociência: a adaptação dopaminérgica. O cérebro começa a se acostumar com o estímulo, o prazer diminui, mas o impulso de continuar aumenta.",
           },
           {
             tipo: "paragrafo",
@@ -68,7 +68,7 @@ export const modulos = {
           },
           {
             tipo: "paragrafo",
-            texto: "Os jogos digitais exploram um mecanismo psicológico muito poderoso: o quase acerto. Quase acertar um placar, quase ganhar um prêmio, quase completar uma sequência — esses eventos ativam o cérebro de forma semelhante à vitória real. O jogador sente que está perto de ganhar, reforçando a crença: \"na próxima tentativa eu consigo\". Esse mecanismo mantém o jogador preso no ciclo.",
+            texto: "Os jogos digitais exploram um mecanismo psicológico muito poderoso: o quase acerto. Quase acertar um placar, quase ganhar um prêmio, quase completar uma sequência, esses eventos ativam o cérebro de forma semelhante à vitória real. O jogador sente que está perto de ganhar, reforçando a crença: \"na próxima tentativa eu consigo\". Esse mecanismo mantém o jogador preso no ciclo.",
           },
           {
             tipo: "titulo",
@@ -89,9 +89,9 @@ export const modulos = {
           {
             tipo: "lista",
             itens: [
-              { titulo: "Acesso permanente", descricao: "O celular coloca o jogo disponível 24 horas por dia — sem sair de casa, sem barreiras sociais." },
+              { titulo: "Acesso permanente", descricao: "O celular coloca o jogo disponível 24 horas por dia, sem sair de casa, sem barreiras sociais." },
               { titulo: "Estímulos constantes", descricao: "Notificações, visuais chamativos e ofertas de bônus mantêm o jogador sempre conectado." },
-              { titulo: "Recompensas rápidas", descricao: "O resultado é imediato — diferente de outras formas de risco, onde há tempo para reflexão." },
+              { titulo: "Recompensas rápidas", descricao: "O resultado é imediato, diferente de outras formas de risco, onde há tempo para reflexão." },
             ],
           },
           {
@@ -140,15 +140,15 @@ export const modulos = {
           },
           {
             tipo: "titulo",
-            texto: "2. Fase 1 — A excitação inicial",
+            texto: "2. Fase 1, A excitação inicial",
           },
           {
             tipo: "paragrafo",
-            texto: "Todo ciclo de dependência começa com uma experiência positiva. O jogador pode sentir curiosidade, entusiasmo, sensação de desafio e pequenas vitórias. Nesse momento, o jogo parece apenas entretenimento. O cérebro registra a experiência como algo prazeroso — e essa memória emocional cria a primeira ligação entre jogo e recompensa.",
+            texto: "Todo ciclo de dependência começa com uma experiência positiva. O jogador pode sentir curiosidade, entusiasmo, sensação de desafio e pequenas vitórias. Nesse momento, o jogo parece apenas entretenimento. O cérebro registra a experiência como algo prazeroso, e essa memória emocional cria a primeira ligação entre jogo e recompensa.",
           },
           {
             tipo: "titulo",
-            texto: "3. Fase 2 — A ilusão de controle",
+            texto: "3. Fase 2, A ilusão de controle",
           },
           {
             tipo: "paragrafo",
@@ -160,15 +160,15 @@ export const modulos = {
           },
           {
             tipo: "titulo",
-            texto: "4. Fase 3 — A tentativa de recuperar perdas",
+            texto: "4. Fase 3, A tentativa de recuperar perdas",
           },
           {
             tipo: "paragrafo",
-            texto: "Em algum momento começam as perdas. Quando isso acontece, muitos jogadores entram na fase mais perigosa do ciclo: apostar para recuperar o dinheiro perdido — o que a psicologia chama de \"perseguição da perda\". O pensamento típico é: \"Se eu ganhar agora, tudo volta ao normal.\" Mas cada nova aposta aumenta o risco de perdas maiores.",
+            texto: "Em algum momento começam as perdas. Quando isso acontece, muitos jogadores entram na fase mais perigosa do ciclo: apostar para recuperar o dinheiro perdido, o que a psicologia chama de \"perseguição da perda\". O pensamento típico é: \"Se eu ganhar agora, tudo volta ao normal.\" Mas cada nova aposta aumenta o risco de perdas maiores.",
           },
           {
             tipo: "titulo",
-            texto: "5. Fase 4 — Culpa e sofrimento emocional",
+            texto: "5. Fase 4, Culpa e sofrimento emocional",
           },
           {
             tipo: "paragrafo",
@@ -176,7 +176,7 @@ export const modulos = {
           },
           {
             tipo: "titulo",
-            texto: "6. Fase 5 — A fuga emocional",
+            texto: "6. Fase 5, A fuga emocional",
           },
           {
             tipo: "paragrafo",
@@ -220,12 +220,12 @@ export const modulos = {
           },
           {
             tipo: "paragrafo",
-            texto: "Embora as perdas financeiras sejam graves, o núcleo do problema é comportamental. O jogo afeta a atenção, as emoções, as relações familiares e a tomada de decisão. É por isso que a recuperação exige mudança de padrão psicológico — não apenas controle financeiro.",
+            texto: "Embora as perdas financeiras sejam graves, o núcleo do problema é comportamental. O jogo afeta a atenção, as emoções, as relações familiares e a tomada de decisão. É por isso que a recuperação exige mudança de padrão psicológico, não apenas controle financeiro.",
           },
           {
             tipo: "reflexao",
             pergunta: "Exercício da Aula 2",
-            texto: "Responda com sinceridade: Quando você costuma sentir vontade de apostar? O que geralmente acontece antes? Qual emoção está presente naquele momento? O que você espera sentir ao jogar — e o que sente depois? Escrever essas respostas revela seu ciclo individual de jogo.",
+            texto: "Responda com sinceridade: Quando você costuma sentir vontade de apostar? O que geralmente acontece antes? Qual emoção está presente naquele momento? O que você espera sentir ao jogar, e o que sente depois? Escrever essas respostas revela seu ciclo individual de jogo.",
           },
           {
             tipo: "destaque",
@@ -249,7 +249,7 @@ export const modulos = {
           {
             tipo: "lista",
             itens: [
-              { titulo: "Curiosidade", descricao: "O jogo começa como entretenimento — sem sinais de alarme." },
+              { titulo: "Curiosidade", descricao: "O jogo começa como entretenimento, sem sinais de alarme." },
               { titulo: "Apostas ocasionais", descricao: "A frequência aumenta gradualmente, ainda dentro do controle aparente." },
               { titulo: "Aumento da frequência", descricao: "O jogo passa a ocupar mais tempo e pensamento do que antes." },
               { titulo: "Perdas financeiras", descricao: "Os prejuízos começam a aparecer de forma consistente." },
@@ -298,7 +298,7 @@ export const modulos = {
           },
           {
             tipo: "destaque",
-            texto: "Em muitos casos, o jogador acredita que conseguirá resolver tudo com uma grande vitória futura — o que reforça o ciclo de apostas.",
+            texto: "Em muitos casos, o jogador acredita que conseguirá resolver tudo com uma grande vitória futura, o que reforça o ciclo de apostas.",
           },
           {
             tipo: "titulo",
@@ -314,7 +314,7 @@ export const modulos = {
           },
           {
             tipo: "paragrafo",
-            texto: "Outro sinal importante é quando o jogo passa a ser usado para aliviar emoções difíceis — estresse, tristeza, solidão, frustrações. Nesse ponto, o jogo deixa de ser diversão e passa a funcionar como anestesia emocional. Esse padrão aumenta significativamente o risco de dependência.",
+            texto: "Outro sinal importante é quando o jogo passa a ser usado para aliviar emoções difíceis, estresse, tristeza, solidão, frustrações. Nesse ponto, o jogo deixa de ser diversão e passa a funcionar como anestesia emocional. Esse padrão aumenta significativamente o risco de dependência.",
           },
           {
             tipo: "titulo",
@@ -331,7 +331,7 @@ export const modulos = {
           },
           {
             tipo: "titulo",
-            texto: "Exercício da Aula 3 — Linha do tempo do jogo",
+            texto: "Exercício da Aula 3, Linha do tempo do jogo",
           },
           {
             tipo: "lista",
@@ -347,11 +347,11 @@ export const modulos = {
           },
           {
             tipo: "titulo",
-            texto: "Check-in ISTOP — 1 minuto",
+            texto: "Check-in ISTOP, 1 minuto",
           },
           {
             tipo: "paragrafo",
-            texto: "Ao final de cada dia — ou sempre que surgir vontade de apostar — responda com sinceridade a estas perguntas:",
+            texto: "Ao final de cada dia, ou sempre que surgir vontade de apostar, responda com sinceridade a estas perguntas:",
           },
           {
             tipo: "lista",
@@ -368,7 +368,7 @@ export const modulos = {
           {
             tipo: "reflexao",
             pergunta: "Interpretação do check-in",
-            texto: "0–1 respostas \"Sim\": baixo risco momentâneo. 2–3 respostas \"Sim\": atenção — pode haver impulso de jogo. 4 ou mais \"Sim\": momento de risco — afaste-se do celular, espere 15 minutos, respire profundamente e repita o check-in.",
+            texto: "0–1 respostas \"Sim\": baixo risco momentâneo. 2–3 respostas \"Sim\": atenção, pode haver impulso de jogo. 4 ou mais \"Sim\": momento de risco, afaste-se do celular, espere 15 minutos, respire profundamente e repita o check-in.",
           },
           {
             tipo: "destaque",
@@ -429,7 +429,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "No livro disponibilizado na plataforma, Jogos online — vício de bolso, aparece o caso de Maria, que começou a jogar durante um período de isolamento social. No início, o jogo parecia apenas uma distração.",
+              "No livro disponibilizado na plataforma, Jogos online, vício de bolso, aparece o caso de Maria, que começou a jogar durante um período de isolamento social. No início, o jogo parecia apenas uma distração.",
           },
           {
             tipo: "paragrafo",
@@ -448,7 +448,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "Muitas pessoas recorrem ao jogo em momentos de desconforto emocional — muitas vezes de forma inconsciente. O jogo oferece estímulo, expectativa, distração e uma sensação momentânea de controle.",
+              "Muitas pessoas recorrem ao jogo em momentos de desconforto emocional, muitas vezes de forma inconsciente. O jogo oferece estímulo, expectativa, distração e uma sensação momentânea de controle.",
           },
           {
             tipo: "paragrafo",
@@ -467,7 +467,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "Essas experiências fazem parte da vida humana. Mas quando não encontram espaço para serem compreendidas, algumas pessoas buscam formas rápidas de aliviar o desconforto. O jogo pode se tornar uma dessas tentativas — não porque a pessoa deseja perder dinheiro, mas porque naquele momento ele parece oferecer uma pausa para o sofrimento.",
+              "Essas experiências fazem parte da vida humana. Mas quando não encontram espaço para serem compreendidas, algumas pessoas buscam formas rápidas de aliviar o desconforto. O jogo pode se tornar uma dessas tentativas, não porque a pessoa deseja perder dinheiro, mas porque naquele momento ele parece oferecer uma pausa para o sofrimento.",
           },
           {
             tipo: "subtitulo",
@@ -494,7 +494,7 @@ export const modulos = {
           {
             tipo: "reflexao",
             texto:
-              "Reserve alguns instantes para pensar: em que momentos da sua rotina a vontade de apostar aparece com mais frequência? Pode ser ao final do dia, após uma frustração, em momentos de solidão ou quando surge preocupação financeira. Não existe resposta certa ou errada — o objetivo é apenas observar com atenção sua própria experiência.",
+              "Reserve alguns instantes para pensar: em que momentos da sua rotina a vontade de apostar aparece com mais frequência? Pode ser ao final do dia, após uma frustração, em momentos de solidão ou quando surge preocupação financeira. Não existe resposta certa ou errada, o objetivo é apenas observar com atenção sua própria experiência.",
           },
         ],
         quiz: [
@@ -524,7 +524,7 @@ export const modulos = {
           },
         ],
         encerramento:
-          "O impulso de apostar raramente aparece por acaso. Na maioria das vezes ele surge ligado a momentos específicos da vida, emoções ou situações do cotidiano. Ao observar esses momentos com mais atenção, você começa a compreender melhor seu próprio comportamento — e compreender é um passo importante para recuperar o controle sobre suas escolhas.",
+          "O impulso de apostar raramente aparece por acaso. Na maioria das vezes ele surge ligado a momentos específicos da vida, emoções ou situações do cotidiano. Ao observar esses momentos com mais atenção, você começa a compreender melhor seu próprio comportamento, e compreender é um passo importante para recuperar o controle sobre suas escolhas.",
       },
       {
         id: 2,
@@ -544,7 +544,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "No livro O Luto, disponível na plataforma, descreve-se como emoções humanas profundas — como tristeza, confusão ou sensação de vazio — podem surgir após perdas ou mudanças importantes na vida. Quando essas emoções não encontram espaço para serem compreendidas, algumas pessoas buscam maneiras rápidas de aliviar o desconforto. O jogo pode se tornar uma dessas tentativas.",
+              "No livro O Luto, disponível na plataforma, descreve-se como emoções humanas profundas, como tristeza, confusão ou sensação de vazio, podem surgir após perdas ou mudanças importantes na vida. Quando essas emoções não encontram espaço para serem compreendidas, algumas pessoas buscam maneiras rápidas de aliviar o desconforto. O jogo pode se tornar uma dessas tentativas.",
           },
           {
             tipo: "reflexao",
@@ -759,7 +759,7 @@ export const modulos = {
           ],
         },
         encerramento:
-          "Você chegou ao final do segundo módulo. Agora você começou a perceber que o impulso de jogar não surge por acaso — ele costuma estar ligado a emoções, pensamentos e situações específicas. Reconhecer esses padrões é um passo importante para compreender melhor sua relação com o jogo. Cada etapa dessa jornada representa um movimento em direção a escolhas mais conscientes.",
+          "Você chegou ao final do segundo módulo. Agora você começou a perceber que o impulso de jogar não surge por acaso, ele costuma estar ligado a emoções, pensamentos e situações específicas. Reconhecer esses padrões é um passo importante para compreender melhor sua relação com o jogo. Cada etapa dessa jornada representa um movimento em direção a escolhas mais conscientes.",
       },
     ],
     proximoPasso: {
@@ -832,7 +832,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "Essa simples identificação já ativa processos de metacognição — ou seja, a capacidade de observar os próprios estados mentais.",
+              "Essa simples identificação já ativa processos de metacognição, ou seja, a capacidade de observar os próprios estados mentais.",
           },
           {
             tipo: "subtitulo",
@@ -856,8 +856,8 @@ export const modulos = {
           {
             tipo: "imagem",
             src: "/imagens/espaco-da-escolha.png",
-            alt: "Infográfico O Espaço da Escolha — entre o impulso de apostar e a ação existe sempre um momento de decisão",
-            legenda: "O Espaço da Escolha — entre o impulso e a ação existe sempre um momento de decisão.",
+            alt: "Infográfico O Espaço da Escolha, entre o impulso de apostar e a ação existe sempre um momento de decisão",
+            legenda: "O Espaço da Escolha, entre o impulso e a ação existe sempre um momento de decisão.",
           },
           {
             tipo: "reflexao",
@@ -913,7 +913,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "O comportamento impulsivo está frequentemente associado à predominância de respostas rápidas do sistema emocional do cérebro. Quando um estímulo associado à recompensa aparece — como uma notificação de aposta ou um pensamento de recuperar perdas — ocorre ativação do sistema de recompensa, que estimula a repetição do comportamento.",
+              "O comportamento impulsivo está frequentemente associado à predominância de respostas rápidas do sistema emocional do cérebro. Quando um estímulo associado à recompensa aparece, como uma notificação de aposta ou um pensamento de recuperar perdas, ocorre ativação do sistema de recompensa, que estimula a repetição do comportamento.",
           },
           {
             tipo: "paragrafo",
@@ -968,7 +968,7 @@ export const modulos = {
               {
                 titulo: "2. Criar um intervalo de tempo",
                 descricao:
-                  "O indivíduo estabelece um período curto — 5, 10 ou 15 minutos — antes de tomar qualquer decisão. O objetivo não é eliminar o impulso imediatamente, mas permitir que ele diminua de intensidade.",
+                  "O indivíduo estabelece um período curto, 5, 10 ou 15 minutos, antes de tomar qualquer decisão. O objetivo não é eliminar o impulso imediatamente, mas permitir que ele diminua de intensidade.",
               },
               {
                 titulo: "3. Retomar a decisão de forma consciente",
@@ -1024,7 +1024,7 @@ export const modulos = {
           {
             tipo: "paragrafo",
             texto:
-              "Após compreender o momento da escolha e a estratégia da pausa consciente, o próximo passo no processo de autorregulação consiste em compreender a natureza dinâmica do impulso. Impulsos comportamentais não são estados estáticos — eles surgem, aumentam de intensidade e, com o tempo, tendem a diminuir.",
+              "Após compreender o momento da escolha e a estratégia da pausa consciente, o próximo passo no processo de autorregulação consiste em compreender a natureza dinâmica do impulso. Impulsos comportamentais não são estados estáticos, eles surgem, aumentam de intensidade e, com o tempo, tendem a diminuir.",
           },
           {
             tipo: "paragrafo",
@@ -1043,15 +1043,15 @@ export const modulos = {
           {
             tipo: "lista",
             itens: [
-              "Ativação inicial — surge a vontade de realizar o comportamento",
-              "Aumento de intensidade — o impulso atinge seu pico",
-              "Declínio gradual — a intensidade diminui quando não é reforçada",
+              "Ativação inicial, surge a vontade de realizar o comportamento",
+              "Aumento de intensidade, o impulso atinge seu pico",
+              "Declínio gradual, a intensidade diminui quando não é reforçada",
             ],
           },
           {
             tipo: "paragrafo",
             texto:
-              "Esse padrão é observado em diferentes comportamentos impulsivos, incluindo dependências comportamentais. No livro Jogo Online — Vício de Bolso, disponível na plataforma, a expectativa de recompensa ativa o sistema dopaminérgico mesolímbico, responsável pela motivação e pela antecipação do prazer. No entanto, quando o comportamento não é imediatamente executado, a ativação desse sistema tende a diminuir com o tempo.",
+              "Esse padrão é observado em diferentes comportamentos impulsivos, incluindo dependências comportamentais. No livro Jogo Online, Vício de Bolso, disponível na plataforma, a expectativa de recompensa ativa o sistema dopaminérgico mesolímbico, responsável pela motivação e pela antecipação do prazer. No entanto, quando o comportamento não é imediatamente executado, a ativação desse sistema tende a diminuir com o tempo.",
           },
           {
             tipo: "subtitulo",
@@ -1067,7 +1067,7 @@ Se o indivíduo reage imediatamente ao impulso, ele reforça o ciclo comportamen
 
 Essa habilidade é frequentemente chamada em psicologia comportamental de **tolerância ao impulso**.`,
             src: "/imagens/curva-do-impulso.png",
-            alt: "Gráfico A Curva do Impulso — dinâmica temporal mostrando surgimento, aumento, pico e declínio natural",
+            alt: "Gráfico A Curva do Impulso, dinâmica temporal mostrando surgimento, aumento, pico e declínio natural",
           },
           {
             tipo: "subtitulo",
@@ -1076,7 +1076,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Um aspecto central da autorregulação consiste em desenvolver a capacidade de observar estados internos sem responder automaticamente a eles. Isso envolve reconhecer que pensamentos surgem, emoções surgem e impulsos surgem — mas a presença desses estados não determina necessariamente a ação.",
+              "Um aspecto central da autorregulação consiste em desenvolver a capacidade de observar estados internos sem responder automaticamente a eles. Isso envolve reconhecer que pensamentos surgem, emoções surgem e impulsos surgem, mas a presença desses estados não determina necessariamente a ação.",
           },
           {
             tipo: "paragrafo",
@@ -1163,7 +1163,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "A pausa consciente e a observação do impulso são estratégias fundamentais para interromper o comportamento automático. No entanto, em muitos casos é útil utilizar também estratégias de redirecionamento da atenção — deslocar temporariamente o foco mental para outras atividades ou estímulos, reduzindo a probabilidade de execução do comportamento impulsivo.",
+              "A pausa consciente e a observação do impulso são estratégias fundamentais para interromper o comportamento automático. No entanto, em muitos casos é útil utilizar também estratégias de redirecionamento da atenção, deslocar temporariamente o foco mental para outras atividades ou estímulos, reduzindo a probabilidade de execução do comportamento impulsivo.",
           },
           {
             tipo: "subtitulo",
@@ -1172,7 +1172,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "A atenção desempenha um papel central no comportamento humano. Estímulos associados a recompensa — como notificações de apostas ou pensamentos sobre recuperar perdas — tendem a capturar a atenção de forma automática. Quando a atenção permanece focada nesses estímulos, a probabilidade de execução do comportamento aumenta.",
+              "A atenção desempenha um papel central no comportamento humano. Estímulos associados a recompensa, como notificações de apostas ou pensamentos sobre recuperar perdas, tendem a capturar a atenção de forma automática. Quando a atenção permanece focada nesses estímulos, a probabilidade de execução do comportamento aumenta.",
           },
           {
             tipo: "paragrafo",
@@ -1186,7 +1186,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Na psicologia comportamental, um princípio frequentemente utilizado é o da substituição comportamental. Esse princípio parte da ideia de que não é suficiente apenas interromper um comportamento problemático — em muitos casos, é necessário introduzir novas respostas que possam ocupar o espaço anteriormente preenchido pelo comportamento compulsivo.",
+              "Na psicologia comportamental, um princípio frequentemente utilizado é o da substituição comportamental. Esse princípio parte da ideia de que não é suficiente apenas interromper um comportamento problemático, em muitos casos, é necessário introduzir novas respostas que possam ocupar o espaço anteriormente preenchido pelo comportamento compulsivo.",
           },
           {
             tipo: "paragrafo",
@@ -1205,7 +1205,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Essas alternativas funcionam como respostas concorrentes — comportamentos que competem com o impulso de apostar.",
+              "Essas alternativas funcionam como respostas concorrentes, comportamentos que competem com o impulso de apostar.",
           },
           {
             tipo: "subtitulo",
@@ -1214,7 +1214,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Um dos motivos pelos quais o jogo online pode se tornar altamente repetitivo é a presença de recompensas imediatas e imprevisíveis. Essas recompensas ativam circuitos de motivação e expectativa, fortalecendo o comportamento ao longo do tempo, conforme as informações trazidas pelo livro Jogo Online — Vício de Bolso, disponível na plataforma.",
+              "Um dos motivos pelos quais o jogo online pode se tornar altamente repetitivo é a presença de recompensas imediatas e imprevisíveis. Essas recompensas ativam circuitos de motivação e expectativa, fortalecendo o comportamento ao longo do tempo, conforme as informações trazidas pelo livro Jogo Online, Vício de Bolso, disponível na plataforma.",
           },
           {
             tipo: "paragrafo",
@@ -1290,7 +1290,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
         titulo: "Praticando antes de precisar",
         duracao: "7 min",
         conteudo: [
-          { tipo: "intro", texto: "A autorregulação é uma habilidade. Como toda habilidade, ela melhora com prática — especialmente quando não há pressão." },
+          { tipo: "intro", texto: "A autorregulação é uma habilidade. Como toda habilidade, ela melhora com prática, especialmente quando não há pressão." },
           { tipo: "titulo", texto: "Prática intencional" },
           { tipo: "paragrafo", texto: "Não espere o impulso para praticar as técnicas. Use-as em momentos de estresse leve, de tédio, de ansiedade cotidiana. Quanto mais automáticas se tornarem, mais disponíveis estarão quando você realmente precisar." },
           { tipo: "lista", itens: [
@@ -1298,8 +1298,8 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
             { titulo: "Pausa intencional", descricao: "Uma vez por dia, faça uma pausa de 2 minutos sem estímulos. Só respirar e observar." },
             { titulo: "Revisão do plano", descricao: "Releia seu Plano de Manejo uma vez por semana. Atualize se necessário." },
           ]},
-          { tipo: "destaque", texto: "Você está construindo um músculo. Resultados aparecem com uso consistente — não com uso perfeito." },
-          { tipo: "reflexao", pergunta: "Antes de continuar", texto: "Você concluiu o Módulo 3. O próximo é Reorganização — reconstruir sua rotina com base em comportamentos que fortalecem a mudança." },
+          { tipo: "destaque", texto: "Você está construindo um músculo. Resultados aparecem com uso consistente, não com uso perfeito." },
+          { tipo: "reflexao", pergunta: "Antes de continuar", texto: "Você concluiu o Módulo 3. O próximo é Reorganização, reconstruir sua rotina com base em comportamentos que fortalecem a mudança." },
         ],
       },
     ],
@@ -1329,7 +1329,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Do ponto de vista neurobiológico, esse processo envolve a formação de circuitos neurais que facilitam a execução rápida de determinadas ações em contextos específicos. No caso do comportamento de jogo, a repetição de apostas ao longo do tempo pode estabelecer cadeias comportamentais relativamente estáveis, nas quais determinados estímulos — como emoções, pensamentos ou ambientes específicos — passam a desencadear automaticamente a resposta de apostar.",
+              "Do ponto de vista neurobiológico, esse processo envolve a formação de circuitos neurais que facilitam a execução rápida de determinadas ações em contextos específicos. No caso do comportamento de jogo, a repetição de apostas ao longo do tempo pode estabelecer cadeias comportamentais relativamente estáveis, nas quais determinados estímulos, como emoções, pensamentos ou ambientes específicos, passam a desencadear automaticamente a resposta de apostar.",
           },
           {
             tipo: "subtitulo",
@@ -1374,7 +1374,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Entretanto, quando hábitos disfuncionais se estabelecem — como padrões repetitivos de jogo — essa automatização pode dificultar a interrupção do comportamento. Por essa razão, intervenções voltadas à mudança comportamental frequentemente buscam modificar ou reorganizar os ciclos de hábito existentes.",
+              "Entretanto, quando hábitos disfuncionais se estabelecem, como padrões repetitivos de jogo, essa automatização pode dificultar a interrupção do comportamento. Por essa razão, intervenções voltadas à mudança comportamental frequentemente buscam modificar ou reorganizar os ciclos de hábito existentes.",
           },
         ],
       },
@@ -1438,12 +1438,12 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Mudanças duradouras no comportamento humano envolvem processos graduais de reorganização das estruturas cognitivas e comportamentais. Esse processo é frequentemente descrito na literatura científica como plasticidade comportamental — conceito que se refere à capacidade do organismo de modificar padrões de resposta ao longo do tempo em função da experiência.",
+              "Mudanças duradouras no comportamento humano envolvem processos graduais de reorganização das estruturas cognitivas e comportamentais. Esse processo é frequentemente descrito na literatura científica como plasticidade comportamental, conceito que se refere à capacidade do organismo de modificar padrões de resposta ao longo do tempo em função da experiência.",
           },
           {
             tipo: "paragrafo",
             texto:
-              "No contexto da mudança de hábitos, essa plasticidade envolve tanto adaptações cognitivas quanto alterações nos circuitos neurais associados ao comportamento. Assim, a substituição de padrões comportamentais disfuncionais — como o comportamento repetitivo de apostar — requer a formação progressiva de novos padrões de ação que possam se tornar estáveis ao longo do tempo.",
+              "No contexto da mudança de hábitos, essa plasticidade envolve tanto adaptações cognitivas quanto alterações nos circuitos neurais associados ao comportamento. Assim, a substituição de padrões comportamentais disfuncionais, como o comportamento repetitivo de apostar, requer a formação progressiva de novos padrões de ação que possam se tornar estáveis ao longo do tempo.",
           },
           {
             tipo: "subtitulo",
@@ -1457,7 +1457,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "No caso de hábitos estabelecidos, circuitos neurais associados à repetição do comportamento tornam-se progressivamente mais eficientes — o que explica por que determinados comportamentos podem se tornar automáticos após repetição prolongada. Da mesma forma, a introdução de novos comportamentos pode gradualmente fortalecer circuitos neurais alternativos.",
+              "No caso de hábitos estabelecidos, circuitos neurais associados à repetição do comportamento tornam-se progressivamente mais eficientes, o que explica por que determinados comportamentos podem se tornar automáticos após repetição prolongada. Da mesma forma, a introdução de novos comportamentos pode gradualmente fortalecer circuitos neurais alternativos.",
           },
           {
             tipo: "subtitulo",
@@ -1688,7 +1688,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Ao longo deste módulo foram discutidos diferentes fatores envolvidos na reorganização comportamental — a formação de hábitos, a influência do ambiente, a plasticidade comportamental e a relação entre emoção e comportamento. Esses elementos convergem para um ponto central: a necessidade de organizar a rotina cotidiana de maneira que favoreça a estabilidade das mudanças comportamentais.",
+              "Ao longo deste módulo foram discutidos diferentes fatores envolvidos na reorganização comportamental, a formação de hábitos, a influência do ambiente, a plasticidade comportamental e a relação entre emoção e comportamento. Esses elementos convergem para um ponto central: a necessidade de organizar a rotina cotidiana de maneira que favoreça a estabilidade das mudanças comportamentais.",
           },
           {
             tipo: "subtitulo",
@@ -1697,7 +1697,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Rotinas estruturadas reduzem a probabilidade de decisões impulsivas em momentos de vulnerabilidade. Quando atividades cotidianas estão organizadas em padrões relativamente previsíveis, o indivíduo tende a apresentar menor exposição a situações de ambiguidade ou ociosidade prolongada — situações frequentemente associadas ao aumento da probabilidade de comportamentos impulsivos.",
+              "Rotinas estruturadas reduzem a probabilidade de decisões impulsivas em momentos de vulnerabilidade. Quando atividades cotidianas estão organizadas em padrões relativamente previsíveis, o indivíduo tende a apresentar menor exposição a situações de ambiguidade ou ociosidade prolongada, situações frequentemente associadas ao aumento da probabilidade de comportamentos impulsivos.",
           },
           {
             tipo: "subtitulo",
@@ -1795,7 +1795,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           },
         ],
         checkin: {
-          titulo: "Check-list do Módulo 4 — Reorganização comportamental",
+          titulo: "Check-list do Módulo 4, Reorganização comportamental",
           instrucao: "Ao longo deste módulo foram discutidos os seguintes conteúdos:",
           perguntas: [
             "Formação e modificação de hábitos",
@@ -1978,7 +1978,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Situações de alto risco podem ser definidas como contextos internos ou externos que aumentam significativamente a probabilidade de retorno ao comportamento anterior. Essas situações não possuem necessariamente a mesma intensidade para todos os indivíduos — elas variam de acordo com experiências pessoais, padrões comportamentais anteriores e fatores ambientais.",
+              "Situações de alto risco podem ser definidas como contextos internos ou externos que aumentam significativamente a probabilidade de retorno ao comportamento anterior. Essas situações não possuem necessariamente a mesma intensidade para todos os indivíduos, elas variam de acordo com experiências pessoais, padrões comportamentais anteriores e fatores ambientais.",
           },
           {
             tipo: "subtitulo",
@@ -2000,7 +2000,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
               {
                 titulo: "3. Contextos ambientais e sociais",
                 descricao:
-                  "Ambientes associados ao comportamento anterior — como exposição a plataformas de apostas, eventos esportivos com estímulo intenso ao jogo ou ambientes sociais onde o comportamento de apostar é incentivado — podem reativar padrões comportamentais previamente estabelecidos.",
+                  "Ambientes associados ao comportamento anterior, como exposição a plataformas de apostas, eventos esportivos com estímulo intenso ao jogo ou ambientes sociais onde o comportamento de apostar é incentivado, podem reativar padrões comportamentais previamente estabelecidos.",
               },
             ],
           },
@@ -2011,7 +2011,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "A identificação de situações de alto risco permite o desenvolvimento de antecipação cognitiva — a capacidade de prever situações potencialmente vulneráveis e preparar respostas comportamentais adequadas antes que o impulso se intensifique. Esse processo aumenta significativamente a probabilidade de aplicação das estratégias aprendidas ao longo do programa.",
+              "A identificação de situações de alto risco permite o desenvolvimento de antecipação cognitiva, a capacidade de prever situações potencialmente vulneráveis e preparar respostas comportamentais adequadas antes que o impulso se intensifique. Esse processo aumenta significativamente a probabilidade de aplicação das estratégias aprendidas ao longo do programa.",
           },
           {
             tipo: "subtitulo",
@@ -2079,8 +2079,8 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "imagem",
             src: "/imagens/estrategias-enfrentamento.png",
-            alt: "Infográfico Estratégias de Enfrentamento em Situações de Alto Risco — Pausa Consciente, Mude de Foco e Reestruturação Cognitiva",
-            legenda: "Estratégias de Enfrentamento ISTOP — Pausa Consciente, Redirecionamento e Reestruturação Cognitiva.",
+            alt: "Infográfico Estratégias de Enfrentamento em Situações de Alto Risco, Pausa Consciente, Mude de Foco e Reestruturação Cognitiva",
+            legenda: "Estratégias de Enfrentamento ISTOP, Pausa Consciente, Redirecionamento e Reestruturação Cognitiva.",
           },
           {
             tipo: "paragrafo",
@@ -2099,7 +2099,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "De acordo com o modelo proposto por Marlatt, a recaída tende a ocorrer com maior probabilidade quando o indivíduo se encontra em uma situação de alto risco e não dispõe de habilidades de enfrentamento adequadas. Quando estratégias de enfrentamento são aplicadas de forma eficaz, ocorre um aumento da percepção de controle sobre o comportamento — o que contribui para o fortalecimento da auto-eficácia, conceito central na manutenção de mudanças comportamentais.",
+              "De acordo com o modelo proposto por Marlatt, a recaída tende a ocorrer com maior probabilidade quando o indivíduo se encontra em uma situação de alto risco e não dispõe de habilidades de enfrentamento adequadas. Quando estratégias de enfrentamento são aplicadas de forma eficaz, ocorre um aumento da percepção de controle sobre o comportamento, o que contribui para o fortalecimento da auto-eficácia, conceito central na manutenção de mudanças comportamentais.",
           },
           {
             tipo: "subtitulo",
@@ -2111,12 +2111,12 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
               {
                 titulo: "1. Estratégias cognitivas",
                 descricao:
-                  "Envolvem processos mentais que permitem reinterpretar ou reavaliar uma situação potencialmente desafiadora — como o questionamento de pensamentos automáticos, a reavaliação de expectativas irreais e a lembrança de consequências negativas associadas ao comportamento anterior.",
+                  "Envolvem processos mentais que permitem reinterpretar ou reavaliar uma situação potencialmente desafiadora, como o questionamento de pensamentos automáticos, a reavaliação de expectativas irreais e a lembrança de consequências negativas associadas ao comportamento anterior.",
               },
               {
                 titulo: "2. Estratégias comportamentais",
                 descricao:
-                  "Envolvem a execução de ações concretas que reduzem a exposição ao comportamento de risco — como afastamento de ambientes associados ao comportamento anterior, realização de atividades alternativas e redirecionamento da atenção para outras tarefas.",
+                  "Envolvem a execução de ações concretas que reduzem a exposição ao comportamento de risco, como afastamento de ambientes associados ao comportamento anterior, realização de atividades alternativas e redirecionamento da atenção para outras tarefas.",
               },
               {
                 titulo: "3. Estratégias de regulação emocional",
@@ -2132,7 +2132,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           {
             tipo: "paragrafo",
             texto:
-              "Na prática clínica, estratégias cognitivas, comportamentais e emocionais raramente são utilizadas de forma isolada. O enfrentamento eficaz de situações de alto risco geralmente envolve a combinação dessas diferentes estratégias — por exemplo, reconhecer um pensamento automático relacionado ao jogo, afastar-se de um ambiente associado ao comportamento e aplicar uma técnica de regulação emocional. Essa integração aumenta significativamente a eficácia do enfrentamento.",
+              "Na prática clínica, estratégias cognitivas, comportamentais e emocionais raramente são utilizadas de forma isolada. O enfrentamento eficaz de situações de alto risco geralmente envolve a combinação dessas diferentes estratégias, por exemplo, reconhecer um pensamento automático relacionado ao jogo, afastar-se de um ambiente associado ao comportamento e aplicar uma técnica de regulação emocional. Essa integração aumenta significativamente a eficácia do enfrentamento.",
           },
           {
             tipo: "reflexao",
@@ -2209,12 +2209,12 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
               {
                 titulo: "1. Proteção ambiental",
                 descricao:
-                  "Envolve a organização do ambiente físico e digital de modo a reduzir a exposição a estímulos associados ao comportamento anterior — como remoção de aplicativos de apostas, bloqueio de plataformas de jogo e redução de exposição a conteúdos relacionados ao jogo.",
+                  "Envolve a organização do ambiente físico e digital de modo a reduzir a exposição a estímulos associados ao comportamento anterior, como remoção de aplicativos de apostas, bloqueio de plataformas de jogo e redução de exposição a conteúdos relacionados ao jogo.",
               },
               {
                 titulo: "2. Proteção estrutural",
                 descricao:
-                  "Refere-se à organização da rotina cotidiana de forma que favoreça estabilidade comportamental — com horários regulares de atividades, equilíbrio entre trabalho, lazer e descanso, e planejamento de atividades significativas. Rotinas estruturadas reduzem períodos prolongados de ociosidade, frequentemente associados a comportamentos impulsivos.",
+                  "Refere-se à organização da rotina cotidiana de forma que favoreça estabilidade comportamental, com horários regulares de atividades, equilíbrio entre trabalho, lazer e descanso, e planejamento de atividades significativas. Rotinas estruturadas reduzem períodos prolongados de ociosidade, frequentemente associados a comportamentos impulsivos.",
               },
               {
                 titulo: "3. Proteção social",
@@ -2394,7 +2394,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           },
         ],
         checkin: {
-          titulo: "Check-list Final — Consolidação do Método ISTOP",
+          titulo: "Check-list Final, Consolidação do Método ISTOP",
           instrucao:
             "Leia cada afirmação com atenção e reflita sobre sua situação atual (Sim / Parcialmente / Ainda preciso trabalhar esse aspecto):",
           perguntas: [
@@ -2415,7 +2415,7 @@ Essa habilidade é frequentemente chamada em psicologia comportamental de **tole
           ],
         },
         encerramento:
-          "Ao longo deste programa foram abordados diferentes aspectos relacionados à compreensão e à reorganização de padrões comportamentais associados ao jogo online — da compreensão do comportamento de apostar à identificação de gatilhos, do desenvolvimento de estratégias de autorregulação à construção de sistemas de prevenção de recaídas. Esses elementos constituem a base para a manutenção de mudanças comportamentais ao longo do tempo.",
+          "Ao longo deste programa foram abordados diferentes aspectos relacionados à compreensão e à reorganização de padrões comportamentais associados ao jogo online, da compreensão do comportamento de apostar à identificação de gatilhos, do desenvolvimento de estratégias de autorregulação à construção de sistemas de prevenção de recaídas. Esses elementos constituem a base para a manutenção de mudanças comportamentais ao longo do tempo.",
         marcoJornada:
           "Mudanças comportamentais duradouras são resultado de aprendizado, prática e adaptação contínua. O percurso realizado ao longo do programa ISTOP representa o desenvolvimento de um conjunto de habilidades que podem ser utilizadas para lidar com desafios futuros e fortalecer escolhas mais conscientes. Cada passo nesse processo contribui para a construção de maior autonomia e equilíbrio ao longo do tempo.",
       },
