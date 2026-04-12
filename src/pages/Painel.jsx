@@ -2,16 +2,23 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 
+const PRECOS = {
+  1: { label: "R$ 29,90", valor: 29.9 },
+  2: { label: "R$ 49,90", valor: 49.9 },
+  3: { label: "R$ 89,90", valor: 89.9 },
+  4: { label: "R$ 149,90", valor: 149.9 },
+  5: { label: "R$ 199,90", valor: 199.9 },
+};
+
 const modulos = [
   {
     id: 1,
     etapa: "I",
     nome: "Interrupção",
     descricao:
-      "Você começa entendendo como o ciclo do jogo se instala — e dá o primeiro passo para sair do piloto automático.",
+      "Você começa entendendo como o ciclo do jogo se instala e dá o primeiro passo para sair do piloto automático.",
     aulas: 3,
     ferramenta: "Contrato de Interrupção",
-    cor: "#3B6D11",
   },
   {
     id: 2,
@@ -21,27 +28,24 @@ const modulos = [
       "Identifique os momentos e emoções que despertam o impulso de apostar.",
     aulas: 5,
     ferramenta: "Mapa de Gatilhos ISTOP",
-    cor: "#3B6D11",
   },
   {
     id: 3,
     etapa: "T",
     nome: "Autorregulação",
     descricao:
-      "Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real — construído por você, para você.",
+      "Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real.",
     aulas: 5,
     ferramenta: "Plano Pessoal de Manejo",
-    cor: "#3B6D11",
   },
   {
     id: 4,
     etapa: "O",
-    nome: "Reorganização comportamental e consolidação de novos padrões",
+    nome: "Reorganização comportamental",
     descricao:
       "Compreenda como hábitos se formam e aprenda a reorganizar rotinas e padrões comportamentais para consolidar mudanças duradouras.",
     aulas: 5,
     ferramenta: "Estrutura de Rotina",
-    cor: "#3B6D11",
   },
   {
     id: 5,
@@ -51,7 +55,6 @@ const modulos = [
       "Consolide as mudanças comportamentais iniciadas no programa e desenvolva estratégias estruturadas para reduzir o risco de recaída ao longo do tempo.",
     aulas: 5,
     ferramenta: "Protocolo de Prevenção de Recaída",
-    cor: "#3B6D11",
   },
 ];
 
@@ -544,10 +547,14 @@ export default function Painel() {
                         color: "#888",
                         display: "flex",
                         gap: "1rem",
+                        flexWrap: "wrap",
                       }}
                     >
                       <span>📖 {m.aulas} aulas</span>
                       <span>🛠 {m.ferramenta}</span>
+                      <span style={{ fontWeight: 600, color: "#3B6D11" }}>
+                        {PRECOS[m.id]?.label}
+                      </span>
                     </div>
 
                     {!bloqueado && (
