@@ -420,6 +420,7 @@ const styles = {
     color: "#333",
     lineHeight: 1.6,
     fontStyle: "italic",
+    textAlign: "justify",
   },
   subtitulo: {
     fontFamily: "DM Serif Display, serif",
@@ -440,6 +441,7 @@ const styles = {
     fontSize: "1rem",
     color: "#444",
     lineHeight: 1.75,
+    textAlign: "justify",
   },
   destaque: {
     background: "#EFF5E8",
@@ -512,6 +514,7 @@ const styles = {
     color: "#666",
     lineHeight: 1.55,
     margin: 0,
+    textAlign: "justify",
   },
   reflexao: {
     background: "#FFF8F0",
@@ -535,6 +538,7 @@ const styles = {
     color: "#664420",
     lineHeight: 1.6,
     margin: 0,
+    textAlign: "justify",
   },
   encerramento: {
     background: "#fff",
@@ -549,6 +553,7 @@ const styles = {
     color: "#2A5009",
     lineHeight: 1.65,
     margin: 0,
+    textAlign: "justify",
   },
   marcoJornadaLabel: {
     fontFamily: "DM Sans, sans-serif",
@@ -566,6 +571,7 @@ const styles = {
     color: "#333",
     lineHeight: 1.65,
     margin: 0,
+    textAlign: "justify",
   },
   quizWrap: {
     marginTop: "0.5rem",
