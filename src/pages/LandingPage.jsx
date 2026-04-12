@@ -546,9 +546,17 @@ export default function LandingPage() {
           </div>
           <div className="lp-footer-col">
             <h4>Programa</h4>
-            <button type="button" onClick={() => scrollTo('programa')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'block', fontSize: 13, color: 'rgba(255,255,255,.4)', marginBottom: 10, fontFamily: 'inherit', padding: 0, textAlign: 'left' }}>Módulo 1 — Interrupção</button>
-            <button type="button" onClick={() => scrollTo('programa')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'block', fontSize: 13, color: 'rgba(255,255,255,.4)', marginBottom: 10, fontFamily: 'inherit', padding: 0, textAlign: 'left' }}>Módulo 2 — Sensibilização</button>
-            <button type="button" onClick={() => scrollTo('programa')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'block', fontSize: 13, color: 'rgba(255,255,255,.4)', marginBottom: 10, fontFamily: 'inherit', padding: 0, textAlign: 'left' }}>Módulo 3 — Autorregulação</button>
+            {[
+              'Módulo 1 — Interrupção',
+              'Módulo 2 — Sensibilização',
+              'Módulo 3 — Autorregulação',
+              'Módulo 4 — Reorganização',
+              'Módulo 5 — Manutenção',
+            ].map((label) => (
+              <button key={label} type="button" onClick={() => scrollTo('programa')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'block', fontSize: 13, color: 'rgba(255,255,255,.4)', marginBottom: 10, fontFamily: 'inherit', padding: 0, textAlign: 'left' }}>
+                {label}
+              </button>
+            ))}
           </div>
           <div className="lp-footer-col">
             <h4>Instituto</h4>
