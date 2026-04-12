@@ -58,11 +58,28 @@ const modulos = [
   },
 ];
 
+const estilos = {
+  btnIniciar: {
+    fontFamily: "DM Sans, sans-serif",
+    fontSize: "0.82rem",
+    fontWeight: 600,
+    padding: "0.45rem 1.1rem",
+    borderRadius: 8,
+    textDecoration: "none",
+    display: "inline-block",
+    background: "#3B6D11",
+    color: "#fff",
+    border: "none",
+  },
+};
+
 export default function Painel() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [progresso, setProgresso] = useState({ moduloAtual: 1, concluidos: [] });
   const [loading, setLoading] = useState(true);
+  const [liberados, setLiberados] = useState([]); // módulos pagos
+  const [carregandoPgto, setCarregandoPgto] = useState(null); // id do módulo em loading
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -81,6 +98,16 @@ export default function Painel() {
       .select("modulo_id")
       .eq("user_id", userId);
 
+    // Módulos pagos (liberados)
+    const { data: dadosLiberados } = await supabase
+      .from("modulos_liberados")
+      .select("modulo_id")
+      .eq("user_id", userId);
+
+    if (dadosLiberados) {
+      setLiberados(dadosLiberados.map((r) => r.modulo_id));
+    }
+
     if (error) {
       console.error("Erro ao carregar progresso:", error.message);
       setProgresso({ moduloAtual: 1, concluidos: [] });
@@ -94,10 +121,52 @@ export default function Painel() {
     setLoading(false);
   }
 
-  function statusModulo(id) {
-    if (progresso.concluidos.includes(id)) return "concluido";
-    if (id === progresso.moduloAtual) return "disponivel";
-    return "bloqueado";
+  async function handleComprar(moduloId) {
+    setCarregandoPgto(moduloId);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const MODULOS_CONFIG = {
+        1: { nome: "Módulo 1 — Interrupção", preco: 29.90 },
+        2: { nome: "Módulo 2 — Sensibilização", preco: 49.90 },
+        3: { nome: "Módulo 3 — Autorregulação", preco: 89.90 },
+        4: { nome: "Módulo 4 — Reorganização", preco: 149.90 },
+        5: { nome: "Módulo 5 — Manutenção", preco: 199.90 },
+      };
+      const { nome, preco } = MODULOS_CONFIG[moduloId];
+      const res = await fetch(
+        "https://gybzuhopxhlbewhjihnd.supabase.co/functions/v1/criar-preferencia-mp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            items: [{ title: nome, quantity: 1, unit_price: preco, currency_id: "BRL" }],
+            external_reference: `user_${session.user.id}_modulo_${moduloId}`,
+            back_urls: {
+              success: "https://paredejogar.com/painel",
+              failure: "https://paredejogar.com/painel",
+              pending: "https://paredejogar.com/painel",
+            },
+            auto_return: "approved",
+            notification_url:
+              "https://gybzuhopxhlbewhjihnd.supabase.co/functions/v1/webhook-mp",
+          }),
+        }
+      );
+      const json = await res.json();
+      if (json.init_point) {
+        window.location.href = json.init_point;
+      } else {
+        alert("Erro ao iniciar pagamento. Tente novamente.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Erro ao conectar ao sistema de pagamento.");
+    } finally {
+      setCarregandoPgto(null);
+    }
   }
 
   const nome = user?.user_metadata?.full_name?.split(" ")[0] || "bem-vindo";
@@ -277,7 +346,19 @@ export default function Painel() {
             }}
           >
             {modulos.map((m) => {
-              const s = statusModulo(m.id);
+              const concluidos = progresso.concluidos;
+              const concluido = concluidos.includes(m.id);
+              const pago = liberados.includes(m.id);
+              const anteriorConcluido =
+                m.id === 1 || concluidos.includes(m.id - 1);
+
+              let s;
+              if (concluido) s = "concluido";
+              else if (pago && anteriorConcluido) s = "disponivel";
+              else if (!pago && anteriorConcluido) s = "pagar";
+              else s = "bloqueado";
+
+              const ativo = s === "disponivel" || s === "pagar";
               return (
                 <div
                   key={m.id}
@@ -290,15 +371,15 @@ export default function Painel() {
                     background:
                       s === "concluido"
                         ? "#3B6D11"
-                        : s === "disponivel"
-                        ? "#EFF5E8"
-                        : "#F0EFE9",
+                        : ativo
+                          ? "#EFF5E8"
+                          : "#F0EFE9",
                     border: `1px solid ${
                       s === "concluido"
                         ? "#3B6D11"
-                        : s === "disponivel"
-                        ? "#3B6D11"
-                        : "#DDD"
+                        : ativo
+                          ? "#3B6D11"
+                          : "#DDD"
                     }`,
                   }}
                 >
@@ -310,9 +391,9 @@ export default function Painel() {
                       color:
                         s === "concluido"
                           ? "#fff"
-                          : s === "disponivel"
-                          ? "#3B6D11"
-                          : "#aaa",
+                          : ativo
+                            ? "#3B6D11"
+                            : "#aaa",
                     }}
                   >
                     {m.etapa}
@@ -324,9 +405,9 @@ export default function Painel() {
                       color:
                         s === "concluido"
                           ? "#fff"
-                          : s === "disponivel"
-                          ? "#3B6D11"
-                          : "#aaa",
+                          : ativo
+                            ? "#3B6D11"
+                            : "#aaa",
                     }}
                   >
                     {m.nome}
@@ -377,8 +458,20 @@ export default function Painel() {
           }}
         >
           {modulos.map((m) => {
-            const s = statusModulo(m.id);
-            const bloqueado = s === "bloqueado";
+            const concluidos = progresso.concluidos;
+            const concluido = concluidos.includes(m.id);
+            const pago = liberados.includes(m.id);
+            const anteriorConcluido =
+              m.id === 1 || concluidos.includes(m.id - 1);
+
+            let status;
+            if (concluido) status = "concluido";
+            else if (pago && anteriorConcluido) status = "disponivel";
+            else if (!pago && anteriorConcluido) status = "pagar";
+            else status = "bloqueado";
+
+            const ativo = status === "disponivel" || status === "pagar";
+            const bloqueado = status === "bloqueado";
 
             return (
               <div
@@ -387,7 +480,7 @@ export default function Painel() {
                   background: "#fff",
                   borderRadius: 14,
                   border: `1px solid ${
-                    s === "disponivel" ? "#3B6D11" : "#E8E4DC"
+                    ativo ? "#3B6D11" : "#E8E4DC"
                   }`,
                   padding: "1.5rem",
                   display: "flex",
@@ -396,7 +489,7 @@ export default function Painel() {
                   opacity: bloqueado ? 0.55 : 1,
                   transition: "box-shadow 0.2s",
                   boxShadow:
-                    s === "disponivel"
+                    ativo
                       ? "0 2px 12px rgba(59,109,17,0.08)"
                       : "none",
                 }}
@@ -408,17 +501,17 @@ export default function Painel() {
                     height: 52,
                     borderRadius: "50%",
                     background:
-                      s === "concluido"
+                      status === "concluido"
                         ? "#3B6D11"
-                        : s === "disponivel"
-                        ? "#EFF5E8"
-                        : "#F0EFE9",
+                        : ativo
+                          ? "#EFF5E8"
+                          : "#F0EFE9",
                     border: `2px solid ${
-                      s === "concluido"
+                      status === "concluido"
                         ? "#3B6D11"
-                        : s === "disponivel"
-                        ? "#3B6D11"
-                        : "#ddd"
+                        : ativo
+                          ? "#3B6D11"
+                          : "#ddd"
                     }`,
                     display: "flex",
                     alignItems: "center",
@@ -426,7 +519,7 @@ export default function Painel() {
                     flexShrink: 0,
                   }}
                 >
-                  {s === "concluido" ? (
+                  {status === "concluido" ? (
                     <span style={{ color: "#fff", fontSize: "1.2rem" }}>✓</span>
                   ) : (
                     <span
@@ -434,7 +527,7 @@ export default function Painel() {
                         fontFamily: "DM Serif Display, serif",
                         fontWeight: 700,
                         fontSize: "1.25rem",
-                        color: s === "disponivel" ? "#3B6D11" : "#bbb",
+                        color: ativo ? "#3B6D11" : "#bbb",
                       }}
                     >
                       {m.etapa}
@@ -463,7 +556,7 @@ export default function Painel() {
                     >
                       Módulo {m.id}
                     </span>
-                    {s === "concluido" && (
+                    {status === "concluido" && (
                       <span
                         style={{
                           background: "#EFF5E8",
@@ -478,7 +571,7 @@ export default function Painel() {
                         Concluído
                       </span>
                     )}
-                    {s === "disponivel" && (
+                    {status === "disponivel" && (
                       <span
                         style={{
                           background: "#3B6D11",
@@ -493,7 +586,22 @@ export default function Painel() {
                         Disponível
                       </span>
                     )}
-                    {s === "bloqueado" && (
+                    {status === "pagar" && (
+                      <span
+                        style={{
+                          background: "#FFF4E5",
+                          color: "#8B5A00",
+                          fontSize: "0.68rem",
+                          padding: "0.15rem 0.5rem",
+                          borderRadius: 99,
+                          fontFamily: "DM Sans, sans-serif",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Comprar acesso
+                      </span>
+                    )}
+                    {status === "bloqueado" && (
                       <span
                         style={{
                           background: "#F0EFE9",
@@ -557,27 +665,45 @@ export default function Painel() {
                       </span>
                     </div>
 
-                    {!bloqueado && (
-                      <Link
-                        to={`/modulo/${m.id}`}
+                    {status === "concluido" && (
+                      <Link to={`/modulo/${m.id}`} style={estilos.btnIniciar}>
+                        Revisar
+                      </Link>
+                    )}
+                    {status === "disponivel" && (
+                      <Link to={`/modulo/${m.id}`} style={estilos.btnIniciar}>
+                        Iniciar módulo →
+                      </Link>
+                    )}
+                    {status === "pagar" && (
+                      <button
+                        type="button"
+                        onClick={() => handleComprar(m.id)}
+                        disabled={carregandoPgto === m.id}
                         style={{
-                          background:
-                            s === "concluido" ? "#EFF5E8" : "#3B6D11",
-                          color: s === "concluido" ? "#3B6D11" : "#fff",
-                          fontFamily: "DM Sans, sans-serif",
-                          fontSize: "0.82rem",
-                          fontWeight: 600,
-                          padding: "0.45rem 1.1rem",
-                          borderRadius: 8,
-                          textDecoration: "none",
-                          border:
-                            s === "concluido"
-                              ? "1px solid #3B6D11"
-                              : "none",
+                          ...estilos.btnIniciar,
+                          background: "#e8a000",
+                          color: "#fff",
+                          border: "none",
+                          cursor:
+                            carregandoPgto === m.id ? "wait" : "pointer",
                         }}
                       >
-                        {s === "concluido" ? "Revisar" : "Iniciar módulo →"}
-                      </Link>
+                        {carregandoPgto === m.id
+                          ? "Aguarde..."
+                          : `Comprar — R$ ${[29.9, 49.9, 89.9, 149.9, 199.9][m.id - 1].toFixed(2).replace(".", ",")} `}
+                      </button>
+                    )}
+                    {status === "bloqueado" && (
+                      <span
+                        style={{
+                          fontSize: "0.82rem",
+                          color: "#aaa",
+                          fontFamily: "DM Sans, sans-serif",
+                        }}
+                      >
+                        🔒 Conclua o módulo anterior
+                      </span>
                     )}
                   </div>
                 </div>
