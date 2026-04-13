@@ -10,6 +10,7 @@ export default function QuizResultPage() {
   const state = location.state
   const score = state && typeof state.score === 'number' ? state.score : null
   const quizType = state?.quizType === 'family' ? 'family' : 'personal'
+  const isFamilia = quizType === 'family'
 
   const [fillPct, setFillPct] = useState(0)
 
@@ -158,6 +159,90 @@ export default function QuizResultPage() {
                 <p style={{ fontSize: 15 }}>{s.texto}</p>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Bloco para familiares — enviar resultado pelo WhatsApp */}
+        {isFamilia && (
+          <div style={{
+            maxWidth: 620,
+            margin: "2.5rem auto 0",
+            background: "#F0FFF4",
+            border: "1px solid #C3E6CB",
+            borderRadius: 16,
+            padding: "2rem",
+            fontFamily: "DM Sans, sans-serif",
+          }}>
+            <h3 style={{
+              fontFamily: "DM Serif Display, serif",
+              fontSize: "1.3rem",
+              color: "#1a1a1a",
+              marginBottom: "0.75rem",
+            }}>
+              O próximo passo pode ser uma conversa
+            </h3>
+            <p style={{ color: "#444", fontSize: "0.95rem", lineHeight: 1.65, marginBottom: "1.25rem" }}>
+              Você acabou de concluir uma avaliação importante. Compartilhar este resultado pode ser o início de uma conversa transformadora — não para acusar ou julgar, mas para convidar à reflexão sobre bem-estar e qualidade de vida.
+            </p>
+
+            <div style={{ marginBottom: "1.25rem" }}>
+              <p style={{ fontWeight: 600, color: "#2d6a4f", marginBottom: "0.6rem", fontSize: "0.9rem" }}>
+                Antes de enviar, reflita:
+              </p>
+              {[
+                "Escolha um momento calmo, sem interrupções ou estresse imediato.",
+                "Use a linguagem do 'Eu': em vez de 'Você está viciado', experimente 'Eu me preocupo quando vejo que o jogo tem afetado seu descanso'.",
+                "Foque na preocupação, não no controle — deixe claro que sua motivação é o cuidado.",
+                "Esteja pronto para ouvir: a pessoa pode reagir com negação. Mantenha a calma.",
+                "Evite ultimatos: frases como 'ou você para, ou…' tendem a gerar resistência.",
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: "0.6rem", marginBottom: "0.5rem", alignItems: "flex-start" }}>
+                  <span style={{ color: "#2d6a4f", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  <p style={{ color: "#555", fontSize: "0.88rem", lineHeight: 1.6, margin: 0 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+
+            <div style={{
+              background: "#fff",
+              border: "1px solid #C3E6CB",
+              borderRadius: 10,
+              padding: "1rem 1.25rem",
+              marginBottom: "1.5rem",
+              fontSize: "0.88rem",
+              color: "#333",
+              lineHeight: 1.7,
+              fontStyle: "italic",
+            }}>
+              "Oi, [Nome]. Fiz uma avaliação sobre hábitos de jogo que me fez refletir. O resultado trouxe alguns pontos que achei importantes e gostaria de compartilhar com você — sem julgamentos. Se quiser ver e conversar quando puder, estou aqui por você."
+            </div>
+
+            <p style={{ fontSize: "0.78rem", color: "#888", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+              ⚠️ Este teste é uma ferramenta educativa e não substitui diagnóstico profissional. Em caso de crise emocional, ligue para o CVV: <strong>188</strong>.
+            </p>
+
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(
+                `Oi! Fiz uma avaliação sobre hábitos de jogo no PareDeJogar e o resultado me fez refletir sobre algo importante.\n\nGostaria de compartilhar com você — sem julgamentos, só com cuidado.\n\n👉 Acesse: https://paredejogar.com/quiz\n\n"Quando o jogo deixa de ser diversão e começa a controlar a vida, existe um caminho de volta. E ele começa com uma conversa."\n\nSe quiser conversar sobre isso quando puder, estou aqui por você.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "block",
+                textAlign: "center",
+                background: "#25D366",
+                color: "#fff",
+                fontFamily: "DM Sans, sans-serif",
+                fontWeight: 700,
+                fontSize: "1rem",
+                padding: "0.9rem",
+                borderRadius: 10,
+                textDecoration: "none",
+                letterSpacing: "0.01em",
+              }}
+            >
+              📲 Enviar resultado pelo WhatsApp
+            </a>
           </div>
         )}
       </div>
