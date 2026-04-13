@@ -16,6 +16,7 @@ export default function QuizFlow({ title, subtitle, questions, quizType }) {
   const progress = total > 0 ? (answered / total) * 100 : 0
 
   const handleSelect = (value) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     const next = [...answers, value]
     if (next.length === total) {
       const score = next.reduce((a, b) => a + b, 0)
