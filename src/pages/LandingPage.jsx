@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
-import LeadForm from '../components/LeadForm'
 
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
@@ -306,10 +305,10 @@ const css = `
 
 const faqs = [
   { p: 'O programa substitui tratamento psicológico?', r: 'Não. O programa é psicoeducacional e complementar. Para casos de dependência grave, o acompanhamento com profissional de saúde mental é fundamental. O ISTOP pode ser utilizado em paralelo ao tratamento.' },
-  { p: 'Preciso comprar todos os módulos de uma vez?', r: 'Não. O programa é vendido por módulos. Você começa pelo Módulo 1 e avança no seu ritmo. Cada módulo é independente e pode ser adquirido separadamente.' },
+  { p: 'Preciso comprar todos os módulos de uma vez?', r: 'O programa é vendido por módulo, de forma sequencial. Cada módulo é adquirido separadamente, mas a ordem é obrigatória: o Módulo 2 só pode ser comprado após o Módulo 1, o Módulo 3 após o 2, e assim por diante. Essa sequência existe porque cada etapa prepara você para a próxima.' },
   { p: 'O programa funciona para qualquer tipo de aposta?', r: 'Sim. O método foi desenvolvido para comportamentos compulsivos com apostas em geral — esportes, cassinos online, jogos de azar — com foco especial nas plataformas digitais (bets).' },
   { p: 'Quanto tempo por dia preciso dedicar?', r: 'Cada aula leva entre 15 e 25 minutos. As atividades práticas levam cerca de 3 minutos. O programa foi desenhado para ser compatível com a rotina de quem trabalha.' },
-  { p: 'Tenho acesso vitalício após a compra?', r: 'Sim. Após a compra de cada módulo, o acesso é vitalício. Você pode revisitar o conteúdo quantas vezes precisar ao longo da sua jornada.' },
+  { p: 'Tenho acesso vitalício após a compra?', r: 'Não. Após a compra de cada módulo, você tem 120 dias para concluí-lo. O prazo é individual por módulo — não existe limite de tempo global para o programa completo.' },
 ]
 
 export default function LandingPage() {
@@ -329,6 +328,8 @@ export default function LandingPage() {
   }, []);
 
   const temModulo1 = modulosLiberados.includes(1);
+  const coresIstop = ["#FFF8F0", "#F0F7FF", "#F5F0FF", "#F0FFF4", "#FFFBF0"];
+  const coresModulos = ["#FFF8F0", "#F0FFF4", "#F0F7FF", "#FFF0F0", "#F5F0FF"];
 
   function scrollTo(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -461,8 +462,8 @@ export default function LandingPage() {
               ['T', 'Transformação', 'Desenvolver ferramentas de autorregulação e criar espaço entre o gatilho e a ação.'],
               ['O', 'Organização', 'Reorganizar a rotina, os hábitos e o ambiente para sustentar a mudança.'],
               ['P', 'Prevenção', 'Consolidar o que foi aprendido e construir sistemas de proteção duradouros.'],
-            ].map(([l, n, d]) => (
-              <div key={l} className="lp-metodo-card">
+            ].map(([l, n, d], i) => (
+              <div key={l} className="lp-metodo-card" style={{ background: coresIstop[i % coresIstop.length] }}>
                 <div className="lp-metodo-letra">{l}</div>
                 <div className="lp-metodo-nome">{n}</div>
                 <div className="lp-metodo-desc">{d}</div>
@@ -507,8 +508,8 @@ export default function LandingPage() {
               { n: 3, nome: 'Autorregulação', desc: 'Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real — construído por você, para você.', info: '5 aulas · Plano Pessoal de Manejo' },
               { n: 4, nome: 'Reorganização', desc: 'Hábitos antigos são substituídos por novos padrões. Você reconstrói sua rotina com base em comportamentos que fortalecem a mudança.', info: '5 aulas · Estrutura de Rotina' },
               { n: 5, nome: 'Manutenção da Mudança e Prevenção de Recaídas', desc: 'Consolide as mudanças iniciadas no programa e desenvolva estratégias para reduzir o risco de recaída ao longo do tempo.', info: '5 aulas · Protocolo de Prevenção de Recaída · Certificado' },
-            ].map(m => (
-              <div key={m.n} className="lp-modulo-card">
+            ].map((m, i) => (
+              <div key={m.n} className="lp-modulo-card" style={{ background: coresModulos[i % coresModulos.length] }}>
                 <div className="lp-modulo-num">Módulo {m.n}</div>
                 <div className="lp-modulo-nome">{m.nome}</div>
                 <div className="lp-modulo-desc">{m.desc}</div>
@@ -521,30 +522,6 @@ export default function LandingPage() {
             {['Mapa de Gatilhos ISTOP', 'Plano Pessoal de Manejo do Impulso', 'Protocolo de Prevenção de Recaída', 'Certificado de Conclusão'].map(f => (
               <div key={f} className="lp-ferramenta-item">{f}</div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAMILIARES */}
-      <section className="lp-section lp-familiares" id="familiares">
-        <div className="lp-container">
-          <div className="lp-familiares-inner">
-            <div className="lp-familiares-texto">
-              <span className="lp-section-label">Para familiares</span>
-              <h2 className="lp-section-title">Para quem está do lado de fora — e também sofre</h2>
-              <p>Ver alguém que você ama perder o controle para o jogo é angustiante. Você tenta ajudar, mas não sabe como. Tenta falar, mas vira briga. Tenta ignorar, mas não consegue.</p>
-              <p>Você não está sozinho nessa situação — e existem formas de ajudar sem se machucar no processo.</p>
-              <ul className="lp-familiares-lista">
-                <li>As fases psicológicas do comportamento compulsivo</li>
-                <li>O que fazer e o que evitar nas conversas difíceis</li>
-                <li>Como indicar ajuda sem gerar resistência</li>
-              </ul>
-            </div>
-            <div className="lp-familiares-form">
-              <h3>Acesse o guia gratuito</h3>
-              <p>Deixe seu e-mail e receba orientações para familiares de apostadores.</p>
-              <LeadForm tipo="familiar" />
-            </div>
           </div>
         </div>
       </section>
