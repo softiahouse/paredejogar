@@ -350,7 +350,7 @@ export default function Painel() {
               const concluido = concluidos.includes(m.id);
               const pago = liberados.includes(m.id);
               const anteriorConcluido =
-                m.id === 1 || concluidos.includes(m.id - 1);
+                liberados.length === 5 || m.id === 1 || concluidos.includes(m.id - 1);
 
               let s;
               if (concluido) s = "concluido";
@@ -462,7 +462,7 @@ export default function Painel() {
             const concluido = concluidos.includes(m.id);
             const pago = liberados.includes(m.id);
             const anteriorConcluido =
-              m.id === 1 || concluidos.includes(m.id - 1);
+              liberados.length === 5 || m.id === 1 || concluidos.includes(m.id - 1);
 
             let status;
             if (concluido) status = "concluido";
@@ -728,3 +728,5 @@ export default function Painel() {
     </div>
   );
 }
+
+
