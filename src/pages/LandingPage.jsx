@@ -1,6 +1,7 @@
 // src/pages/LandingPage.jsx
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabaseClient'
 import LeadForm from '../components/LeadForm'
 
 const css = `
@@ -313,6 +314,21 @@ const faqs = [
 
 export default function LandingPage() {
   const [faqAberto, setFaqAberto] = useState(null)
+  const navigate = useNavigate();
+  const [modulosLiberados, setModulosLiberados] = useState([]);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) return;
+      const { data: lib } = await supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", data.user.id);
+      if (lib) setModulosLiberados(lib.map((r) => r.modulo_id));
+    });
+  }, []);
+
+  const temModulo1 = modulosLiberados.includes(1);
 
   function scrollTo(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -348,6 +364,32 @@ export default function LandingPage() {
           <div className="lp-hero-btns">
             <Link to="/quiz" className="lp-btn-primary">Teste para Jogador</Link>
             <Link to="/quiz/familias" className="lp-btn-secondary">Teste para Familiar</Link>
+          </div>
+          {/* Botão CTA principal */}
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+            <button
+              onClick={() => navigate(temModulo1 ? "/painel" : "/cadastrar")}
+              style={{
+                fontFamily: "DM Sans, sans-serif",
+                fontWeight: 700,
+                fontSize: "1.1rem",
+                padding: "1rem 0",
+                width: "100%",
+                maxWidth: 520,
+                borderRadius: 12,
+                border: "none",
+                cursor: "pointer",
+                background: temModulo1 ? "#C0392B" : "#5BA4CF",
+                color: "#fff",
+                letterSpacing: "0.01em",
+                boxShadow: temModulo1
+                  ? "0 4px 18px rgba(192,57,43,0.18)"
+                  : "0 4px 18px rgba(91,164,207,0.18)",
+                transition: "background 0.2s, box-shadow 0.2s",
+              }}
+            >
+              {temModulo1 ? "Continue sua jornada →" : "Inicie sua jornada →"}
+            </button>
           </div>
         </div>
       </section>
