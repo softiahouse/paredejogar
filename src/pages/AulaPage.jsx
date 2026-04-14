@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { modulos } from "../data/modulosContent";
+import BotaoEmergencia from "../components/BotaoEmergencia";
 
 /** Fragmentos de texto com trechos **negrito** (sem markdown completo). */
 function partesComNegrito(texto) {
@@ -18,6 +19,7 @@ function partesComNegrito(texto) {
 export default function AulaPage() {
   const { moduloId, aulaId } = useParams();
   const navigate = useNavigate();
+  const [modulosLiberados, setModulosLiberados] = useState([]);
 
   const mId = parseInt(moduloId);
   const aId = parseInt(aulaId);
@@ -35,6 +37,17 @@ export default function AulaPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [mId, aId]);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) return;
+      const { data: lib } = await supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", data.user.id);
+      if (lib) setModulosLiberados(lib.map((r) => r.modulo_id));
+    });
+  }, []);
 
   if (!modulo || !aula) {
     return (
@@ -320,6 +333,7 @@ export default function AulaPage() {
           </button>
         </div>
       </div>
+      <BotaoEmergencia modulosLiberados={modulosLiberados} />
     </div>
   );
 }
