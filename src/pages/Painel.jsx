@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
+import BotaoEmergencia from "../components/BotaoEmergencia";
 
 const PRECOS = {
   1: { label: "R$ 29,90", valor: 29.9 },
@@ -253,6 +254,7 @@ export default function Painel() {
           >
             {nome}
           </span>
+          <BotaoEmergencia modulosLiberados={liberados} inline={true} />
           <button
             onClick={async () => {
               await supabase.auth.signOut();

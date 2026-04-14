@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
 const BLOCOS = [
   {
-    id: 1,
-    modulo: "Módulo 1 — Interrupção",
-    cor: "#C0392B",
+    id: 1, modulo: "Módulo 1 — Interrupção", cor: "#C0392B",
     perguntas: [
       { texto: "Estou sentindo um impulso forte agora mesmo.", tipo: "Sim/Não" },
       { texto: "Já tentei recuperar perdas apostando mais nas últimas 24 horas.", tipo: "V/F" },
@@ -16,7 +14,7 @@ const BLOCOS = [
       { texto: "Sinto ansiedade quando penso em não apostar agora.", tipo: "Sim/Não" },
       { texto: "Já menti sobre quanto tempo ou dinheiro gastei jogando.", tipo: "V/F" },
       { texto: "Estou jogando para fugir de um problema ou emoção difícil.", tipo: "Sim/Não" },
-      { texto: 'Acredito que "desta vez vai ser diferente".', tipo: "V/F" },
+      { texto: "Acredito que \"desta vez vai ser diferente\".", tipo: "V/F" },
       { texto: "Estou sentindo culpa por minhas apostas recentes.", tipo: "Sim/Não" },
       { texto: "Já cancelei ou adiei compromissos importantes para jogar.", tipo: "V/F" },
       { texto: "Estou apostando valores cada vez maiores para sentir a mesma emoção.", tipo: "Sim/Não" },
@@ -25,14 +23,12 @@ const BLOCOS = [
       { texto: "Sinto que perdi o controle sobre minhas apostas.", tipo: "V/F" },
       { texto: "Estou ignorando sinais de alerta que reconheço.", tipo: "Sim/Não" },
       { texto: "Já tentei parar e não consegui sozinho.", tipo: "V/F" },
-      { texto: 'Estou justificando o jogo como "apenas diversão" agora.', tipo: "Sim/Não" },
+      { texto: "Estou justificando o jogo como \"apenas diversão\" agora.", tipo: "Sim/Não" },
       { texto: "Preciso de uma pausa consciente de 15 minutos antes de qualquer ação.", tipo: "V/F" },
     ],
   },
   {
-    id: 2,
-    modulo: "Módulo 2 — Sensibilização",
-    cor: "#D35400",
+    id: 2, modulo: "Módulo 2 — Sensibilização", cor: "#D35400",
     perguntas: [
       { texto: "Consigo identificar qual emoção estou sentindo agora.", tipo: "Sim/Não" },
       { texto: "Estou apostando porque estou entediado.", tipo: "V/F" },
@@ -46,7 +42,7 @@ const BLOCOS = [
       { texto: "Estou apostando para evitar pensar em algo difícil.", tipo: "V/F" },
       { texto: "Consigo nomear o que estou sentindo sem julgar.", tipo: "Sim/Não" },
       { texto: "Estou confundindo tédio com necessidade de jogar.", tipo: "V/F" },
-      { texto: 'Estou confundindo ansiedade com "sorte próxima".', tipo: "Sim/Não" },
+      { texto: "Estou confundindo ansiedade com \"sorte próxima\".", tipo: "Sim/Não" },
       { texto: "Já mapeei quais horários do dia sou mais vulnerável.", tipo: "V/F" },
       { texto: "Estou apostando porque vi alguém falando sobre isso.", tipo: "Sim/Não" },
       { texto: "Reconheço que estou no pico da curva do impulso agora.", tipo: "V/F" },
@@ -57,9 +53,7 @@ const BLOCOS = [
     ],
   },
   {
-    id: 3,
-    modulo: "Módulo 3 — Autorregulação",
-    cor: "#1A6B8A",
+    id: 3, modulo: "Módulo 3 — Autorregulação", cor: "#1A6B8A",
     perguntas: [
       { texto: "Já se passaram 15 minutos desde que senti o impulso?", tipo: "Sim/Não" },
       { texto: "Respirei profundamente 3 vezes antes de decidir.", tipo: "V/F" },
@@ -74,7 +68,7 @@ const BLOCOS = [
       { texto: "Já usei o Contrato de Interrupção antes.", tipo: "Sim/Não" },
       { texto: "Estou disposto a esperar mais 15 minutos antes de decidir.", tipo: "V/F" },
       { texto: "Já fiz algo prático para me distrair (caminhar, ler, ligar).", tipo: "Sim/Não" },
-      { texto: 'Consegui "surfar" a onda do impulso sem me afogar.', tipo: "V/F" },
+      { texto: "Consegui \"surfar\" a onda do impulso sem me afogar.", tipo: "V/F" },
       { texto: "Lembrei das consequências negativas de agir por impulso.", tipo: "Sim/Não" },
       { texto: "Já validei que o impulso é temporário.", tipo: "V/F" },
       { texto: "Estou aplicando o que aprendi sobre autorregulação.", tipo: "Sim/Não" },
@@ -84,9 +78,7 @@ const BLOCOS = [
     ],
   },
   {
-    id: 4,
-    modulo: "Módulo 4 — Organização",
-    cor: "#1E7E34",
+    id: 4, modulo: "Módulo 4 — Organização", cor: "#1E7E34",
     perguntas: [
       { texto: "Tenho uma rotina estruturada hoje.", tipo: "Sim/Não" },
       { texto: "Já reservei tempo para atividades saudáveis hoje.", tipo: "V/F" },
@@ -111,9 +103,7 @@ const BLOCOS = [
     ],
   },
   {
-    id: 5,
-    modulo: "Módulo 5 — Prevenção",
-    cor: "#5B2C8D",
+    id: 5, modulo: "Módulo 5 — Prevenção", cor: "#5B2C8D",
     perguntas: [
       { texto: "Já identifiquei situações de alto risco para mim.", tipo: "Sim/Não" },
       { texto: "Tenho estratégias de enfrentamento definidas.", tipo: "V/F" },
@@ -139,31 +129,24 @@ const BLOCOS = [
   },
 ];
 
-export default function BotaoEmergencia({ modulosLiberados = [] }) {
+export default function BotaoEmergencia({ modulosLiberados = [], inline = false }) {
   const [aberto, setAberto] = useState(false);
   const [blocoAtual, setBlocoAtual] = useState(null);
   const [respostas, setRespostas] = useState({});
   const [concluido, setConcluido] = useState(false);
   const temAcesso = modulosLiberados.length > 0;
 
-  useEffect(() => {}, []);
-
   async function handleAbrir() {
+    if (!temAcesso) { setAberto(true); return; }
     setAberto(true);
-    if (!temAcesso) return;
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
-
     const { data: vistos } = await supabase
       .from("emergencia_blocos_vistos")
       .select("bloco_id")
       .eq("user_id", user.id);
-
-    const idsVistos = vistos ? vistos.map((v) => v.bloco_id) : [];
-    const naoVistos = BLOCOS.filter((b) => !idsVistos.includes(b.id));
+    const idsVistos = vistos ? vistos.map(v => v.bloco_id) : [];
+    const naoVistos = BLOCOS.filter(b => !idsVistos.includes(b.id));
     const pool = naoVistos.length > 0 ? naoVistos : BLOCOS;
     const escolhido = pool[Math.floor(Math.random() * pool.length)];
     setBlocoAtual(escolhido);
@@ -172,11 +155,8 @@ export default function BotaoEmergencia({ modulosLiberados = [] }) {
   }
 
   async function handleConcluir() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     if (!user || !blocoAtual) return;
-
     await supabase.from("emergencia_blocos_vistos").upsert(
       { user_id: user.id, bloco_id: blocoAtual.id, visto_em: new Date().toISOString() },
       { onConflict: "user_id,bloco_id" }
@@ -194,402 +174,181 @@ export default function BotaoEmergencia({ modulosLiberados = [] }) {
   const totalRespondidas = Object.keys(respostas).length;
   const todasRespondidas = blocoAtual && totalRespondidas === blocoAtual.perguntas.length;
 
+  const btnStyle = inline ? {
+    background: temAcesso ? "#C0392B" : "#E0DDD8",
+    color: temAcesso ? "#fff" : "#999",
+    border: "none",
+    borderRadius: 8,
+    padding: "0.35rem 0.9rem",
+    fontFamily: "DM Sans, sans-serif",
+    fontWeight: 700,
+    fontSize: "0.78rem",
+    cursor: temAcesso ? "pointer" : "default",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.3rem",
+    title: temAcesso ? "" : "Disponível após comprar o Módulo 1",
+  } : {
+    position: "fixed",
+    bottom: "1.5rem",
+    right: "1.5rem",
+    zIndex: 1000,
+    background: "#C0392B",
+    color: "#fff",
+    border: "none",
+    borderRadius: 50,
+    padding: "0.75rem 1.25rem",
+    fontFamily: "DM Sans, sans-serif",
+    fontWeight: 700,
+    fontSize: "0.88rem",
+    cursor: "pointer",
+    boxShadow: "0 4px 16px rgba(192,57,43,0.4)",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.4rem",
+  };
+
   return (
     <>
-      <button
-        onClick={handleAbrir}
-        style={{
-          position: "fixed",
-          bottom: "1.5rem",
-          right: "1.5rem",
-          zIndex: 1000,
-          background: "#C0392B",
-          color: "#fff",
-          border: "none",
-          borderRadius: 50,
-          padding: "0.75rem 1.25rem",
-          fontFamily: "DM Sans, sans-serif",
-          fontWeight: 700,
-          fontSize: "0.88rem",
-          cursor: "pointer",
-          boxShadow: "0 4px 16px rgba(192,57,43,0.4)",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.4rem",
-        }}
-      >
-        🆘 Emergência
+      <button onClick={handleAbrir} style={btnStyle} title={!temAcesso ? "Disponível após comprar o Módulo 1" : ""}>
+        🆘 {inline ? "Emergência" : "Emergência"}
       </button>
 
       {aberto && (
-        <div
-          onClick={handleFechar}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 2000,
-            background: "rgba(0,0,0,0.6)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "1rem",
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              background: "#fff",
-              borderRadius: 16,
-              maxWidth: 560,
-              width: "100%",
-              maxHeight: "85vh",
-              overflowY: "auto",
-              padding: "2rem",
-              position: "relative",
-            }}
-          >
-            <button
-              onClick={handleFechar}
-              style={{
-                position: "absolute",
-                top: 16,
-                right: 16,
-                background: "none",
-                border: "none",
-                fontSize: "1.25rem",
-                cursor: "pointer",
-                color: "#888",
-              }}
-            >
-              ✕
-            </button>
+        <div onClick={handleFechar} style={{
+          position: "fixed", inset: 0, zIndex: 2000,
+          background: "rgba(0,0,0,0.6)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          padding: "1rem",
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: "#fff",
+            borderRadius: 16,
+            maxWidth: 560,
+            width: "100%",
+            maxHeight: "85vh",
+            overflowY: "auto",
+            padding: "2rem",
+            position: "relative",
+          }}>
+            <button onClick={handleFechar} style={{
+              position: "absolute", top: 16, right: 16,
+              background: "none", border: "none",
+              fontSize: "1.25rem", cursor: "pointer", color: "#888",
+            }}>✕</button>
 
             {!temAcesso ? (
               <div style={{ textAlign: "center", padding: "1rem 0" }}>
                 <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>🆘</div>
-                <h2
-                  style={{
-                    fontFamily: "DM Serif Display, serif",
-                    fontSize: "1.3rem",
-                    color: "#1a1a1a",
-                    marginBottom: "0.75rem",
-                  }}
-                >
+                <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.3rem", color: "#1a1a1a", marginBottom: "0.75rem" }}>
                   Ferramenta de Emergência
                 </h2>
-                <p
-                  style={{
-                    fontFamily: "DM Sans, sans-serif",
-                    color: "#555",
-                    fontSize: "0.92rem",
-                    lineHeight: 1.65,
-                    marginBottom: "1.25rem",
-                  }}
-                >
-                  Esta ferramenta de reflexão guiada está disponível para quem já iniciou o programa. Ela te
-                  ajuda a atravessar momentos de crise com perguntas que ativam a consciência e criam uma pausa
-                  antes da ação.
+                <p style={{ fontFamily: "DM Sans, sans-serif", color: "#555", fontSize: "0.92rem", lineHeight: 1.65, marginBottom: "1.25rem" }}>
+                  Esta ferramenta de reflexão guiada está disponível para quem já iniciou o programa. Ela te ajuda a atravessar momentos de crise com perguntas que ativam a consciência e criam uma pausa antes da ação.
                 </p>
-                <div
-                  style={{
-                    background: "#FFF8F0",
-                    border: "1px solid #FFD8A8",
-                    borderRadius: 10,
-                    padding: "1rem",
-                    marginBottom: "1.5rem",
-                    fontSize: "0.88rem",
-                    color: "#7A4500",
-                    fontFamily: "DM Sans, sans-serif",
-                  }}
-                >
+                <div style={{
+                  background: "#FFF8F0", border: "1px solid #FFD8A8",
+                  borderRadius: 10, padding: "1rem", marginBottom: "1.5rem",
+                  fontSize: "0.88rem", color: "#7A4500", fontFamily: "DM Sans, sans-serif",
+                }}>
                   Disponível a partir do <strong>Módulo 1 — Interrupção</strong>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <a
-                    href="/painel"
-                    style={{
-                      background: "#3B6D11",
-                      color: "#fff",
-                      padding: "0.75rem",
-                      borderRadius: 8,
-                      textDecoration: "none",
-                      fontFamily: "DM Sans, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.88rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    Começar o programa →
-                  </a>
-                  <p style={{ fontSize: "0.78rem", color: "#888", fontFamily: "DM Sans, sans-serif" }}>
-                    Em crise agora? Ligue para o CVV: <strong>188</strong> (24h)
-                  </p>
-                </div>
+                <a href="/painel" style={{
+                  display: "block", background: "#3B6D11", color: "#fff",
+                  padding: "0.75rem", borderRadius: 8, textDecoration: "none",
+                  fontFamily: "DM Sans, sans-serif", fontWeight: 700,
+                  fontSize: "0.88rem", textAlign: "center", marginBottom: "0.75rem",
+                }}>
+                  Começar o programa →
+                </a>
+                <p style={{ fontSize: "0.78rem", color: "#888", fontFamily: "DM Sans, sans-serif" }}>
+                  Em crise agora? CVV: <strong>188</strong> (24h)
+                </p>
               </div>
+
             ) : concluido ? (
               <div style={{ padding: "0.5rem 0" }}>
                 <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
                   <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>✅</div>
-                  <h2
-                    style={{
-                      fontFamily: "DM Serif Display, serif",
-                      fontSize: "1.2rem",
-                      color: "#1a1a1a",
-                      marginBottom: "0.4rem",
-                    }}
-                  >
+                  <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.4rem" }}>
                     Você observou o impulso sem agir.
                   </h2>
-                  <p
-                    style={{
-                      fontFamily: "DM Sans, sans-serif",
-                      fontSize: "0.88rem",
-                      color: "#555",
-                      lineHeight: 1.6,
-                    }}
-                  >
+                  <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#555", lineHeight: 1.6 }}>
                     Isso é Interrupção. O ciclo automático perdeu força.
                   </p>
                 </div>
-
-                {/* Guia de respiração */}
-                <div
-                  style={{
-                    background: "#F0F7FF",
-                    border: "1px solid #BFD9F5",
-                    borderRadius: 14,
-                    padding: "1.25rem",
-                    marginBottom: "1.25rem",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontFamily: "DM Sans, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.78rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                      color: "#1A6B8A",
-                      marginBottom: "1rem",
-                    }}
-                  >
+                <div style={{ background: "#F0F7FF", border: "1px solid #BFD9F5", borderRadius: 14, padding: "1.25rem", marginBottom: "1.25rem" }}>
+                  <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#1A6B8A", marginBottom: "1rem" }}>
                     Respiração regulada — ativando o freio natural do corpo
                   </p>
-
                   {[
-                    {
-                      num: "1️⃣",
-                      titulo: "PREPARE-SE",
-                      itens: [
-                        "Sente-se confortavelmente ou fique em pé com os pés no chão",
-                        "Coloque uma mão no peito e outra na barriga",
-                        "Feche os olhos ou mantenha o olhar suave em um ponto fixo",
-                      ],
-                    },
-                    {
-                      num: "2️⃣",
-                      titulo: "INSPIRE PELO NARIZ (4 segundos)",
-                      itens: [
-                        "Conte mentalmente: 1... 2... 3... 4",
-                        "Sinta a barriga expandir (não só o peito)",
-                        "Imagine que está enchendo um balão suave dentro de você",
-                      ],
-                    },
-                    {
-                      num: "3️⃣",
-                      titulo: "SEGURE LEVEMENTE (6 segundos)",
-                      itens: [
-                        "Conte: 1... 2... 3... 4... 5... 6",
-                        "Não force — apenas pause naturalmente",
-                        "Observe a sensação de plenitude",
-                      ],
-                    },
-                    {
-                      num: "4️⃣",
-                      titulo: "EXPIRE PELA BOCA (2 segundos)",
-                      itens: [
-                        "Solte o ar suavemente, como se estivesse assoprando uma vela sem apagar",
-                        "Conte: 1... 2",
-                        "Sinta a barriga voltar ao lugar",
-                      ],
-                    },
-                    {
-                      num: "🔁",
-                      titulo: "REPITA 5 a 10 CICLOS",
-                      itens: [
-                        "Tempo total: 2 a 3 minutos",
-                        "Se distrair, volte gentilmente para a contagem",
-                      ],
-                    },
+                    { num: "1️⃣", titulo: "PREPARE-SE", itens: ["Sente-se confortavelmente ou fique em pé com os pés no chão", "Coloque uma mão no peito e outra na barriga", "Feche os olhos ou mantenha o olhar suave em um ponto fixo"] },
+                    { num: "2️⃣", titulo: "INSPIRE PELO NARIZ (4 segundos)", itens: ["Conte mentalmente: 1... 2... 3... 4", "Sinta a barriga expandir (não só o peito)", "Imagine que está enchendo um balão suave dentro de você"] },
+                    { num: "3️⃣", titulo: "SEGURE LEVEMENTE (6 segundos)", itens: ["Conte: 1... 2... 3... 4... 5... 6", "Não force — apenas pause naturalmente", "Observe a sensação de plenitude"] },
+                    { num: "4️⃣", titulo: "EXPIRE PELA BOCA (2 segundos)", itens: ["Solte o ar suavemente, como se estivesse assoprando uma vela sem apagar", "Conte: 1... 2", "Sinta a barriga voltar ao lugar"] },
+                    { num: "🔁", titulo: "REPITA 5 a 10 CICLOS", itens: ["Tempo total: 2 a 3 minutos", "Se distrair, volte gentilmente para a contagem"] },
                   ].map((passo, i) => (
                     <div key={i} style={{ marginBottom: "0.9rem" }}>
-                      <p
-                        style={{
-                          fontFamily: "DM Sans, sans-serif",
-                          fontWeight: 700,
-                          fontSize: "0.85rem",
-                          color: "#1A6B8A",
-                          marginBottom: "0.3rem",
-                        }}
-                      >
+                      <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>
                         {passo.num} {passo.titulo}
                       </p>
                       {passo.itens.map((item, j) => (
-                        <p
-                          key={j}
-                          style={{
-                            fontFamily: "DM Sans, sans-serif",
-                            fontSize: "0.82rem",
-                            color: "#444",
-                            lineHeight: 1.55,
-                            paddingLeft: "1.2rem",
-                            margin: "0.15rem 0",
-                          }}
-                        >
-                          • {item}
-                        </p>
+                        <p key={j} style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#444", lineHeight: 1.55, paddingLeft: "1.2rem", margin: "0.15rem 0" }}>• {item}</p>
                       ))}
                     </div>
                   ))}
                 </div>
-
-                {/* Mensagens de reforço */}
                 {[
-                  { texto: "O impulso tem pico... e depois passa.\nVocê não precisa fazer nada agora.\nSó respirar." },
-                  {
-                    texto:
-                      'Seu "freio natural" foi ativado.\nO nervo vago respondeu.\nSeu corpo está mais calmo.\nSua mente, mais clara.',
-                  },
+                  { texto: "O impulso tem pico... e depois passa.\nVocê não precisa fazer nada agora.\nSó respirar.", bg: "#F5F0FF", border: "#D4C5F5", cor: "#4A2D8D" },
+                  { texto: "Seu \"freio natural\" foi ativado.\nO nervo vago respondeu.\nSeu corpo está mais calmo.\nSua mente, mais clara.", bg: "#F0FFF4", border: "#C3E6CB", cor: "#1E5C2E" },
                 ].map((msg, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      background: i === 0 ? "#F5F0FF" : "#F0FFF4",
-                      border: `1px solid ${i === 0 ? "#D4C5F5" : "#C3E6CB"}`,
-                      borderRadius: 10,
-                      padding: "1rem 1.25rem",
-                      marginBottom: "0.75rem",
-                      fontFamily: "DM Serif Display, serif",
-                      fontSize: "0.95rem",
-                      color: i === 0 ? "#4A2D8D" : "#1E5C2E",
-                      lineHeight: 1.7,
-                      whiteSpace: "pre-line",
-                      textAlign: "center",
-                    }}
-                  >
+                  <div key={i} style={{ background: msg.bg, border: `1px solid ${msg.border}`, borderRadius: 10, padding: "1rem 1.25rem", marginBottom: "0.75rem", fontFamily: "DM Serif Display, serif", fontSize: "0.95rem", color: msg.cor, lineHeight: 1.7, whiteSpace: "pre-line", textAlign: "center" }}>
                     {msg.texto}
                   </div>
                 ))}
-
-                <p
-                  style={{
-                    textAlign: "center",
-                    fontSize: "0.75rem",
-                    color: "#aaa",
-                    fontFamily: "DM Sans, sans-serif",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  Em crise? CVV: <strong>188</strong> · SAMU: <strong>192</strong> (24h gratuito)
+                <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginBottom: "1rem" }}>
+                  Em crise? CVV: <strong>188</strong> · SAMU: <strong>192</strong>
                 </p>
-
-                <button
-                  onClick={handleFechar}
-                  style={{
-                    width: "100%",
-                    background: "#3B6D11",
-                    color: "#fff",
-                    border: "none",
-                    padding: "0.9rem",
-                    borderRadius: 10,
-                    fontFamily: "DM Sans, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.95rem",
-                    cursor: "pointer",
-                  }}
-                >
+                <button onClick={handleFechar} style={{ width: "100%", background: "#3B6D11", color: "#fff", border: "none", padding: "0.9rem", borderRadius: 10, fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
                   Fechar
                 </button>
               </div>
+
             ) : blocoAtual ? (
               <>
-                <div
-                  style={{
-                    display: "inline-block",
-                    background: `${blocoAtual.cor}15`,
-                    color: blocoAtual.cor,
-                    padding: "0.25rem 0.75rem",
-                    borderRadius: 99,
-                    fontSize: "0.72rem",
-                    fontFamily: "DM Sans, sans-serif",
-                    fontWeight: 700,
-                    marginBottom: "0.5rem",
-                  }}
-                >
+                {/* Imagem curva do impulso */}
+                <div style={{ marginBottom: "1.25rem", borderRadius: 10, overflow: "hidden" }}>
+                  <img
+                    src="/imagens/curva-do-impulso.png"
+                    alt="A Curva do Impulso"
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                </div>
+
+                <div style={{ display: "inline-block", background: blocoAtual.cor + "15", color: blocoAtual.cor, padding: "0.25rem 0.75rem", borderRadius: 99, fontSize: "0.72rem", fontFamily: "DM Sans, sans-serif", fontWeight: 700, marginBottom: "0.5rem" }}>
                   {blocoAtual.modulo}
                 </div>
-                <h2
-                  style={{
-                    fontFamily: "DM Serif Display, serif",
-                    fontSize: "1.2rem",
-                    color: "#1a1a1a",
-                    marginBottom: "0.25rem",
-                  }}
-                >
+                <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.25rem" }}>
                   Reflexão de emergência
                 </h2>
-                <p
-                  style={{
-                    fontFamily: "DM Sans, sans-serif",
-                    fontSize: "0.82rem",
-                    color: "#888",
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/
-                  {blocoAtual.perguntas.length})
+                <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#888", marginBottom: "1.5rem" }}>
+                  Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/{blocoAtual.perguntas.length})
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
                   {blocoAtual.perguntas.map((p, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        background: "#F7F5F0",
-                        borderRadius: 10,
-                        padding: "0.9rem 1rem",
-                        border: respostas[i] ? `1px solid ${blocoAtual.cor}40` : "1px solid #E8E4DC",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontFamily: "DM Sans, sans-serif",
-                          fontSize: "0.88rem",
-                          color: "#333",
-                          marginBottom: "0.6rem",
-                          lineHeight: 1.5,
-                        }}
-                      >
+                    <div key={i} style={{ background: "#F7F5F0", borderRadius: 10, padding: "0.9rem 1rem", border: respostas[i] ? `1px solid ${blocoAtual.cor}40` : "1px solid #E8E4DC" }}>
+                      <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#333", marginBottom: "0.6rem", lineHeight: 1.5 }}>
                         {i + 1}. {p.texto}
                       </p>
                       <div style={{ display: "flex", gap: "0.5rem" }}>
-                        {(p.tipo === "Sim/Não" ? ["Sim", "Não"] : ["Verdadeiro", "Falso"]).map((op) => (
-                          <button
-                            key={op}
-                            onClick={() => setRespostas((r) => ({ ...r, [i]: op }))}
-                            style={{
-                              padding: "0.3rem 0.9rem",
-                              borderRadius: 6,
-                              border: "none",
-                              cursor: "pointer",
-                              fontFamily: "DM Sans, sans-serif",
-                              fontSize: "0.8rem",
-                              fontWeight: 600,
-                              background: respostas[i] === op ? blocoAtual.cor : "#fff",
-                              color: respostas[i] === op ? "#fff" : "#555",
-                              transition: "all 0.15s",
-                            }}
-                          >
+                        {(p.tipo === "Sim/Não" ? ["Sim", "Não"] : ["Verdadeiro", "Falso"]).map(op => (
+                          <button key={op} onClick={() => setRespostas(r => ({ ...r, [i]: op }))} style={{
+                            padding: "0.3rem 0.9rem", borderRadius: 6, border: "none", cursor: "pointer",
+                            fontFamily: "DM Sans, sans-serif", fontSize: "0.8rem", fontWeight: 600,
+                            background: respostas[i] === op ? blocoAtual.cor : "#fff",
+                            color: respostas[i] === op ? "#fff" : "#555",
+                          }}>
                             {op}
                           </button>
                         ))}
@@ -599,34 +358,11 @@ export default function BotaoEmergencia({ modulosLiberados = [] }) {
                 </div>
 
                 {todasRespondidas && (
-                  <button
-                    onClick={handleConcluir}
-                    style={{
-                      width: "100%",
-                      background: blocoAtual.cor,
-                      color: "#fff",
-                      border: "none",
-                      padding: "0.9rem",
-                      borderRadius: 10,
-                      fontFamily: "DM Sans, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.95rem",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <button onClick={handleConcluir} style={{ width: "100%", background: blocoAtual.cor, color: "#fff", border: "none", padding: "0.9rem", borderRadius: 10, fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
                     Concluir reflexão
                   </button>
                 )}
-
-                <p
-                  style={{
-                    textAlign: "center",
-                    fontSize: "0.75rem",
-                    color: "#aaa",
-                    fontFamily: "DM Sans, sans-serif",
-                    marginTop: "1rem",
-                  }}
-                >
+                <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginTop: "1rem" }}>
                   CVV: 188 · SAMU: 192 (24h)
                 </p>
               </>
