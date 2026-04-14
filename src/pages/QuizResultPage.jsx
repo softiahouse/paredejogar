@@ -241,7 +241,7 @@ export default function QuizResultPage() {
                 letterSpacing: "0.01em",
               }}
             >
-              📲 Enviar resultado pelo WhatsApp
+              Pensei em você ao ver isso. Vale dar uma olhada
             </a>
           </div>
         )}
