@@ -431,6 +431,93 @@ export default function Painel() {
               );
             })}
           </div>
+
+          {/* Livros gratuitos — Módulo 1 */}
+          {liberados.includes(1) && (
+            <div
+              style={{
+                marginTop: "1.5rem",
+                paddingTop: "1.25rem",
+                borderTop: "1px solid #E8E4DC",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "DM Sans, sans-serif",
+                  fontSize: "0.72rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  color: "#3B6D11",
+                  fontWeight: 700,
+                  marginBottom: "0.9rem",
+                }}
+              >
+                📚 Seus materiais gratuitos
+              </p>
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                {[
+                  { titulo: "O Luto", autor: "Marcelo R. Paulo", arquivo: "/livros/o-luto.pdf", capa: "/imagens/capa-o-luto.png" },
+                  { titulo: "Jogo Online", autor: "Vício de Bolso", arquivo: "/livros/jogo-online.pdf", capa: "/imagens/capa-jogo-online.png" },
+                ].map((livro, i) => (
+                  <a
+                    key={i}
+                    href={livro.arquivo}
+                    download
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.75rem",
+                      background: "#F7F5F0",
+                      border: "1px solid #E8E4DC",
+                      borderRadius: 10,
+                      padding: "0.65rem 1rem",
+                      textDecoration: "none",
+                      flex: "1 1 200px",
+                      minWidth: 180,
+                    }}
+                  >
+                    <img
+                      src={livro.capa}
+                      alt={livro.titulo}
+                      style={{ width: 36, height: 50, objectFit: "cover", borderRadius: 4, flexShrink: 0 }}
+                    />
+                    <div style={{ flex: 1 }}>
+                      <p
+                        style={{
+                          fontFamily: "DM Serif Display, serif",
+                          fontSize: "0.88rem",
+                          color: "#1a1a1a",
+                          marginBottom: "0.15rem",
+                        }}
+                      >
+                        {livro.titulo}
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "DM Sans, sans-serif",
+                          fontSize: "0.75rem",
+                          color: "#888",
+                          marginBottom: "0.3rem",
+                        }}
+                      >
+                        {livro.autor}
+                      </p>
+                      <span
+                        style={{
+                          fontFamily: "DM Sans, sans-serif",
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          color: "#3B6D11",
+                        }}
+                      >
+                        ↓ Baixar grátis
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {totalConcluidos === 5 && (
