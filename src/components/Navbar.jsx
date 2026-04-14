@@ -14,30 +14,12 @@ export default function Navbar() {
   return (
     <nav className="istop-nav">
       <div className="istop-nav-inner">
-        <Link
-          to="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            textDecoration: "none",
-          }}
-        >
+        <Link to="/" style={{ textDecoration: "none", display: "flex" }}>
           <img
-            src="/logo-icon.png"
-            alt="PareDeJogar"
-            style={{ height: 128, width: "auto" }}
+            src="/logo-instituto-istop.svg"
+            alt="Instituto ISTOP"
+            style={{ height: 56, width: "auto" }}
           />
-          <span
-            style={{
-              fontFamily: "DM Serif Display, serif",
-              fontSize: "1.25rem",
-              color: "#3B6D11",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Instituto ISTOP
-          </span>
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           {user ? (
