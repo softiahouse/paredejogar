@@ -19,6 +19,7 @@ import QuizPage from './pages/QuizPage'
 import FamilyQuizPage from './pages/FamilyQuizPage'
 import QuizResultPage from './pages/QuizResultPage'
 import CertificadoPage from './pages/CertificadoPage'
+import TermosPage from './pages/TermosPage'
 
 function Layout({ children, noFooter }) {
   return (
@@ -44,6 +45,8 @@ export default function App() {
           <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
           <Route path="/nova-senha" element={<NovaSenha />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/termos" element={<TermosPage />} />
+          <Route path="/privacidade" element={<TermosPage />} />
           {/* Rotas /modulo/...: a rota com mais segmentos (/aula/:aulaId) deve vir ANTES de /modulo/:id */}
           <Route
             path="/modulo/:moduloId/aula/:aulaId"

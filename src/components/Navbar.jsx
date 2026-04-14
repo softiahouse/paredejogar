@@ -17,23 +17,23 @@ export default function Navbar() {
         <Link
           to="/"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            textDecoration: 'none',
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            textDecoration: "none",
           }}
         >
           <img
             src="/logo-icon.png"
             alt="PareDeJogar"
-            style={{ height: 32, width: 'auto' }}
+            style={{ height: 128, width: "auto" }}
           />
           <span
             style={{
-              fontFamily: 'DM Serif Display, serif',
-              fontSize: '1.25rem',
-              color: '#3B6D11',
-              letterSpacing: '-0.02em',
+              fontFamily: "DM Serif Display, serif",
+              fontSize: "1.25rem",
+              color: "#3B6D11",
+              letterSpacing: "-0.02em",
             }}
           >
             Instituto ISTOP
