@@ -327,51 +327,184 @@ export default function BotaoEmergencia({ modulosLiberados = [] }) {
                 </div>
               </div>
             ) : concluido ? (
-              <div style={{ textAlign: "center", padding: "1rem 0" }}>
-                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>✅</div>
-                <h2
+              <div style={{ padding: "0.5rem 0" }}>
+                <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+                  <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>✅</div>
+                  <h2
+                    style={{
+                      fontFamily: "DM Serif Display, serif",
+                      fontSize: "1.2rem",
+                      color: "#1a1a1a",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Você observou o impulso sem agir.
+                  </h2>
+                  <p
+                    style={{
+                      fontFamily: "DM Sans, sans-serif",
+                      fontSize: "0.88rem",
+                      color: "#555",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Isso é Interrupção. O ciclo automático perdeu força.
+                  </p>
+                </div>
+
+                {/* Guia de respiração */}
+                <div
                   style={{
-                    fontFamily: "DM Serif Display, serif",
-                    fontSize: "1.3rem",
-                    color: "#1a1a1a",
-                    marginBottom: "0.75rem",
-                  }}
-                >
-                  Reflexão concluída
-                </h2>
-                <p
-                  style={{
-                    fontFamily: "DM Sans, sans-serif",
-                    color: "#555",
-                    fontSize: "0.92rem",
-                    lineHeight: 1.65,
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  Você acabou de atravessar um momento difícil com consciência. Isso é autorregulação em ação.
-                  Espere 15 minutos antes de tomar qualquer decisão.
-                </p>
-                <p
-                  style={{
-                    fontSize: "0.78rem",
-                    color: "#888",
-                    fontFamily: "DM Sans, sans-serif",
+                    background: "#F0F7FF",
+                    border: "1px solid #BFD9F5",
+                    borderRadius: 14,
+                    padding: "1.25rem",
                     marginBottom: "1.25rem",
                   }}
                 >
-                  Em crise agora? CVV: <strong>188</strong> (24h gratuito)
+                  <p
+                    style={{
+                      fontFamily: "DM Sans, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.78rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "#1A6B8A",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    Respiração regulada — ativando o freio natural do corpo
+                  </p>
+
+                  {[
+                    {
+                      num: "1️⃣",
+                      titulo: "PREPARE-SE",
+                      itens: [
+                        "Sente-se confortavelmente ou fique em pé com os pés no chão",
+                        "Coloque uma mão no peito e outra na barriga",
+                        "Feche os olhos ou mantenha o olhar suave em um ponto fixo",
+                      ],
+                    },
+                    {
+                      num: "2️⃣",
+                      titulo: "INSPIRE PELO NARIZ (4 segundos)",
+                      itens: [
+                        "Conte mentalmente: 1... 2... 3... 4",
+                        "Sinta a barriga expandir (não só o peito)",
+                        "Imagine que está enchendo um balão suave dentro de você",
+                      ],
+                    },
+                    {
+                      num: "3️⃣",
+                      titulo: "SEGURE LEVEMENTE (6 segundos)",
+                      itens: [
+                        "Conte: 1... 2... 3... 4... 5... 6",
+                        "Não force — apenas pause naturalmente",
+                        "Observe a sensação de plenitude",
+                      ],
+                    },
+                    {
+                      num: "4️⃣",
+                      titulo: "EXPIRE PELA BOCA (2 segundos)",
+                      itens: [
+                        "Solte o ar suavemente, como se estivesse assoprando uma vela sem apagar",
+                        "Conte: 1... 2",
+                        "Sinta a barriga voltar ao lugar",
+                      ],
+                    },
+                    {
+                      num: "🔁",
+                      titulo: "REPITA 5 a 10 CICLOS",
+                      itens: [
+                        "Tempo total: 2 a 3 minutos",
+                        "Se distrair, volte gentilmente para a contagem",
+                      ],
+                    },
+                  ].map((passo, i) => (
+                    <div key={i} style={{ marginBottom: "0.9rem" }}>
+                      <p
+                        style={{
+                          fontFamily: "DM Sans, sans-serif",
+                          fontWeight: 700,
+                          fontSize: "0.85rem",
+                          color: "#1A6B8A",
+                          marginBottom: "0.3rem",
+                        }}
+                      >
+                        {passo.num} {passo.titulo}
+                      </p>
+                      {passo.itens.map((item, j) => (
+                        <p
+                          key={j}
+                          style={{
+                            fontFamily: "DM Sans, sans-serif",
+                            fontSize: "0.82rem",
+                            color: "#444",
+                            lineHeight: 1.55,
+                            paddingLeft: "1.2rem",
+                            margin: "0.15rem 0",
+                          }}
+                        >
+                          • {item}
+                        </p>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mensagens de reforço */}
+                {[
+                  { texto: "O impulso tem pico... e depois passa.\nVocê não precisa fazer nada agora.\nSó respirar." },
+                  {
+                    texto:
+                      'Seu "freio natural" foi ativado.\nO nervo vago respondeu.\nSeu corpo está mais calmo.\nSua mente, mais clara.',
+                  },
+                ].map((msg, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: i === 0 ? "#F5F0FF" : "#F0FFF4",
+                      border: `1px solid ${i === 0 ? "#D4C5F5" : "#C3E6CB"}`,
+                      borderRadius: 10,
+                      padding: "1rem 1.25rem",
+                      marginBottom: "0.75rem",
+                      fontFamily: "DM Serif Display, serif",
+                      fontSize: "0.95rem",
+                      color: i === 0 ? "#4A2D8D" : "#1E5C2E",
+                      lineHeight: 1.7,
+                      whiteSpace: "pre-line",
+                      textAlign: "center",
+                    }}
+                  >
+                    {msg.texto}
+                  </div>
+                ))}
+
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: "0.75rem",
+                    color: "#aaa",
+                    fontFamily: "DM Sans, sans-serif",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Em crise? CVV: <strong>188</strong> · SAMU: <strong>192</strong> (24h gratuito)
                 </p>
+
                 <button
                   onClick={handleFechar}
                   style={{
+                    width: "100%",
                     background: "#3B6D11",
                     color: "#fff",
                     border: "none",
-                    padding: "0.75rem 2rem",
-                    borderRadius: 8,
+                    padding: "0.9rem",
+                    borderRadius: 10,
                     fontFamily: "DM Sans, sans-serif",
                     fontWeight: 700,
-                    fontSize: "0.88rem",
+                    fontSize: "0.95rem",
                     cursor: "pointer",
                   }}
                 >
