@@ -3,6 +3,7 @@ import { AuthProvider } from './hooks/useAuth'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
+import BotaoEmergencia from "./components/BotaoEmergencia";
 
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/auth/LoginPage'
@@ -70,6 +71,7 @@ export default function App() {
           <Route path="/checkin" element={<ProtectedRoute><Layout><CheckIn /></Layout></ProtectedRoute>} />
           <Route path="*" element={<Layout><div style={{ padding: '120px 24px', textAlign: 'center' }}><h2>Página não encontrada</h2></div></Layout>} />
         </Routes>
+        <BotaoEmergencia modulosLiberados={[]} inline={false} />
       </AuthProvider>
     </BrowserRouter>
   )
