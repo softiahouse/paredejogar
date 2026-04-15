@@ -204,12 +204,12 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#fff",
-              fontSize: "1.6rem",
+              padding: 0,
+              overflow: "hidden",
             }}
             title="Botão de Emergência"
           >
-            ⏸
+            <img src="/logo-icon.png" alt="Emergência" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
           </button>
           <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
             Emergência
@@ -347,7 +347,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               </>
             ) : (
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>⏸</div>
+                <img src="/logo-icon.png" alt="PareDeJogar" style={{ width: 72, height: 72, objectFit: "contain", margin: "0 auto 0.75rem" }} />
                 <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.3rem", color: "#1a1a1a", marginBottom: "0.5rem" }}>
                   Você fez a escolha certa ao clicar aqui.
                 </h2>
@@ -355,9 +355,21 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                   <p style={{ fontWeight: 700, color: "#3B6D11", marginBottom: "0.75rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                     Responda agora, com honestidade:
                   </p>
-                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.95rem" }}>💭 O que aconteceu antes dessa vontade aparecer?</p>
-                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.95rem" }}>🎲 O que você vai sentir se jogar agora?</p>
-                  <p style={{ color: "#444", fontSize: "0.95rem" }}>🛑 O que você vai sentir se resistir?</p>
+                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.92rem" }}>O que aconteceu antes dessa vontade aparecer?</p>
+                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.92rem" }}>O que você vai sentir se jogar agora?</p>
+                  <p style={{ color: "#444", marginBottom: "1rem", fontSize: "0.92rem" }}>O que você vai sentir se resistir?</p>
+                  <div style={{ borderTop: "1px solid #e0d8cc", paddingTop: "0.75rem" }}>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Você está sentindo um impulso AGORA?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Este impulso surgiu nos últimos 15 minutos?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Você já tentou recuperar perdas nas últimas 24h?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Está apostando escondido de alguém?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Você usou dinheiro que precisava para outra coisa?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Está sentindo culpa por suas apostas recentes?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Já mentiu sobre quanto tempo/dinheiro gastou jogando?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Está tentando provar algo através do jogo?</p>
+                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Sente que o jogo está controlando suas decisões hoje?</p>
+                    <p style={{ color: "#555", fontSize: "0.88rem" }}>Já cancelou ou adiou algo importante para jogar?</p>
+                  </div>
                 </div>
                 <p style={{ color: "#666", fontSize: "0.85rem", marginBottom: "1.25rem", lineHeight: 1.6 }}>
                   Esta ferramenta tem uma versão completa com <strong>100 perguntas randomizadas</strong>, a Curva do Impulso e técnica de respiração guiada.
