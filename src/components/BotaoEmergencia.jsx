@@ -130,14 +130,14 @@ const BLOCOS = [
 ];
 
 export default function BotaoEmergencia({ modulosLiberados = [], inline = false }) {
+  const temModulo = modulosLiberados && modulosLiberados.length > 0;
   const [aberto, setAberto] = useState(false);
   const [blocoAtual, setBlocoAtual] = useState(null);
   const [respostas, setRespostas] = useState({});
   const [concluido, setConcluido] = useState(false);
-  const temAcesso = modulosLiberados.length > 0;
 
   async function handleAbrir() {
-    if (!temAcesso) { setAberto(true); return; }
+    if (!temModulo) { setAberto(true); return; }
     setAberto(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -174,221 +174,217 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
   const totalRespondidas = Object.keys(respostas).length;
   const todasRespondidas = blocoAtual && totalRespondidas === blocoAtual.perguntas.length;
 
-  const btnStyle = inline ? {
-    background: temAcesso ? "#C0392B" : "#E0DDD8",
-    color: temAcesso ? "#fff" : "#999",
-    border: "none",
-    borderRadius: 8,
-    padding: "0.35rem 0.9rem",
-    fontFamily: "DM Sans, sans-serif",
-    fontWeight: 700,
-    fontSize: "0.78rem",
-    cursor: temAcesso ? "pointer" : "default",
-    display: "flex",
-    alignItems: "center",
-    gap: "0.3rem",
-    title: temAcesso ? "" : "Disponível após comprar o Módulo 1",
-  } : {
-    position: "fixed",
-    bottom: "1.5rem",
-    right: "1.5rem",
-    zIndex: 1000,
-    background: "#C0392B",
-    color: "#fff",
-    border: "none",
-    borderRadius: 50,
-    padding: "0.75rem 1.25rem",
-    fontFamily: "DM Sans, sans-serif",
-    fontWeight: 700,
-    fontSize: "0.88rem",
-    cursor: "pointer",
-    boxShadow: "0 4px 16px rgba(192,57,43,0.4)",
-    display: "flex",
-    alignItems: "center",
-    gap: "0.4rem",
-  };
-
   return (
     <>
-      <button onClick={handleAbrir} style={btnStyle} title={!temAcesso ? "Disponível após comprar o Módulo 1" : ""}>
-        🆘 {inline ? "Emergência" : "Emergência"}
-      </button>
+      {/* BOTÃO FLUTUANTE — aparece sempre no canto direito */}
+      {!inline && (
+        <div
+          style={{
+            position: "fixed",
+            right: "1.25rem",
+            bottom: "1.75rem",
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.4rem",
+          }}
+        >
+          <button
+            onClick={() => (temModulo ? handleAbrir() : setAberto(true))}
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: "50%",
+              background: "radial-gradient(circle at 35% 35%, #e74c3c, #922b21)",
+              border: "3px solid rgba(255,255,255,0.3)",
+              boxShadow: "0 0 0 0 rgba(231,76,60,0.7)",
+              animation: "pulseHeart 1.4s ease-in-out infinite",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              fontSize: "1.6rem",
+            }}
+            title="Botão de Emergência"
+          >
+            ⏸
+          </button>
+          <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
+            Emergência
+          </span>
+        </div>
+      )}
 
+      {/* MODAL */}
       {aberto && (
-        <div onClick={handleFechar} style={{
-          position: "fixed", inset: 0, zIndex: 2000,
-          background: "rgba(0,0,0,0.6)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          padding: "1rem",
-        }}>
-          <div onClick={e => e.stopPropagation()} style={{
-            background: "#fff",
-            borderRadius: 16,
-            maxWidth: 560,
-            width: "100%",
-            maxHeight: "85vh",
-            overflowY: "auto",
-            padding: "2rem",
-            position: "relative",
-          }}>
-            <button onClick={handleFechar} style={{
-              position: "absolute", top: 16, right: 16,
-              background: "none", border: "none",
-              fontSize: "1.25rem", cursor: "pointer", color: "#888",
-            }}>✕</button>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
+          <div style={{ background: "#fff", borderRadius: 16, padding: "2rem 1.5rem", maxWidth: 480, width: "100%", maxHeight: "85vh", overflowY: "auto", position: "relative" }}>
+            <button onClick={handleFechar} style={{ position: "absolute", top: "1rem", right: "1rem", background: "none", border: "none", fontSize: "1.4rem", cursor: "pointer", color: "#666" }}>×</button>
 
-            {!temAcesso ? (
-              <div style={{ textAlign: "center", padding: "1rem 0" }}>
-                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>🆘</div>
-                <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.3rem", color: "#1a1a1a", marginBottom: "0.75rem" }}>
-                  Ferramenta de Emergência
-                </h2>
-                <p style={{ fontFamily: "DM Sans, sans-serif", color: "#555", fontSize: "0.92rem", lineHeight: 1.65, marginBottom: "1.25rem" }}>
-                  Esta ferramenta de reflexão guiada está disponível para quem já iniciou o programa. Ela te ajuda a atravessar momentos de crise com perguntas que ativam a consciência e criam uma pausa antes da ação.
-                </p>
-                <div style={{
-                  background: "#FFF8F0", border: "1px solid #FFD8A8",
-                  borderRadius: 10, padding: "1rem", marginBottom: "1.5rem",
-                  fontSize: "0.88rem", color: "#7A4500", fontFamily: "DM Sans, sans-serif",
-                }}>
-                  Disponível a partir do <strong>Módulo 1 — Interrupção</strong>
-                </div>
-                <a href="/painel" style={{
-                  display: "block", background: "#3B6D11", color: "#fff",
-                  padding: "0.75rem", borderRadius: 8, textDecoration: "none",
-                  fontFamily: "DM Sans, sans-serif", fontWeight: 700,
-                  fontSize: "0.88rem", textAlign: "center", marginBottom: "0.75rem",
-                }}>
-                  Começar o programa →
-                </a>
-                <p style={{ fontSize: "0.78rem", color: "#888", fontFamily: "DM Sans, sans-serif" }}>
-                  Em crise agora? CVV: <strong>188</strong> (24h)
-                </p>
-              </div>
-
-            ) : concluido ? (
-              <div style={{ padding: "0.5rem 0" }}>
-                <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-                  <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>✅</div>
-                  <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.4rem" }}>
-                    Você observou o impulso sem agir.
-                  </h2>
-                  <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#555", lineHeight: 1.6 }}>
-                    Isso é Interrupção. O ciclo automático perdeu força.
-                  </p>
-                </div>
-                <div style={{ background: "#F0F7FF", border: "1px solid #BFD9F5", borderRadius: 14, padding: "1.25rem", marginBottom: "1.25rem" }}>
-                  <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#1A6B8A", marginBottom: "1rem" }}>
-                    Respiração regulada — ativando o freio natural do corpo
-                  </p>
-                  {[
-                    { num: "1️⃣", titulo: "PREPARE-SE", itens: ["Sente-se confortavelmente ou fique em pé com os pés no chão", "Coloque uma mão no peito e outra na barriga", "Feche os olhos ou mantenha o olhar suave em um ponto fixo"] },
-                    { num: "2️⃣", titulo: "INSPIRE PELO NARIZ (4 segundos)", itens: ["Conte mentalmente: 1... 2... 3... 4", "Sinta a barriga expandir (não só o peito)", "Imagine que está enchendo um balão suave dentro de você"] },
-                    { num: "3️⃣", titulo: "SEGURE LEVEMENTE (6 segundos)", itens: ["Conte: 1... 2... 3... 4... 5... 6", "Não force — apenas pause naturalmente", "Observe a sensação de plenitude"] },
-                    { num: "4️⃣", titulo: "EXPIRE PELA BOCA (2 segundos)", itens: ["Solte o ar suavemente, como se estivesse assoprando uma vela sem apagar", "Conte: 1... 2", "Sinta a barriga voltar ao lugar"] },
-                    { num: "🔁", titulo: "REPITA 5 a 10 CICLOS", itens: ["Tempo total: 2 a 3 minutos", "Se distrair, volte gentilmente para a contagem"] },
-                  ].map((passo, i) => (
-                    <div key={i} style={{ marginBottom: "0.9rem" }}>
-                      <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>
-                        {passo.num} {passo.titulo}
+            {temModulo ? (
+              <>
+                {concluido ? (
+                  <div style={{ padding: "0.5rem 0" }}>
+                    <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+                      <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>✅</div>
+                      <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.4rem" }}>
+                        Você observou o impulso sem agir.
+                      </h2>
+                      <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#555", lineHeight: 1.6 }}>
+                        Isso é Interrupção. O ciclo automático perdeu força.
                       </p>
-                      {passo.itens.map((item, j) => (
-                        <p key={j} style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#444", lineHeight: 1.55, paddingLeft: "1.2rem", margin: "0.15rem 0" }}>• {item}</p>
+                    </div>
+                    <div style={{ background: "#F0F7FF", border: "1px solid #BFD9F5", borderRadius: 14, padding: "1.25rem", marginBottom: "1.25rem" }}>
+                      <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#1A6B8A", marginBottom: "1rem" }}>
+                        Respiração regulada — ativando o freio natural do corpo
+                      </p>
+                      {[
+                        { num: "1️⃣", titulo: "PREPARE-SE", itens: ["Sente-se confortavelmente ou fique em pé com os pés no chão", "Coloque uma mão no peito e outra na barriga", "Feche os olhos ou mantenha o olhar suave em um ponto fixo"] },
+                        { num: "2️⃣", titulo: "INSPIRE PELO NARIZ (4 segundos)", itens: ["Conte mentalmente: 1... 2... 3... 4", "Sinta a barriga expandir (não só o peito)", "Imagine que está enchendo um balão suave dentro de você"] },
+                        { num: "3️⃣", titulo: "SEGURE LEVEMENTE (6 segundos)", itens: ["Conte: 1... 2... 3... 4... 5... 6", "Não force — apenas pause naturalmente", "Observe a sensação de plenitude"] },
+                        { num: "4️⃣", titulo: "EXPIRE PELA BOCA (2 segundos)", itens: ["Solte o ar suavemente, como se estivesse assoprando uma vela sem apagar", "Conte: 1... 2", "Sinta a barriga voltar ao lugar"] },
+                        { num: "🔁", titulo: "REPITA 5 a 10 CICLOS", itens: ["Tempo total: 2 a 3 minutos", "Se distrair, volte gentilmente para a contagem"] },
+                      ].map((passo, i) => (
+                        <div key={i} style={{ marginBottom: "0.9rem" }}>
+                          <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>
+                            {passo.num} {passo.titulo}
+                          </p>
+                          {passo.itens.map((item, j) => (
+                            <p key={j} style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#444", lineHeight: 1.55, paddingLeft: "1.2rem", margin: "0.15rem 0" }}>• {item}</p>
+                          ))}
+                        </div>
                       ))}
                     </div>
-                  ))}
-                </div>
-                {[
-                  { texto: "O impulso tem pico... e depois passa.\nVocê não precisa fazer nada agora.\nSó respirar.", bg: "#F5F0FF", border: "#D4C5F5", cor: "#4A2D8D" },
-                  { texto: "Seu \"freio natural\" foi ativado.\nO nervo vago respondeu.\nSeu corpo está mais calmo.\nSua mente, mais clara.", bg: "#F0FFF4", border: "#C3E6CB", cor: "#1E5C2E" },
-                ].map((msg, i) => (
-                  <div key={i} style={{ background: msg.bg, border: `1px solid ${msg.border}`, borderRadius: 10, padding: "1rem 1.25rem", marginBottom: "0.75rem", fontFamily: "DM Serif Display, serif", fontSize: "0.95rem", color: msg.cor, lineHeight: 1.7, whiteSpace: "pre-line", textAlign: "center" }}>
-                    {msg.texto}
+                    {[
+                      { texto: "O impulso tem pico... e depois passa.\nVocê não precisa fazer nada agora.\nSó respirar.", bg: "#F5F0FF", border: "#D4C5F5", cor: "#4A2D8D" },
+                      { texto: "Seu \"freio natural\" foi ativado.\nO nervo vago respondeu.\nSeu corpo está mais calmo.\nSua mente, mais clara.", bg: "#F0FFF4", border: "#C3E6CB", cor: "#1E5C2E" },
+                    ].map((msg, i) => (
+                      <div key={i} style={{ background: msg.bg, border: `1px solid ${msg.border}`, borderRadius: 10, padding: "1rem 1.25rem", marginBottom: "0.75rem", fontFamily: "DM Serif Display, serif", fontSize: "0.95rem", color: msg.cor, lineHeight: 1.7, whiteSpace: "pre-line", textAlign: "center" }}>
+                        {msg.texto}
+                      </div>
+                    ))}
+                    <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginBottom: "1rem" }}>
+                      Em crise? CVV: <strong>188</strong> · SAMU: <strong>192</strong>
+                    </p>
+                    <button onClick={handleFechar} style={{ width: "100%", background: "#3B6D11", color: "#fff", border: "none", padding: "0.9rem", borderRadius: 10, fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
+                      Fechar
+                    </button>
                   </div>
-                ))}
-                <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginBottom: "1rem" }}>
-                  Em crise? CVV: <strong>188</strong> · SAMU: <strong>192</strong>
+                ) : blocoAtual ? (
+                  <>
+                    {/* Imagem curva do impulso */}
+                    <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
+                      <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" className="w-full rounded-lg" />
+                    </div>
+                    <div style={{ marginTop: "1rem", marginBottom: "1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.875rem" }}>
+                      <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
+                        RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
+                      </p>
+                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                        Você observou o impulso sem agir.<br />
+                        Isso é Interrupção.<br />
+                        O ciclo automático perdeu força.
+                      </p>
+                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                        O impulso tem pico... e depois passa.<br />
+                        Você não precisa fazer nada agora.<br />
+                        Só respirar.
+                      </p>
+                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                        Seu "freio natural" foi ativado.<br />
+                        O nervo vago respondeu.<br />
+                        Seu corpo está mais calmo.<br />
+                        Sua mente, mais clara.
+                      </p>
+                    </div>
+
+                    <div style={{ display: "inline-block", background: blocoAtual.cor + "15", color: blocoAtual.cor, padding: "0.25rem 0.75rem", borderRadius: 99, fontSize: "0.72rem", fontFamily: "DM Sans, sans-serif", fontWeight: 700, marginBottom: "0.5rem" }}>
+                      {blocoAtual.modulo}
+                    </div>
+                    <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.25rem" }}>
+                      Reflexão de emergência
+                    </h2>
+                    <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#888", marginBottom: "1.5rem" }}>
+                      Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/{blocoAtual.perguntas.length})
+                    </p>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
+                      {blocoAtual.perguntas.map((p, i) => (
+                        <div key={i} style={{ background: "#F7F5F0", borderRadius: 10, padding: "0.9rem 1rem", border: respostas[i] ? `1px solid ${blocoAtual.cor}40` : "1px solid #E8E4DC" }}>
+                          <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#333", marginBottom: "0.6rem", lineHeight: 1.5 }}>
+                            {i + 1}. {p.texto}
+                          </p>
+                          <div style={{ display: "flex", gap: "0.5rem" }}>
+                            {(p.tipo === "Sim/Não" ? ["Sim", "Não"] : ["Verdadeiro", "Falso"]).map(op => (
+                              <button key={op} onClick={() => setRespostas(r => ({ ...r, [i]: op }))} style={{
+                                padding: "0.3rem 0.9rem", borderRadius: 6, border: "none", cursor: "pointer",
+                                fontFamily: "DM Sans, sans-serif", fontSize: "0.8rem", fontWeight: 600,
+                                background: respostas[i] === op ? blocoAtual.cor : "#fff",
+                                color: respostas[i] === op ? "#fff" : "#555",
+                              }}>
+                                {op}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {todasRespondidas && (
+                      <button onClick={handleConcluir} style={{ width: "100%", background: blocoAtual.cor, color: "#fff", border: "none", padding: "0.9rem", borderRadius: 10, fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
+                        Concluir reflexão
+                      </button>
+                    )}
+                    <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginTop: "1rem" }}>
+                      CVV: 188 · SAMU: 192 (24h)
+                    </p>
+                  </>
+                ) : (
+                  <p style={{ fontFamily: "DM Sans, sans-serif", color: "#888", textAlign: "center" }}>Carregando...</p>
+                )}
+              </>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>⏸</div>
+                <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.3rem", color: "#1a1a1a", marginBottom: "0.5rem" }}>
+                  Você fez a escolha certa ao clicar aqui.
+                </h2>
+                <div style={{ background: "#f9f5f0", borderRadius: 12, padding: "1.25rem", marginBottom: "1.25rem", textAlign: "left" }}>
+                  <p style={{ fontWeight: 700, color: "#3B6D11", marginBottom: "0.75rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    Responda agora, com honestidade:
+                  </p>
+                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.95rem" }}>💭 O que aconteceu antes dessa vontade aparecer?</p>
+                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.95rem" }}>🎲 O que você vai sentir se jogar agora?</p>
+                  <p style={{ color: "#444", fontSize: "0.95rem" }}>🛑 O que você vai sentir se resistir?</p>
+                </div>
+                <p style={{ color: "#666", fontSize: "0.85rem", marginBottom: "1.25rem", lineHeight: 1.6 }}>
+                  Esta ferramenta tem uma versão completa com <strong>100 perguntas randomizadas</strong>, a Curva do Impulso e técnica de respiração guiada.
                 </p>
-                <button onClick={handleFechar} style={{ width: "100%", background: "#3B6D11", color: "#fff", border: "none", padding: "0.9rem", borderRadius: 10, fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
+                <a
+                  href="/modulo/1"
+                  style={{ display: "block", background: "#3B6D11", color: "#fff", padding: "0.9rem", borderRadius: 10, fontWeight: 700, fontSize: "1rem", textDecoration: "none", marginBottom: "0.75rem" }}
+                >
+                  Quero o Módulo 1 — Interrupção
+                </a>
+                <button onClick={handleFechar} style={{ background: "none", border: "none", color: "#aaa", fontSize: "0.8rem", cursor: "pointer" }}>
                   Fechar
                 </button>
               </div>
-
-            ) : blocoAtual ? (
-              <>
-                {/* Imagem curva do impulso */}
-                <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
-                  <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" className="w-full rounded-lg" />
-                </div>
-                <div style={{ marginTop: "1rem", marginBottom: "1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.875rem" }}>
-                  <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
-                    RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
-                  </p>
-                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                    Você observou o impulso sem agir.<br />
-                    Isso é Interrupção.<br />
-                    O ciclo automático perdeu força.
-                  </p>
-                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                    O impulso tem pico... e depois passa.<br />
-                    Você não precisa fazer nada agora.<br />
-                    Só respirar.
-                  </p>
-                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                    Seu "freio natural" foi ativado.<br />
-                    O nervo vago respondeu.<br />
-                    Seu corpo está mais calmo.<br />
-                    Sua mente, mais clara.
-                  </p>
-                </div>
-
-                <div style={{ display: "inline-block", background: blocoAtual.cor + "15", color: blocoAtual.cor, padding: "0.25rem 0.75rem", borderRadius: 99, fontSize: "0.72rem", fontFamily: "DM Sans, sans-serif", fontWeight: 700, marginBottom: "0.5rem" }}>
-                  {blocoAtual.modulo}
-                </div>
-                <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.25rem" }}>
-                  Reflexão de emergência
-                </h2>
-                <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#888", marginBottom: "1.5rem" }}>
-                  Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/{blocoAtual.perguntas.length})
-                </p>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
-                  {blocoAtual.perguntas.map((p, i) => (
-                    <div key={i} style={{ background: "#F7F5F0", borderRadius: 10, padding: "0.9rem 1rem", border: respostas[i] ? `1px solid ${blocoAtual.cor}40` : "1px solid #E8E4DC" }}>
-                      <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem", color: "#333", marginBottom: "0.6rem", lineHeight: 1.5 }}>
-                        {i + 1}. {p.texto}
-                      </p>
-                      <div style={{ display: "flex", gap: "0.5rem" }}>
-                        {(p.tipo === "Sim/Não" ? ["Sim", "Não"] : ["Verdadeiro", "Falso"]).map(op => (
-                          <button key={op} onClick={() => setRespostas(r => ({ ...r, [i]: op }))} style={{
-                            padding: "0.3rem 0.9rem", borderRadius: 6, border: "none", cursor: "pointer",
-                            fontFamily: "DM Sans, sans-serif", fontSize: "0.8rem", fontWeight: 600,
-                            background: respostas[i] === op ? blocoAtual.cor : "#fff",
-                            color: respostas[i] === op ? "#fff" : "#555",
-                          }}>
-                            {op}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {todasRespondidas && (
-                  <button onClick={handleConcluir} style={{ width: "100%", background: blocoAtual.cor, color: "#fff", border: "none", padding: "0.9rem", borderRadius: 10, fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
-                    Concluir reflexão
-                  </button>
-                )}
-                <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginTop: "1rem" }}>
-                  CVV: 188 · SAMU: 192 (24h)
-                </p>
-              </>
-            ) : (
-              <p style={{ fontFamily: "DM Sans, sans-serif", color: "#888", textAlign: "center" }}>Carregando...</p>
             )}
           </div>
         </div>
       )}
+
+      {/* Animação pulso coração */}
+      <style>{`
+        @keyframes pulseHeart {
+          0% { box-shadow: 0 0 0 0 rgba(231,76,60,0.7); transform: scale(1); }
+          50% { box-shadow: 0 0 0 14px rgba(231,76,60,0); transform: scale(1.08); }
+          100% { box-shadow: 0 0 0 0 rgba(231,76,60,0); transform: scale(1); }
+        }
+      `}</style>
     </>
   );
 }
