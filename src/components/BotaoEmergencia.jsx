@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
 
 const BLOCOS = [
@@ -130,11 +130,27 @@ const BLOCOS = [
 ];
 
 export default function BotaoEmergencia({ modulosLiberados = [], inline = false }) {
-  const temModulo = modulosLiberados && modulosLiberados.length > 0;
+  const [modulosState, setModulosState] = useState(modulosLiberados || []);
+  const temModulo = modulosState && modulosState.length > 0;
   const [aberto, setAberto] = useState(false);
   const [blocoAtual, setBlocoAtual] = useState(null);
   const [respostas, setRespostas] = useState({});
   const [concluido, setConcluido] = useState(false);
+
+  useEffect(() => {
+    async function carregarModulos() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", user.id);
+      if (data && data.length > 0) setModulosState(data);
+    }
+    if (!modulosLiberados || modulosLiberados.length === 0) {
+      carregarModulos();
+    }
+  }, []);
 
   async function handleAbrir() {
     if (!temModulo) { setAberto(true); return; }
