@@ -209,7 +209,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
             }}
             title="Botão de Emergência"
           >
-            <img src="/logo-icon.png" alt="Emergência" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+            <img src="/logo-icon.png" alt="Emergência" style={{ width: "70%", height: "70%", objectFit: "contain" }} />
           </button>
           <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
             Emergência
