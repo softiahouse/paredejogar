@@ -209,7 +209,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
             }}
             title="Botão de Emergência"
           >
-            <img src="/logo-icon.png" alt="Emergência" style={{ width: "75%", height: "75%", objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+            <img src="/logo-icon.png" alt="Emergência" style={{ width: "72%", height: "72%", objectFit: "contain", display: "block" }} />
           </button>
           <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
             Emergência
@@ -339,6 +339,43 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                     )}
                     <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginTop: "1rem" }}>
                       CVV: 188 · SAMU: 192 (24h)
+                    </p>
+                  </>
+                ) : blocoAtual ? (
+                  <>
+                    {/* Imagem curva do impulso */}
+                    <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
+                      <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" className="w-full rounded-lg" />
+                    </div>
+                    <div style={{ marginTop: "1rem", marginBottom: "1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.875rem" }}>
+                      <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
+                        RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
+                      </p>
+                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                        Você observou o impulso sem agir.<br />
+                        Isso é Interrupção.<br />
+                        O ciclo automático perdeu força.
+                      </p>
+                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                        O impulso tem pico... e depois passa.<br />
+                        Você não precisa fazer nada agora.<br />
+                        Só respirar.
+                      </p>
+                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                        Seu "freio natural" foi ativado.<br />
+                        O nervo vago respondeu.<br />
+                        Seu corpo está mais calmo.<br />
+                        Sua mente, mais clara.
+                      </p>
+                    </div>
+                    <div style={{ display: "inline-block", background: blocoAtual.cor + "15", color: blocoAtual.cor, padding: "0.25rem 0.75rem", borderRadius: 99, fontSize: "0.72rem", fontFamily: "DM Sans, sans-serif", fontWeight: 700, marginBottom: "0.5rem" }}>
+                      {blocoAtual.modulo}
+                    </div>
+                    <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.25rem" }}>
+                      Reflexão de emergência
+                    </h2>
+                    <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#888", marginBottom: "1.5rem" }}>
+                      Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/{blocoAtual.perguntas.length})
                     </p>
                   </>
                 ) : (
