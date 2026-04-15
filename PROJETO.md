@@ -4,60 +4,83 @@
 
 Aplicação web **React + Vite** para o programa **PareDeJogar**, alinhado ao **Método ISTOP** (Interrupção, Sensibilização, Transformação, Organização, Prevenção) e à proposta do **Instituto ISTOP** de reorganização comportamental em torno do jogo problemático.
 
-## Referência de layout e conteúdo
-
-| Arquivo | Função |
-|--------|--------|
-| **`instituto-istop.html`** | Página estática de referência (HTML + CSS) com a **landing completa**: hero, sobre, pilares ISTOP, etapas, público-alvo, sinais, lutos, formulário, recursos, FAQ e CTA. Use como guia visual e de texto ao evoluir o React. |
-| **`src/pages/LandingPage.jsx`** | Implementação React equivalente, integrada ao **React Router**, **LeadForm** (Supabase) e estilos globais (`src/index.css`). |
-
 ## Stack
 
 - **React 19** + **Vite** + **Tailwind CSS** (`@tailwindcss/vite`)
 - **React Router** (rotas SPA)
-- **Supabase** (auth, `leads`, `contratos`, `progresso_usuario`, RLS)
-- **Google OAuth** (app no Google Cloud — Instituto ISTOP)
+- **Supabase** (auth, tabelas, RLS, Edge Functions)
+- **Google OAuth**
+- **Mercado Pago** (Checkout Pro, pagamento por módulo)
 - **Deploy:** Vercel (`vercel.json` com SPA rewrite)
 
-## Comandos
+## Repositório e infra
 
-```bash
-npm install
-npm run dev
-npm run build
-```
+| Item | Valor |
+|------|-------|
+| **Repositório** | `softiahouse/paredejogar` (`main`) |
+| **Domínio** | paredejogar.com |
+| **Supabase** | `gybzuhopxhlbewhjihnd.supabase.co` |
+| **Vercel** | deploy automático via push |
 
 ## Variáveis de ambiente
 
-Criar `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (não commitar).
+`.env.local` (não commitar):
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+- `VITE_MP_PUBLIC_KEY`
+- `MP_ACCESS_TOKEN` (sem VITE — só backend)
+
+Supabase Secrets (Edge Functions):
+- `MP_ACCESS_TOKEN`
+- `SITE_URL=https://paredejogar.com`
 
 ---
 
-## Estado atual — 10/04/2026
+## Estado actual — 14/04/2026
 
-**Handoff para a próxima sessão:** use esta secção como contexto inicial.
+### Tabelas Supabase
 
-### Infra e repositório
+| Tabela | Função |
+|--------|--------|
+| `progresso_usuario` | Módulos concluídos por user |
+| `modulos_liberados` | Módulos pagos/desbloqueados por user |
+| `pagamentos_mp` | Registo de pagamentos MP |
+| `contratos` | Contratos de interrupção assinados |
+| `leads` | Leads do formulário da landing |
+| `emergencia_blocos_vistos` | Controla quais blocos de emergência o user já viu |
 
-| Item | Valor |
-|------|--------|
-| **Repositório** | [softiahouse/paredejogar](https://github.com/softiahouse/paredejogar) (`main`) |
-| **Domínio** | paredejogar.com |
-| **Supabase** | `gybzuhopxhlbewhjihnd.supabase.co` |
+### Edge Functions (Supabase)
 
-### Concluído (sessões recentes)
+- `criar-preferencia-mp` — cria preferência no MP e devolve `init_point`
+- `webhook-mp` — recebe notificação MP, grava em `pagamentos_mp` e insere em `modulos_liberados` quando `status === "approved"`
 
-- **Painel.jsx** — 5 módulos ISTOP com progresso real do Supabase (`progresso_usuario`).
-- **modulosContent.js** — conteúdo dos módulos **1–5** (aulas e metadados).
-- **AulaPage.jsx** — aulas dinâmicas por rota; **scroll suave para o topo** ao mudar módulo/aula (`mId`, `aId`).
-- **Contrato.jsx** — contrato com checkbox **CONTRATO PESSOAL**, cláusulas, persistência em Supabase; **marco de jornada** e **tela de conclusão** do Módulo 1 após assinar (antes de voltar ao painel).
-- **QuizResultPage.jsx** — botão WhatsApp com texto humano; fluxo sem login duplicado; guia para familiares.
-- **Navbar.jsx** — botão **Entrar** no lugar de “Ver o programa”.
-- **LandingPage.jsx** — visual alinhado ao HTML de referência.
-- **Supabase** — tabelas **`contratos`** e **`progresso_usuario`** com RLS.
-- **Módulo 1 — aulas 1, 2 e 3** — texto reescrito e expandido em `modulosContent.js`.
+### Modelo de pagamento
 
-### Rotas ativas
+| Módulo | Nome | Preço |
+|--------|------|-------|
+| 1 | Interrupção | R$ 29,90 |
+| 2 | Sensibilização | R$ 49,90 |
+| 3 | Autorregulação | R$ 89,90 |
+| 4 | Reorganização | R$ 149,90 |
+| 5 | Manutenção | R$ 199,90 |
+
+- Pagamento sequencial obrigatório (só compra o 2 se tiver o 1, etc.)
+- Módulo libera acesso por 120 dias
+- Sócios com acesso permanente a todos os módulos (inserido directo no Supabase)
+
+### Sócios com acesso permanente
+
+Emails com todos os módulos liberados via SQL directo:
+- `jose.r.paulo@hotmail.com`
+- `joyce.pollet@gmail.com`
+- `darosapaulomarcelo@gmail.com`
+- `paulopaulosul@gmail.com`
+
+Lógica no `Painel.jsx`: se `liberados.length === 5`, ignora restrição de sequência.
+
+---
+
+## Rotas activas
 
 | Rota | Descrição |
 |------|-----------|
@@ -65,46 +88,84 @@ Criar `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (não comm
 | `/entrar`, `/cadastrar` | Auth |
 | `/quiz`, `/quiz/familias`, `/resultado` | Quiz e resultado |
 | `/painel` | Painel logado |
-| `/modulo/:id` | Entrada do módulo (redireciona para primeira aula quando aplicável) |
+| `/modulo/:id` | Entrada do módulo |
 | `/modulo/:moduloId/aula/:aulaId` | Aulas |
 | `/contrato` | Contrato de Interrupção (Módulo 1) |
 | `/auth/callback`, `/nova-senha` | OAuth e redefinição de senha |
-
-## Estrutura da landing (ordem das seções)
-
-1. **Hero** — Headline, subtítulo, CTAs (cadastrar / âncora método), painel glass com as 5 etapas ISTOP.  
-2. **Sobre o Instituto ISTOP** — Missão e abordagem (ciência + acolhimento).  
-3. **Os 5 pilares ISTOP** — Interrupção, Sensibilização, Transformação, Organização, Prevenção.  
-4. **4 etapas do caminho** — Parar, elaborar perdas, reconstruir identidade, manter vínculos (`#metodo`).  
-5. **Para quem é** — Público-alvo em cards.  
-6. **Sinais de alerta** — Lista em cards glass.  
-7. **Além do dinheiro** — Lutos + **LeadForm** (contato).  
-8. **Recursos gratuitos** — Grid de ferramentas (`#recursos`).  
-9. **FAQ** — Perguntas frequentes (`#faq`).  
-10. **CTA final** — Cadastro / login.
-
-## Fluxo completo — Módulo 1 (Interrupção)
-
-Ordem esperada na navegação:
-
-1. **`/painel`** — Lista de módulos; utilizador abre o Módulo 1.  
-2. **`/modulo/1`** — Redireciona para a primeira aula (`ModuloEntry` → `/modulo/1/aula/1`).  
-3. **`/modulo/1/aula/1`** … **`/modulo/1/aula/3`** — Aulas (`AulaPage` + `modulosContent.js`).  
-4. **`/contrato`** — Contrato; após assinar, **tela de conclusão do Módulo 1** e depois **Ir para o painel**.  
-5. **`/painel`** — Módulo 1 concluído no progresso.
-
-Nota: as aulas usam sempre **`/modulo/:moduloId/aula/:aulaId`**.
-
-### Após assinar o contrato (Supabase + painel)
-
-1. **`Contrato.jsx`:** `INSERT` em **`contratos`**; `INSERT` em **`progresso_usuario`** com **`modulo_id: 1`** (duplicado `23505` ignorado).  
-2. **`Painel.jsx`:** `SELECT` em **`progresso_usuario`** → módulos concluídos, bloqueios e barra `concluidos.length / 5`.
-
-## Próximas tarefas (sugestão)
-
-- [ ] Integrar **`/checkin`** ou outras peças ao progresso, se fizer sentido.
-- [ ] Revisar copy/UX conforme feedback clínico ou do Instituto ISTOP.
+| `/termos`, `/privacidade` | Termos de uso |
+| `/certificado` | Certificado de conclusão |
 
 ---
 
-*Documento de alinhamento ao `instituto-istop.html` e ao estado do repositório `paredejogar`.*
+## Componentes principais
+
+| Ficheiro | Função |
+|----------|--------|
+| `Painel.jsx` | Painel logado — progresso, módulos, paywall, livros gratuitos |
+| `AulaPage.jsx` | Aulas dinâmicas por rota |
+| `Contrato.jsx` | Contrato de Interrupção com persistência Supabase |
+| `BotaoEmergencia.jsx` | Botão de emergência com 5 blocos de 20 perguntas, respiração e mensagens |
+| `LandingPage.jsx` | Landing completa com secção de familiares |
+| `Footer.jsx` | Rodapé com mensagem para familiares |
+| `Navbar.jsx` | Navbar com logo SVG Instituto ISTOP |
+| `QuizResultPage.jsx` | Resultado do quiz com botão WhatsApp para familiares |
+| `TermosPage.jsx` | Página de termos de uso e privacidade |
+
+---
+
+## Ficheiros públicos importantes
+
+| Ficheiro | Local |
+|----------|-------|
+| Logo SVG | `public/logo-instituto-istop.svg` |
+| Logo ícone | `public/logo-icon.png` |
+| Favicon | `public/favicon.png` |
+| Livro O Luto | `public/livros/o-luto.pdf` |
+| Livro Jogo Online | `public/livros/jogo-online.pdf` |
+| Capa O Luto | `public/imagens/capa-o-luto.png` |
+| Capa Jogo Online | `public/imagens/capa-jogo-online.png` |
+| Espaço da Escolha | `public/imagens/espaco-da-escolha.png` |
+| Curva do Impulso | `public/imagens/curva-do-impulso.png` |
+| Estratégias Enfrentamento | `public/imagens/estrategias-enfrentamento.png` |
+
+---
+
+## Botão de Emergência
+
+- Localizado no `Painel.jsx` no cabeçalho (prop `inline={true}`)
+- 5 blocos de 20 perguntas (um por módulo ISTOP)
+- Mostra bloco não visto ainda (sequência aleatória sem repetição)
+- Após concluir: guia de respiração 4-6-2 + mensagens de reforço
+- Utilizadores sem Módulo 1: vê mensagem informativa
+- Tabela Supabase: `emergencia_blocos_vistos`
+
+---
+
+## Conteúdo dos módulos (`src/data/modulosContent.js`)
+
+- **Módulo 1** — 3 aulas completas + Contrato de Interrupção + 2 livros gratuitos
+- **Módulo 2** — 5 aulas completas + Mapa de Gatilhos
+- **Módulo 3** — 5 aulas completas + imagens (espaço da escolha, curva do impulso)
+- **Módulo 4** — 5 aulas completas + Estrutura de Rotina
+- **Módulo 5** — 5 aulas completas + Protocolo de Prevenção de Recaída + Certificado
+
+---
+
+## Próximas tarefas
+
+- [ ] Testar pagamento MP ponta a ponta (webhook → `modulos_liberados`)
+- [ ] Painel financeiro/admin (ver receita, utilizadores, pagamentos)
+- [ ] Emails `@paredejogar.com` (Zoho Mail Lite R$25/mês para 5 contas)
+- [ ] Verificar PDFs dos livros a abrir correctamente no Vercel
+- [ ] Google Analytics ou similar
+- [ ] Teste completo do fluxo: cadastro → pagamento → módulo → contrato → painel
+
+---
+
+## Regras importantes (nunca mudar)
+
+- Nunca referenciar FIDE na UI
+- PowerShell 5.1 no Windows — usar `Set-Clipboard`, evitar `&&`
+- `external_reference` do MP tem formato: `user_{userId}_modulo_{moduloId}`
+- Sócios com `liberados.length === 5` ignoram sequência de módulos
+- Imagens sempre em `public/imagens/`, PDFs em `public/livros/`
