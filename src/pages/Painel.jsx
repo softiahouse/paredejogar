@@ -30,6 +30,7 @@ const modulos = [
       "Identifique os momentos e emoções que despertam o impulso de apostar.",
     aulas: 5,
     ferramenta: "Mapa de Gatilhos ISTOP",
+    detalhes: `OBJETIVO: Identificar, mapear e compreender os gatilhos pessoais que desencadeiam o impulso de apostar. O jogo não acontece "do nada" — ele é ativado por estímulos específicos que, quando reconhecidos, perdem seu poder automático.\n\n⏱ Duração: 5 aulas (75–100 min) · Nível: Intermediário\n\n1️⃣ Condicionamento Clássico (Pavlov) — seu cérebro associou estímulos como tédio ou notificações à recompensa do jogo, criando gatilhos condicionados que ativam a dopamina antes de você começar a jogar.\n2️⃣ Modelo Cognitivo-Comportamental (Beck, 1976) — Situação → Pensamento Automático → Emoção → Comportamento. Os gatilhos ativam pensamentos como "só mais uma vez".\n3️⃣ Prevenção de Recaída (Marlatt & Gordon, 1985) — gatilhos intrapessoais (tédio, estresse, solidão, comemoração) e interpessoais (pressão social, conflito, isolamento).\n4️⃣ Sistema de Recompensa Cerebral — os gatilhos ativam o núcleo accumbens e criam vias neurais automatizadas: gatilho → impulso → ação. Interromper esse ciclo exige consciência + estratégias alternativas.\n\nResultado: ao final você terá um Mapa Pessoal de Gatilhos completo para antecipar situações de risco.`,
   },
   {
     id: 3,
