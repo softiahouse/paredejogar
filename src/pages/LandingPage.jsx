@@ -27,7 +27,7 @@ const css = `
     position: relative; min-height: 100vh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    text-align: center; padding: 120px 24px 80px;
+    text-align: center; padding: 60px 24px 80px;
     overflow: hidden; background: var(--creme);
   }
   .lp-blob-1 {
