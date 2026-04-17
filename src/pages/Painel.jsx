@@ -86,6 +86,7 @@ export default function Painel() {
   const [loading, setLoading] = useState(true);
   const [liberados, setLiberados] = useState([]); // módulos pagos
   const [carregandoPgto, setCarregandoPgto] = useState(null); // id do módulo em loading
+  const [moduloExpandido, setModuloExpandido] = useState(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -746,12 +747,54 @@ export default function Painel() {
                     {m.descricao}
                   </p>
                   {m.detalhes && (status === "concluido" || status === "disponivel") && (
-                    <div style={{ background: "#f0f7e8", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem", borderLeft: "3px solid #3B6D11" }}>
-                      {m.detalhes.split("\n\n").map((bloco, i) => (
-                        <p key={i} style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#3a3a3a", lineHeight: 1.6, marginBottom: i < m.detalhes.split("\n\n").length - 1 ? "0.6rem" : 0 }}>
-                          {bloco}
-                        </p>
-                      ))}
+                    <div style={{ background: "#f0f7e8", borderRadius: 10, marginBottom: "0.75rem", borderLeft: "3px solid #3B6D11", overflow: "hidden" }}>
+                      <div style={{
+                        maxHeight: moduloExpandido === m.id ? "2000px" : "80px",
+                        overflow: "hidden",
+                        transition: "max-height 0.4s ease",
+                        padding: "1rem 1.1rem",
+                      }}>
+                        {m.detalhes.split("\n\n").map((bloco, i) => (
+                          <div key={i} style={{ marginBottom: "0.6rem" }}>
+                            {bloco.split("\n").map((linha, j) => {
+                              const isNumero = /^[1-5]️⃣/.test(linha);
+                              return (
+                                <p key={j} style={{
+                                  fontFamily: "DM Sans, sans-serif",
+                                  fontSize: "0.82rem",
+                                  color: isNumero ? "#1a1a1a" : "#3a3a3a",
+                                  fontWeight: isNumero ? 600 : 400,
+                                  lineHeight: 1.6,
+                                  textAlign: "justify",
+                                  marginBottom: isNumero ? "0.3rem" : 0,
+                                }}>
+                                  {linha}
+                                </p>
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setModuloExpandido(moduloExpandido === m.id ? null : m.id)}
+                        style={{
+                          width: "100%",
+                          background: "none",
+                          border: "none",
+                          borderTop: "1px solid #c8e6a0",
+                          padding: "0.4rem",
+                          cursor: "pointer",
+                          color: "#3B6D11",
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        {moduloExpandido === m.id ? "▲ Ver menos" : "▼ Ver mais"}
+                      </button>
                     </div>
                   )}
 
