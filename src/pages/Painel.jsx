@@ -774,9 +774,14 @@ export default function Painel() {
                     >
                       <span>📖 {m.aulas} aulas</span>
                       <span>🛠 {m.ferramenta}</span>
-                      <span style={{ fontWeight: 600, color: "#3B6D11" }}>
-                        {PRECOS[m.id]?.label}
-                      </span>
+                      {(status === "pagar" && m.id === Math.min(...modulos.filter(mod => {
+                        const s = liberados.includes(mod.id) ? (progresso.concluidos.includes(mod.id) ? "concluido" : "disponivel") : (liberados.includes(mod.id - 1) || mod.id === 1 ? "pagar" : "bloqueado");
+                        return s === "pagar";
+                      }).map(mod => mod.id))) && (
+                        <span style={{ fontWeight: 600, color: "#3B6D11" }}>
+                          {PRECOS[m.id]?.label}
+                        </span>
+                      )}
                     </div>
 
                     {status === "concluido" && (
