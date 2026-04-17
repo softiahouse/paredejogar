@@ -233,7 +233,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                 width: "130%",
                 height: "130%",
                 objectFit: "cover",
-                objectPosition: "center 30%",
+                objectPosition: "center 15%",
                 display: "block",
               }}
             />
