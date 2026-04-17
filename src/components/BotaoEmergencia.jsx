@@ -226,12 +226,13 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
             }}
           >
             <img
-              src="/logo-instituto-istop.svg"
+              src="/logo-icon.png"
               alt="Emergência"
               style={{
-                width: "85%",
-                height: "85%",
-                objectFit: "contain",
+                width: "160%",
+                height: "160%",
+                objectFit: "cover",
+                objectPosition: "center top",
                 display: "block",
                 flexShrink: 0,
               }}
