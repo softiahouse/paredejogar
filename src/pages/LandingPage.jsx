@@ -393,6 +393,36 @@ export default function LandingPage() {
             </button>
           </div>
         </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "1.5rem",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.3rem",
+            animation: "bounceDown 1.8s ease-in-out infinite",
+            cursor: "pointer",
+            opacity: 0.6,
+          }}
+          onClick={() => window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
+        >
+          <span style={{ fontSize: "0.7rem", color: "#3B6D11", fontFamily: "DM Sans, sans-serif", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            Ver mais
+          </span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9L12 15L18 9" stroke="#3B6D11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+
+        <style>{`
+          @keyframes bounceDown {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+          }
+        `}</style>
       </section>
 
       {/* ESPELHO DA DOR */}
