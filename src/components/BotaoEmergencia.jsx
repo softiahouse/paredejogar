@@ -229,8 +229,8 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               src="/logo-instituto-istop.svg"
               alt="Emergência"
               style={{
-                width: "65%",
-                height: "65%",
+                width: "85%",
+                height: "85%",
                 objectFit: "contain",
                 display: "block",
                 flexShrink: 0,
