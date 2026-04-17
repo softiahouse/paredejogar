@@ -230,9 +230,10 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               src="/logo-icon.png"
               alt="Emergência"
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
+                width: "130%",
+                height: "130%",
+                objectFit: "cover",
+                objectPosition: "center 30%",
                 display: "block",
               }}
             />
