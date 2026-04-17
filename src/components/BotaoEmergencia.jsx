@@ -225,18 +225,17 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               overflow: "hidden",
             }}
           >
-            <img
-              src="/logo-icon.png"
-              alt="Emergência"
-              style={{
-                width: "160%",
-                height: "160%",
-                objectFit: "cover",
-                objectPosition: "center top",
-                display: "block",
-                flexShrink: 0,
-              }}
-            />
+            <svg width="56" height="56" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 5 L90 20 L90 55 C90 78 72 96 50 105 C28 96 10 78 10 55 L10 20 Z" fill="none" stroke="url(#g)" strokeWidth="6" strokeLinejoin="round"/>
+              <rect x="38" y="30" width="9" height="45" rx="4" fill="url(#g)"/>
+              <rect x="53" y="30" width="9" height="45" rx="4" fill="url(#g)"/>
+              <defs>
+                <linearGradient id="g" x1="10" y1="5" x2="90" y2="105" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#38bdf8"/>
+                  <stop offset="100%" stopColor="#34d399"/>
+                </linearGradient>
+              </defs>
+            </svg>
           </button>
           <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
             Emergência
