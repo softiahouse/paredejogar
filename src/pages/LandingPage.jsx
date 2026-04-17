@@ -491,7 +491,7 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-          <p className="lp-depo-nota">Histórias baseadas em casos reais descritos no livro <em>Jogos Online — Vício de Bolso</em>, de Marcelo R. Paulo.</p>
+          <p className="lp-depo-nota">Histórias baseadas em casos reais descritos no livro <em>Jogos Online — Vício de Bolso</em>.</p>
         </div>
       </section>
 
@@ -585,7 +585,7 @@ export default function LandingPage() {
         </div>
         <div className="lp-footer-bottom">
           <span>© 2025 Instituto ISTOP. Todos os direitos reservados.</span>
-          <span>Método ISTOP — Marcelo R. Paulo</span>
+          <span>Método ISTOP — Instituto ISTOP</span>
         </div>
       </footer>
     </div>
