@@ -344,7 +344,6 @@ export default function LandingPage() {
         <div className="lp-blob-1" />
         <div className="lp-blob-2" />
         <div className="lp-hero-inner">
-          <span className="lp-hero-label">Instituto ISTOP</span>
           <h1 className="lp-hero-title">
             <span className="lp-pare">PARE</span>{' '}
             <span className="lp-viva">VIVA</span>
