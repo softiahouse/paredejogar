@@ -20,6 +20,7 @@ const modulos = [
       "Você começa entendendo como o ciclo do jogo se instala e dá o primeiro passo para sair do piloto automático.",
     aulas: 3,
     ferramenta: "Contrato de Interrupção",
+    detalhes: `OBJETIVO: Identificar e interromper o ciclo automático do jogo antes que ele se transforme em ação. O impulso NÃO é incontrolável — ele segue uma curva previsível: surge, aumenta, atinge o pico e diminui naturalmente.\n\n⏱ Duração: 3 aulas (45–60 min) · Nível: Iniciante\n\n1️⃣ Modelo Cognitivo-Comportamental — identificação de pensamentos automáticos e distorções cognitivas.\n2️⃣ Curva do Impulso (Marlatt & Gordon, 1985) — duração média de 15–30 min do surgimento ao declínio.\n3️⃣ Sistema Nervoso Autônomo — técnicas de respiração ativam o nervo vago e reduzem a urgência em 2–5 min.\n\nResultado: você não luta contra o impulso — você o atravessa conscientemente até ele diminuir.`,
   },
   {
     id: 2,
@@ -740,6 +741,15 @@ export default function Painel() {
                   >
                     {m.descricao}
                   </p>
+                  {m.detalhes && (status === "concluido" || status === "disponivel") && (
+                    <div style={{ background: "#f0f7e8", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem", borderLeft: "3px solid #3B6D11" }}>
+                      {m.detalhes.split("\n\n").map((bloco, i) => (
+                        <p key={i} style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#3a3a3a", lineHeight: 1.6, marginBottom: i < m.detalhes.split("\n\n").length - 1 ? "0.6rem" : 0 }}>
+                          {bloco}
+                        </p>
+                      ))}
+                    </div>
+                  )}
 
                   <div
                     style={{
