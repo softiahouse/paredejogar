@@ -209,8 +209,8 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
           <button
             onClick={() => (temModulo ? handleAbrir() : setAberto(true))}
             style={{
-              width: 64,
-              height: 64,
+              width: 96,
+              height: 96,
               borderRadius: "50%",
               background: "radial-gradient(circle at 35% 35%, #e74c3c, #922b21)",
               border: "3px solid rgba(255,255,255,0.3)",
@@ -222,10 +222,11 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               justifyContent: "center",
               padding: 0,
               overflow: "hidden",
+              position: "relative",
             }}
             title="Botão de Emergência"
           >
-            <img src="/logo-icon.png" alt="Emergência" style={{ width: "72%", height: "72%", objectFit: "contain", display: "block" }} />
+            <img src="/logo-icon.png" alt="Emergência" style={{ width: "68%", height: "68%", objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
           </button>
           <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
             Emergência
