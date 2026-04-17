@@ -220,13 +220,22 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: 0,
+              padding: "14px",
               overflow: "hidden",
               position: "relative",
             }}
             title="Botão de Emergência"
           >
-            <img src="/logo-icon.png" alt="Emergência" style={{ width: "68%", height: "68%", objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+            <img
+              src="/logo-icon.png"
+              alt="Emergência"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
           </button>
           <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#922b21", letterSpacing: "0.05em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.2 }}>
             Emergência
