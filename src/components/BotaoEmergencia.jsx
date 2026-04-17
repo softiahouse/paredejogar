@@ -411,6 +411,23 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
             ) : (
               <div style={{ textAlign: "center" }}>
                 <img src="/logo-icon.png" alt="PareDeJogar" style={{ width: 72, height: 72, objectFit: "contain", margin: "0 auto 0.75rem" }} />
+                <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
+                  <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" style={{ width: "100%", borderRadius: 8 }} />
+                </div>
+                <div style={{ marginTop: "0.75rem", marginBottom: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.82rem" }}>
+                  <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.72rem" }}>
+                    RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
+                  </p>
+                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                    Você observou o impulso sem agir.<br />Isso é Interrupção.<br />O ciclo automático perdeu força.
+                  </p>
+                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                    O impulso tem pico... e depois passa.<br />Você não precisa fazer nada agora.<br />Só respirar.
+                  </p>
+                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
+                    Seu "freio natural" foi ativado.<br />O nervo vago respondeu.<br />Seu corpo está mais calmo.<br />Sua mente, mais clara.
+                  </p>
+                </div>
                 <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.3rem", color: "#1a1a1a", marginBottom: "0.5rem" }}>
                   Você fez a escolha certa ao clicar aqui.
                 </h2>
