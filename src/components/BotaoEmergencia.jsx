@@ -208,6 +208,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
         >
           <button
             onClick={() => (temModulo ? handleAbrir() : setAberto(true))}
+            title="Botão de Emergência"
             style={{
               width: 96,
               height: 96,
@@ -220,21 +221,19 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: "14px",
+              padding: 0,
               overflow: "hidden",
-              position: "relative",
             }}
-            title="Botão de Emergência"
           >
             <img
-              src="/logo-icon.png"
+              src="/logo-instituto-istop.svg"
               alt="Emergência"
               style={{
-                width: "130%",
-                height: "130%",
-                objectFit: "cover",
-                objectPosition: "center 15%",
+                width: "65%",
+                height: "65%",
+                objectFit: "contain",
                 display: "block",
+                flexShrink: 0,
               }}
             />
           </button>
