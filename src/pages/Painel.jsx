@@ -40,6 +40,7 @@ const modulos = [
       "Você aprende a criar uma pausa entre o gatilho e a ação. Aqui começa o controle real.",
     aulas: 5,
     ferramenta: "Plano Pessoal de Manejo",
+    detalhes: `OBJETIVO: Criar uma pausa consciente entre o gatilho e a ação, substituindo respostas automáticas por escolhas deliberadas. Autorregulação não é "lutar contra" o impulso — é atravessar o pico com clareza.\n\n⏱ Duração: 5 aulas (75–100 min) · Nível: Intermediário-Avançado\n\n1️⃣ TCC (Beck, 1976) — reestruturação cognitiva: identificar pensamentos automáticos ("vou recuperar", "só mais uma rodada") e substituí-los por interpretações realistas. Fortalece o córtex pré-frontal e reduz a dominância da amígdala.\n2️⃣ Urge Surfing (Marlatt & Gordon, 1985) — o impulso é como uma onda: sobe, atinge o pico e desce naturalmente em 15–30 min. A técnica ensina a observá-lo e respirar com ele até a dissipação.\n3️⃣ ACT (Hayes, 1999) — defusão cognitiva: observar pensamentos como eventos passageiros, não como ordens. Tolerância ao desconforto emocional sem usar o jogo como escape.\n4️⃣ Teoria Polivagal (Porges, 1995) — respiração e mindfulness estimulam o nervo vago, restaurando o estado de calma onde o controle executivo opera.\n5️⃣ Autoeficácia (Bandura, 1977) — cada vez que você atravessa o pico usando uma técnica, seu cérebro registra: "Eu consigo." Esse ciclo fortalece a confiança progressivamente.\n\nResultado: Plano Pessoal de Manejo estruturado com técnicas validadas para gerenciar situações de risco.`,
   },
   {
     id: 4,
