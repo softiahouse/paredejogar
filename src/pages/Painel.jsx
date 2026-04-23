@@ -3,6 +3,22 @@ import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import BotaoEmergencia from "../components/BotaoEmergencia";
 
+function calcularStatus(moduloId, liberados, concluidos) {
+  const ehSocio = liberados.length >= 5;
+  const concluido = concluidos.includes(moduloId);
+  const pago = liberados.includes(moduloId);
+  const anteriorOk =
+    moduloId === 1 ||
+    ehSocio ||
+    concluidos.includes(moduloId - 1) ||
+    liberados.includes(moduloId - 1);
+
+  if (concluido) return "concluido";
+  if (pago && anteriorOk) return "disponivel";
+  if (!pago && anteriorOk) return "pagar";
+  return "bloqueado";
+}
+
 const PRECOS = {
   1: { label: "R$ 29,90", valor: 29.9 },
   2: { label: "R$ 49,90", valor: 49.9 },
@@ -367,18 +383,7 @@ export default function Painel() {
             }}
           >
             {modulos.map((m) => {
-              const concluidos = progresso.concluidos;
-              const concluido = concluidos.includes(m.id);
-              const pago = liberados.includes(m.id);
-              const anteriorConcluido =
-                liberados.length === 5 || m.id === 1 || concluidos.includes(m.id - 1);
-
-              let s;
-              if (concluido) s = "concluido";
-              else if (pago && anteriorConcluido) s = "disponivel";
-              else if (!pago && anteriorConcluido) s = "pagar";
-              else s = "bloqueado";
-
+              const s = calcularStatus(m.id, liberados, progresso.concluidos);
               const ativo = s === "disponivel" || s === "pagar";
               return (
                 <div
@@ -566,18 +571,7 @@ export default function Painel() {
           }}
         >
           {modulos.map((m) => {
-            const concluidos = progresso.concluidos;
-            const concluido = concluidos.includes(m.id);
-            const pago = liberados.includes(m.id);
-            const anteriorConcluido =
-              liberados.length === 5 || m.id === 1 || concluidos.includes(m.id - 1);
-
-            let status;
-            if (concluido) status = "concluido";
-            else if (pago && anteriorConcluido) status = "disponivel";
-            else if (!pago && anteriorConcluido) status = "pagar";
-            else status = "bloqueado";
-
+            const status = calcularStatus(m.id, liberados, progresso.concluidos);
             const ativo = status === "disponivel" || status === "pagar";
             const bloqueado = status === "bloqueado";
 
@@ -746,7 +740,7 @@ export default function Painel() {
                   >
                     {m.descricao}
                   </p>
-                  {m.detalhes && (status === "concluido" || status === "disponivel") && (
+                  {m.detalhes && (status === "concluido" || status === "disponivel" || status === "pagar") && (
                     <div style={{ background: "#f0f7e8", borderRadius: 10, marginBottom: "0.75rem", borderLeft: "3px solid #3B6D11", overflow: "hidden" }}>
                       <div style={{
                         maxHeight: moduloExpandido === m.id ? "2000px" : "80px",
