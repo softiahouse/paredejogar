@@ -308,6 +308,31 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                       <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
                         RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
                       </p>
+                      <div style={{ background: "#f0f7ff", border: "1px solid #bfd9f5", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem" }}>
+                        <p style={{ fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.5rem" }}>Respiração Guiada para Atravessar o Impulso</p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>O QUE É?</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO FUNCIONA?</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.5rem" }}>Quando executada corretamente, esta sequência respiratória:</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8, marginBottom: "0.75rem" }}>
+                          ✅ Estimula o nervo vago — principal componente do sistema parassimpático<br />
+                          ✅ Reduz a frequência cardíaca e a pressão arterial<br />
+                          ✅ Diminui a liberação de cortisol (hormônio do estresse)<br />
+                          ✅ Aumenta a variabilidade da frequência cardíaca<br />
+                          ✅ Ativa o córtex pré-frontal — área responsável pelo controle executivo
+                        </p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO PRATICAR</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 1 — INSPIRAÇÃO (4 segundos):</strong> Inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 2 — RETENÇÃO (6 segundos):</strong> Segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}><strong>FASE 3 — EXPIRAÇÃO (2 segundos):</strong> Solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>QUANDO USAR?</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8 }}>
+                          🎯 No momento do impulso: assim que perceber a vontade de jogar<br />
+                          🎯 Antes de situações de risco: quando souber que estará exposto a gatilhos<br />
+                          🎯 Após uma recaída: para retomar o controle sem autocrítica<br />
+                          🎯 Na prevenção diária: como prática de manutenção
+                        </p>
+                      </div>
                       <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
                         Você observou o impulso sem agir.<br />
                         Isso é Interrupção.<br />
@@ -377,6 +402,31 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                       <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
                         RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
                       </p>
+                      <div style={{ background: "#f0f7ff", border: "1px solid #bfd9f5", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem" }}>
+                        <p style={{ fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.5rem" }}>Respiração Guiada para Atravessar o Impulso</p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>O QUE É?</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO FUNCIONA?</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.5rem" }}>Quando executada corretamente, esta sequência respiratória:</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8, marginBottom: "0.75rem" }}>
+                          ✅ Estimula o nervo vago — principal componente do sistema parassimpático<br />
+                          ✅ Reduz a frequência cardíaca e a pressão arterial<br />
+                          ✅ Diminui a liberação de cortisol (hormônio do estresse)<br />
+                          ✅ Aumenta a variabilidade da frequência cardíaca<br />
+                          ✅ Ativa o córtex pré-frontal — área responsável pelo controle executivo
+                        </p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO PRATICAR</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 1 — INSPIRAÇÃO (4 segundos):</strong> Inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 2 — RETENÇÃO (6 segundos):</strong> Segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}><strong>FASE 3 — EXPIRAÇÃO (2 segundos):</strong> Solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
+                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>QUANDO USAR?</p>
+                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8 }}>
+                          🎯 No momento do impulso: assim que perceber a vontade de jogar<br />
+                          🎯 Antes de situações de risco: quando souber que estará exposto a gatilhos<br />
+                          🎯 Após uma recaída: para retomar o controle sem autocrítica<br />
+                          🎯 Na prevenção diária: como prática de manutenção
+                        </p>
+                      </div>
                       <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
                         Você observou o impulso sem agir.<br />
                         Isso é Interrupção.<br />
@@ -418,6 +468,31 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                   <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.72rem" }}>
                     RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
                   </p>
+                  <div style={{ background: "#f0f7ff", border: "1px solid #bfd9f5", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem" }}>
+                    <p style={{ fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.5rem" }}>Respiração Guiada para Atravessar o Impulso</p>
+                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>O QUE É?</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
+                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO FUNCIONA?</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.5rem" }}>Quando executada corretamente, esta sequência respiratória:</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8, marginBottom: "0.75rem" }}>
+                      ✅ Estimula o nervo vago — principal componente do sistema parassimpático<br />
+                      ✅ Reduz a frequência cardíaca e a pressão arterial<br />
+                      ✅ Diminui a liberação de cortisol (hormônio do estresse)<br />
+                      ✅ Aumenta a variabilidade da frequência cardíaca<br />
+                      ✅ Ativa o córtex pré-frontal — área responsável pelo controle executivo
+                    </p>
+                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO PRATICAR</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 1 — INSPIRAÇÃO (4 segundos):</strong> Inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 2 — RETENÇÃO (6 segundos):</strong> Segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}><strong>FASE 3 — EXPIRAÇÃO (2 segundos):</strong> Solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
+                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>QUANDO USAR?</p>
+                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8 }}>
+                      🎯 No momento do impulso: assim que perceber a vontade de jogar<br />
+                      🎯 Antes de situações de risco: quando souber que estará exposto a gatilhos<br />
+                      🎯 Após uma recaída: para retomar o controle sem autocrítica<br />
+                      🎯 Na prevenção diária: como prática de manutenção
+                    </p>
+                  </div>
                   <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
                     Você observou o impulso sem agir.<br />Isso é Interrupção.<br />O ciclo automático perdeu força.
                   </p>

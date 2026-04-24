@@ -68,7 +68,7 @@ Deno.serve(async (req: Request) => {
     }
 
     // Formato esperado: user_{userId}_modulo_{moduloId}
-    const match = extRef.match(/^user_([^_]+(?:_[^_]+){4})_modulo_(\d+)$/);
+    const match = extRef.match(/^user_([0-9a-f-]+)_modulo_(\d+)$/);
     if (!match) {
       console.error("webhook-mp: external_reference fora do formato:", extRef);
       return new Response(JSON.stringify({ ok: true }), { status: 200 });
