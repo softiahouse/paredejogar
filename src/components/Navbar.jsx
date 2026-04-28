@@ -43,9 +43,24 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Link to="/entrar" className="istop-nav-cta">
-              Entrar
-            </Link>
+            <>
+              <Link
+                to="/blog"
+                style={{
+                  fontFamily: "DM Sans, sans-serif",
+                  fontSize: "0.88rem",
+                  color: "#3B6D11",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  marginRight: "1rem",
+                }}
+              >
+                Blog
+              </Link>
+              <Link to="/entrar" className="istop-nav-cta">
+                Entrar
+              </Link>
+            </>
           )}
         </div>
       </div>
