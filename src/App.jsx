@@ -21,6 +21,9 @@ import FamilyQuizPage from './pages/FamilyQuizPage'
 import QuizResultPage from './pages/QuizResultPage'
 import CertificadoPage from './pages/CertificadoPage'
 import TermosPage from './pages/TermosPage'
+import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
+import BlogAdminPage from './pages/BlogAdminPage'
 
 function Layout({ children, noFooter }) {
   return (
@@ -69,6 +72,9 @@ export default function App() {
           <Route path="/certificado" element={<CertificadoPage />} />
           <Route path="/modulo/:id" element={<ProtectedRoute><ModuloEntry /></ProtectedRoute>} />
           <Route path="/checkin" element={<ProtectedRoute><Layout><CheckIn /></Layout></ProtectedRoute>} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/blog/admin" element={<BlogAdminPage />} />
           <Route path="*" element={<Layout><div style={{ padding: '120px 24px', textAlign: 'center' }}><h2>Página não encontrada</h2></div></Layout>} />
         </Routes>
         <BotaoEmergencia modulosLiberados={[]} inline={false} />
