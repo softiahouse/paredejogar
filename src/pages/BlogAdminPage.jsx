@@ -155,7 +155,25 @@ export default function BlogAdminPage() {
               </div>
             </div>
             <label style={s.label}>URL da imagem de capa</label>
-            <input value={form.imagem_url} onChange={e => setForm(f => ({ ...f, imagem_url: e.target.value }))} style={s.input} placeholder="https://... (link da imagem)" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                setMsg("Enviando imagem...");
+                const ext = file.name.split(".").pop();
+                const nome = `${Date.now()}.${ext}`;
+                const { error } = await supabase.storage
+                  .from("blog-imagens")
+                  .upload(nome, file, { upsert: true });
+                if (error) { setMsg("Erro ao enviar imagem."); return; }
+                const { data: urlData } = supabase.storage.from("blog-imagens").getPublicUrl(nome);
+                setForm(f => ({ ...f, imagem_url: urlData.publicUrl }));
+                setMsg("Imagem enviada com sucesso!");
+              }}
+              style={{ ...s.input, padding: "0.4rem" }}
+            />
             {form.imagem_url && <img src={form.imagem_url} alt="" style={{ width: "100%", height: 160, objectFit: "cover", borderRadius: 10, marginBottom: "1rem" }} />}
             <label style={s.label}>Resumo (aparece nos cards)</label>
             <textarea value={form.resumo} onChange={e => setForm(f => ({ ...f, resumo: e.target.value }))} style={{ ...s.textarea, height: 70 }} placeholder="Breve descrição do artigo..." />
