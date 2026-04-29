@@ -56,17 +56,26 @@ export default function BlogAdminPage() {
     e.preventDefault();
     setSalvando(true);
     setMsg("");
-    const dados = { ...form, slug: form.slug || slugify(form.titulo), updated_at: new Date().toISOString() };
+    const dados = {
+      ...form,
+      slug: form.slug || slugify(form.titulo),
+      updated_at: new Date().toISOString()
+    };
     if (editandoId) {
       const { error } = await supabase.from("blog_posts").update(dados).eq("id", editandoId);
-      setMsg(error ? "Erro ao salvar." : "Post atualizado!");
+      setMsg(error ? `Erro: ${error.message}` : "Post atualizado!");
     } else {
       const { error } = await supabase.from("blog_posts").insert(dados);
-      setMsg(error ? "Erro ao criar." : "Post criado!");
+      setMsg(error ? `Erro: ${error.message}` : "Post criado com sucesso!");
+      if (!error) {
+        setTimeout(() => {
+          setForm({ titulo: "", slug: "", categoria: "jogador", resumo: "", conteudo: "", imagem_url: "", publicado: false });
+          setAba("lista");
+        }, 1500);
+      }
     }
     setSalvando(false);
     carregarPosts();
-    if (!editandoId) { setForm({ titulo: "", slug: "", categoria: "jogador", resumo: "", conteudo: "", imagem_url: "", publicado: false }); setAba("lista"); }
   }
 
   async function togglePublicado(p) {
@@ -154,27 +163,55 @@ export default function BlogAdminPage() {
                 <label htmlFor="publicado" style={{ fontSize: "0.88rem", color: "#555" }}>Publicar imediatamente</label>
               </div>
             </div>
-            <label style={s.label}>URL da imagem de capa</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={async (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                setMsg("Enviando imagem...");
-                const ext = file.name.split(".").pop();
-                const nome = `${Date.now()}.${ext}`;
-                const { error } = await supabase.storage
-                  .from("blog-imagens")
-                  .upload(nome, file, { upsert: true });
-                if (error) { setMsg("Erro ao enviar imagem."); return; }
-                const { data: urlData } = supabase.storage.from("blog-imagens").getPublicUrl(nome);
-                setForm(f => ({ ...f, imagem_url: urlData.publicUrl }));
-                setMsg("Imagem enviada com sucesso!");
-              }}
-              style={{ ...s.input, padding: "0.4rem" }}
-            />
-            {form.imagem_url && <img src={form.imagem_url} alt="" style={{ width: "100%", height: 160, objectFit: "cover", borderRadius: 10, marginBottom: "1rem" }} />}
+            <label style={s.label}>Imagem de capa</label>
+            <div style={{ marginBottom: "1rem" }}>
+              <label style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                padding: "1.5rem",
+                border: "2px dashed #c8e6a0",
+                borderRadius: 12,
+                background: "#f0f7e8",
+                cursor: "pointer",
+                marginBottom: 8,
+              }}>
+                <span style={{ fontSize: "1.5rem" }}>📷</span>
+                <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "#3B6D11" }}>Clique aqui e envie sua imagem</span>
+                <span style={{ fontSize: "0.75rem", color: "#888" }}>Formatos aceitos: JPG, PNG, WEBP · Tamanho máximo: 5MB</span>
+                <span style={{ fontSize: "0.72rem", color: "#aaa" }}>Tamanho recomendado: 1200 × 630px</span>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  style={{ display: "none" }}
+                  onChange={async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    if (file.size > 5 * 1024 * 1024) { setMsg("Imagem muito grande. Máximo 5MB."); return; }
+                    setMsg("Enviando imagem...");
+                    const ext = file.name.split(".").pop();
+                    const nome = `${Date.now()}.${ext}`;
+                    const { error } = await supabase.storage.from("blog-imagens").upload(nome, file, { upsert: true });
+                    if (error) { setMsg("Erro ao enviar imagem."); return; }
+                    const { data: urlData } = supabase.storage.from("blog-imagens").getPublicUrl(nome);
+                    setForm(f => ({ ...f, imagem_url: urlData.publicUrl }));
+                    setMsg("✅ Imagem enviada com sucesso!");
+                  }}
+                />
+              </label>
+              {form.imagem_url && (
+                <div style={{ position: "relative" }}>
+                  <img src={form.imagem_url} alt="" style={{ width: "100%", height: 160, objectFit: "cover", borderRadius: 10 }} />
+                  <button
+                    type="button"
+                    onClick={() => setForm(f => ({ ...f, imagem_url: "" }))}
+                    style={{ position: "absolute", top: 8, right: 8, background: "rgba(0,0,0,0.6)", color: "#fff", border: "none", borderRadius: 99, width: 28, height: 28, cursor: "pointer", fontSize: "0.9rem" }}
+                  >×</button>
+                </div>
+              )}
+            </div>
             <label style={s.label}>Resumo (aparece nos cards)</label>
             <textarea value={form.resumo} onChange={e => setForm(f => ({ ...f, resumo: e.target.value }))} style={{ ...s.textarea, height: 70 }} placeholder="Breve descrição do artigo..." />
             <label style={s.label}>Conteúdo completo *</label>
