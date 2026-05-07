@@ -871,6 +871,27 @@ export default function Painel() {
         </div>
 
         {/* Rodapé do painel */}
+        <div style={{ textAlign: "center", marginTop: "2rem", marginBottom: "1rem" }}>
+          <Link
+            to="/blog"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              background: "#f0f7e8",
+              border: "1px solid #c8e6a0",
+              borderRadius: 99,
+              padding: "0.6rem 1.25rem",
+              textDecoration: "none",
+              color: "#3B6D11",
+              fontFamily: "DM Sans, sans-serif",
+              fontSize: "0.88rem",
+              fontWeight: 600,
+            }}
+          >
+            📰 Aceder ao Blog — artigos e recursos gratuitos
+          </Link>
+        </div>
         <p
           style={{
             fontFamily: "DM Sans, sans-serif",
