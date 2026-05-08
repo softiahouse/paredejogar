@@ -180,7 +180,7 @@ export default function BlogAdminPage() {
               }}>
                 <span style={{ fontSize: "1.5rem" }}>📷</span>
                 <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "#3B6D11" }}>Clique aqui e envie sua imagem</span>
-                <span style={{ fontSize: "0.75rem", color: "#888" }}>Formatos aceitos: JPG, PNG, WEBP · Tamanho máximo: 5MB</span>
+                <span style={{ fontSize: "0.75rem", color: "#888" }}>Formatos aceitos: JPG, PNG, WEBP · Tamanho máximo: 50MB</span>
                 <span style={{ fontSize: "0.72rem", color: "#aaa" }}>Tamanho recomendado: 1200 × 630px</span>
                 <input
                   type="file"
@@ -189,7 +189,7 @@ export default function BlogAdminPage() {
                   onChange={async (e) => {
                     const file = e.target.files[0];
                     if (!file) return;
-                    if (file.size > 5 * 1024 * 1024) { setMsg("Imagem muito grande. Máximo 5MB."); return; }
+                    if (file.size > 50 * 1024 * 1024) { setMsg("Imagem muito grande. Máximo 50MB."); return; }
                     setMsg("Enviando imagem...");
                     const ext = file.name.split(".").pop();
                     const nome = `${Date.now()}.${ext}`;

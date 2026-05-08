@@ -24,6 +24,18 @@ export default function Navbar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           {user ? (
             <>
+              <Link
+                to="/blog"
+                style={{
+                  fontFamily: "DM Sans, sans-serif",
+                  fontSize: 14,
+                  color: "#3B6D11",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                Blog
+              </Link>
               <Link to="/painel" style={{ fontSize: 14, color: 'var(--muted)', textDecoration: 'none' }}>
                 Meu painel
               </Link>
