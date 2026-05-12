@@ -295,6 +295,135 @@ const css = `
     gap: 8px; font-size: 12px; color: rgba(255,255,255,.3);
   }
 
+  /* HERO COM SIDEBAR (POSTS DO BLOG) */
+  .lp-hero-grid {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 1320px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 40px;
+  }
+  @media (min-width: 1024px) {
+    .lp-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      align-items: center; gap: 64px;
+    }
+    .lp-hero-grid > .lp-hero-inner { justify-self: center; }
+  }
+
+  .lp-hero-sidebar {
+    width: 100%; max-width: 420px;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    padding: 20px 20px 14px;
+    animation: lpFadeUp .8s .8s ease both;
+  }
+  @media (min-width: 1024px) {
+    .lp-hero-sidebar { max-width: none; width: 280px; }
+  }
+  .lp-hero-sidebar-header {
+    font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--verde);
+    font-weight: 600; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .lp-hero-sidebar-post {
+    display: block; padding: 12px 0;
+    border-bottom: 1px solid var(--borda);
+    text-decoration: none; color: inherit;
+    transition: opacity .2s;
+  }
+  .lp-hero-sidebar-post:hover { opacity: .65; }
+  .lp-hero-sidebar-post-cat {
+    font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--verde);
+    font-weight: 600; margin-bottom: 4px;
+  }
+  .lp-hero-sidebar-post-title {
+    font-family: var(--fonte-titulo);
+    font-size: 15px; color: var(--texto);
+    line-height: 1.3; margin: 0;
+  }
+  .lp-hero-sidebar-link {
+    display: block; text-align: center;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--borda);
+    font-size: 12px; font-weight: 600;
+    color: var(--verde); text-decoration: none;
+    letter-spacing: .04em;
+  }
+
+  /* SECCAO BLOG NO FIM */
+  .lp-blog-section { background: #fff; }
+  .lp-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px; margin-top: 32px;
+  }
+  .lp-blog-card {
+    background: #fff; border: 1px solid var(--borda);
+    border-radius: 16px; overflow: hidden;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .lp-blog-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--verde);
+    box-shadow: 0 8px 28px rgba(59,109,17,0.08);
+  }
+  .lp-blog-card-img {
+    width: 100%; height: 180px;
+    object-fit: cover; background: var(--verde-suave);
+    display: block;
+  }
+  .lp-blog-card-noimg {
+    width: 100%; height: 100px;
+    background: linear-gradient(135deg, var(--verde-suave), #fff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; color: var(--verde);
+  }
+  .lp-blog-card-content {
+    padding: 22px 22px 20px; flex: 1;
+    display: flex; flex-direction: column;
+  }
+  .lp-blog-card-cat {
+    font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--verde);
+    font-weight: 600; margin-bottom: 10px;
+  }
+  .lp-blog-card-title {
+    font-family: var(--fonte-titulo);
+    font-size: 21px; color: var(--texto);
+    line-height: 1.3; margin-bottom: 10px;
+  }
+  .lp-blog-card-resumo {
+    font-size: 14px; color: var(--texto-sec);
+    line-height: 1.6; flex: 1; margin-bottom: 14px;
+    display: -webkit-box; -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .lp-blog-card-link {
+    font-size: 13px; color: var(--verde); font-weight: 600;
+  }
+  .lp-blog-section-cta {
+    text-align: center; margin-top: 40px;
+  }
+  .lp-blog-section-cta a {
+    display: inline-block; border: 1px solid var(--borda);
+    border-radius: 8px; padding: 12px 28px;
+    text-decoration: none; color: var(--texto);
+    font-size: 14px;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .lp-blog-section-cta a:hover {
+    border-color: var(--verde); color: var(--verde);
+    background: var(--verde-claro);
+  }
+
   @media (max-width: 640px) {
     .lp-familiares-inner { grid-template-columns: 1fr; gap: 40px; }
     .lp-footer-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -315,6 +444,7 @@ export default function LandingPage() {
   const [faqAberto, setFaqAberto] = useState(null)
   const navigate = useNavigate();
   const [modulosLiberados, setModulosLiberados] = useState([]);
+  const [ultimosPosts, setUltimosPosts] = useState([]);
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data }) => {
@@ -325,6 +455,16 @@ export default function LandingPage() {
         .eq("user_id", data.user.id);
       if (lib) setModulosLiberados(lib.map((r) => r.modulo_id));
     });
+  }, []);
+
+  useEffect(() => {
+    supabase
+      .from("blog_posts")
+      .select("id, titulo, slug, categoria, resumo, imagem_url")
+      .eq("publicado", true)
+      .order("created_at", { ascending: false })
+      .limit(3)
+      .then(({ data }) => setUltimosPosts(data || []));
   }, []);
 
   const temModulo1 = modulosLiberados.includes(1);
@@ -343,6 +483,7 @@ export default function LandingPage() {
       <section className="lp-hero">
         <div className="lp-blob-1" />
         <div className="lp-blob-2" />
+        <div className="lp-hero-grid">
         <div className="lp-hero-inner">
           <h1 className="lp-hero-title">
             <span className="lp-pare">PARE</span>{' '}
@@ -391,6 +532,24 @@ export default function LandingPage() {
               {temModulo1 ? "Continue sua jornada →" : "Inicie sua jornada →"}
             </button>
           </div>
+        </div>
+        {ultimosPosts.length > 0 && (
+          <aside className="lp-hero-sidebar">
+            <div className="lp-hero-sidebar-header">
+              <span>📰</span>
+              <span>Últimos do blog</span>
+            </div>
+            {ultimosPosts.map((p) => (
+              <Link key={p.id} to={`/blog/${p.slug}`} className="lp-hero-sidebar-post">
+                <div className="lp-hero-sidebar-post-cat">{p.categoria}</div>
+                <h3 className="lp-hero-sidebar-post-title">{p.titulo}</h3>
+              </Link>
+            ))}
+            <Link to="/blog" className="lp-hero-sidebar-link">
+              Ver todos os artigos →
+            </Link>
+          </aside>
+        )}
         </div>
         <div
           style={{
@@ -573,6 +732,39 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* BLOG — POSTS EM DESTAQUE */}
+      {ultimosPosts.length > 0 && (
+        <section className="lp-section lp-blog-section">
+          <div className="lp-container">
+            <span className="lp-section-label">Recursos gratuitos</span>
+            <h2 className="lp-section-title">Do blog</h2>
+            <p className="lp-section-sub">
+              Artigos baseados em evidência para quem quer entender o ciclo do jogo — leitura grátis, sem cadastro.
+            </p>
+            <div className="lp-blog-grid">
+              {ultimosPosts.map((p) => (
+                <Link key={p.id} to={`/blog/${p.slug}`} className="lp-blog-card">
+                  {p.imagem_url ? (
+                    <img src={p.imagem_url} alt={p.titulo} className="lp-blog-card-img" />
+                  ) : (
+                    <div className="lp-blog-card-noimg">📰</div>
+                  )}
+                  <div className="lp-blog-card-content">
+                    <div className="lp-blog-card-cat">{p.categoria}</div>
+                    <h3 className="lp-blog-card-title">{p.titulo}</h3>
+                    {p.resumo && <p className="lp-blog-card-resumo">{p.resumo}</p>}
+                    <span className="lp-blog-card-link">Ler artigo →</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="lp-blog-section-cta">
+              <Link to="/blog">Ver todos os artigos →</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA FINAL */}
       <section className="lp-cta-final">
