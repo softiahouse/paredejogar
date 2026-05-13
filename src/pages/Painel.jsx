@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import BotaoEmergencia from "../components/BotaoEmergencia";
 
@@ -7,11 +7,12 @@ function calcularStatus(moduloId, liberados, concluidos) {
   const ehSocio = liberados.length >= 5;
   const concluido = concluidos.includes(moduloId);
   const pago = liberados.includes(moduloId);
+  // Regra de sequencia: para destravar M(n) para compra, o M(n-1) precisa estar
+  // PAGO E CONCLUIDO. M1 e o ponto de entrada (sempre destravado).
   const anteriorOk =
     moduloId === 1 ||
     ehSocio ||
-    concluidos.includes(moduloId - 1) ||
-    liberados.includes(moduloId - 1);
+    (liberados.includes(moduloId - 1) && concluidos.includes(moduloId - 1));
 
   if (concluido) return "concluido";
   if (pago && anteriorOk) return "disponivel";
@@ -97,12 +98,30 @@ const estilos = {
 
 export default function Painel() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pagamentoStatus = searchParams.get("pagamento"); // sucesso | falha | pendente
+  const moduloPagamento = searchParams.get("modulo");
+  const bloqueado = searchParams.get("bloqueado"); // ex: "modulo_2"
   const [user, setUser] = useState(null);
   const [progresso, setProgresso] = useState({ moduloAtual: 1, concluidos: [] });
   const [loading, setLoading] = useState(true);
   const [liberados, setLiberados] = useState([]); // módulos pagos
   const [carregandoPgto, setCarregandoPgto] = useState(null); // id do módulo em loading
   const [moduloExpandido, setModuloExpandido] = useState(null);
+
+  // Limpa query params apos 8s para nao persistir no historico
+  useEffect(() => {
+    if (pagamentoStatus || bloqueado) {
+      const t = setTimeout(() => {
+        const novo = new URLSearchParams(searchParams);
+        novo.delete("pagamento");
+        novo.delete("modulo");
+        novo.delete("bloqueado");
+        setSearchParams(novo, { replace: true });
+      }, 8000);
+      return () => clearTimeout(t);
+    }
+  }, [pagamentoStatus, bloqueado, searchParams, setSearchParams]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -165,24 +184,16 @@ export default function Painel() {
             Authorization: `Bearer ${session.access_token}`,
           },
           body: JSON.stringify({
+            modulo_id: moduloId,
             items: [{ title: nome, quantity: 1, unit_price: preco, currency_id: "BRL" }],
-            external_reference: `user_${session.user.id}_modulo_${moduloId}`,
-            back_urls: {
-              success: "https://paredejogar.com/painel",
-              failure: "https://paredejogar.com/painel",
-              pending: "https://paredejogar.com/painel",
-            },
-            auto_return: "approved",
-            notification_url:
-              "https://gybzuhopxhlbewhjihnd.supabase.co/functions/v1/webhook-mp",
           }),
         }
       );
       const json = await res.json();
-      if (json.init_point) {
+      if (res.ok && json.init_point) {
         window.location.href = json.init_point;
       } else {
-        alert("Erro ao iniciar pagamento. Tente novamente.");
+        alert(json.error || "Erro ao iniciar pagamento. Tente novamente.");
       }
     } catch (e) {
       console.error(e);
@@ -306,6 +317,44 @@ export default function Painel() {
           padding: "2.5rem 1.5rem",
         }}
       >
+        {/* Avisos de retorno do Mercado Pago / acesso bloqueado */}
+        {pagamentoStatus === "sucesso" && (
+          <div style={{
+            background: "#EFF5E8", border: "1px solid #3B6D11",
+            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
+            fontFamily: "DM Sans, sans-serif", color: "#2A5009",
+          }}>
+            Pagamento aprovado{moduloPagamento ? ` para o Módulo ${moduloPagamento}` : ""}.
+            O acesso é liberado em instantes — recarregue a página se ainda não aparecer.
+          </div>
+        )}
+        {pagamentoStatus === "pendente" && (
+          <div style={{
+            background: "#FFF8E0", border: "1px solid #E8A000",
+            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
+            fontFamily: "DM Sans, sans-serif", color: "#7A5500",
+          }}>
+            Pagamento pendente. Assim que o Mercado Pago confirmar, seu acesso é liberado.
+          </div>
+        )}
+        {pagamentoStatus === "falha" && (
+          <div style={{
+            background: "#FDECEC", border: "1px solid #C44",
+            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
+            fontFamily: "DM Sans, sans-serif", color: "#7A2020",
+          }}>
+            O pagamento não foi concluído. Você pode tentar novamente.
+          </div>
+        )}
+        {bloqueado && (
+          <div style={{
+            background: "#FDECEC", border: "1px solid #C44",
+            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
+            fontFamily: "DM Sans, sans-serif", color: "#7A2020",
+          }}>
+            Você precisa comprar este módulo (ou concluir o anterior) para acessar.
+          </div>
+        )}
         {/* Boas-vindas + progresso */}
         <div
           style={{
@@ -813,10 +862,7 @@ export default function Painel() {
                     >
                       <span>📖 {m.aulas} aulas</span>
                       <span>🛠 {m.ferramenta}</span>
-                      {(status === "pagar" && m.id === Math.min(...modulos.filter(mod => {
-                        const s = liberados.includes(mod.id) ? (progresso.concluidos.includes(mod.id) ? "concluido" : "disponivel") : (liberados.includes(mod.id - 1) || mod.id === 1 ? "pagar" : "bloqueado");
-                        return s === "pagar";
-                      }).map(mod => mod.id))) && (
+                      {status === "pagar" && (
                         <span style={{ fontWeight: 600, color: "#3B6D11" }}>
                           {PRECOS[m.id]?.label}
                         </span>

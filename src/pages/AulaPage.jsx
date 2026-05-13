@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { modulos } from "../data/modulosContent";
@@ -26,15 +26,44 @@ export default function AulaPage() {
   const totalAulas = modulo?.aulas.length || 0;
   const isUltimaAula = aId === totalAulas;
 
+  // Bloqueia acesso a aulas de modulos nao comprados.
+  // null = checando | true = liberado | false = bloqueado (redireciona)
+  const [acessoLiberado, setAcessoLiberado] = useState(null);
+
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) navigate("/entrar");
-    });
-  }, [navigate]);
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) {
+        navigate("/entrar");
+        return;
+      }
+      const { data: liberado } = await supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", data.user.id)
+        .eq("modulo_id", mId)
+        .maybeSingle();
+      if (!liberado) {
+        navigate(`/painel?bloqueado=modulo_${mId}`, { replace: true });
+        return;
+      }
+      setAcessoLiberado(true);
+    })();
+  }, [navigate, mId]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [mId, aId]);
+
+  if (acessoLiberado === null) {
+    return (
+      <div style={styles.centro}>
+        <p style={{ fontFamily: "DM Sans, sans-serif", color: "#999" }}>
+          Carregando aula...
+        </p>
+      </div>
+    );
+  }
 
   if (!modulo || !aula) {
     return (

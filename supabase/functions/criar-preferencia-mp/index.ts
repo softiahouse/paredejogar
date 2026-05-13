@@ -10,23 +10,30 @@ const corsHeaders: Record<string, string> = {
 
 const MP_API = "https://api.mercadopago.com/checkout/preferences";
 
-type Item = {
-  title: string;
-  quantity: number;
-  unit_price: number;
-  currency_id?: string;
+// URLs canonicas — o servidor e a fonte da verdade. Nunca confia no cliente.
+const SITE_URL =
+  Deno.env.get("SITE_URL")?.replace(/\/$/, "") ??
+  "https://www.paredejogar.com";
+const WEBHOOK_URL =
+  Deno.env.get("MP_WEBHOOK_URL") ??
+  "https://gybzuhopxhlbewhjihnd.supabase.co/functions/v1/webhook-mp";
+
+// Catalogo oficial de precos. O cliente nao pode passar precos arbitrarios.
+const PRECOS_OFICIAIS: Record<
+  number,
+  { titulo: string; preco: number }
+> = {
+  1: { titulo: "Modulo 1 — Interrupcao", preco: 29.9 },
+  2: { titulo: "Modulo 2 — Sensibilizacao", preco: 49.9 },
+  3: { titulo: "Modulo 3 — Autorregulacao", preco: 89.9 },
+  4: { titulo: "Modulo 4 — Reorganizacao", preco: 149.9 },
+  5: { titulo: "Modulo 5 — Manutencao", preco: 199.9 },
 };
 
 type Body = {
-  items?: Item[];
-  back_urls?: {
-    success?: string;
-    failure?: string;
-    pending?: string;
-  };
-  auto_return?: "approved" | "all";
+  modulo_id?: number;
+  // Mantido por compatibilidade — se vier sem modulo_id, tenta extrair daqui.
   external_reference?: string;
-  notification_url?: string;
 };
 
 Deno.serve(async (req: Request) => {
@@ -44,7 +51,7 @@ Deno.serve(async (req: Request) => {
   const accessToken = Deno.env.get("MP_ACCESS_TOKEN");
   if (!accessToken) {
     return new Response(
-      JSON.stringify({ error: "MP_ACCESS_TOKEN não configurado" }),
+      JSON.stringify({ error: "MP_ACCESS_TOKEN nao configurado" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -54,7 +61,7 @@ Deno.serve(async (req: Request) => {
 
   const authHeader = req.headers.get("Authorization");
   if (!authHeader?.startsWith("Bearer ")) {
-    return new Response(JSON.stringify({ error: "Não autorizado" }), {
+    return new Response(JSON.stringify({ error: "Nao autorizado" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -74,7 +81,7 @@ Deno.serve(async (req: Request) => {
   } = await supabase.auth.getUser(jwt);
 
   if (userError || !user) {
-    return new Response(JSON.stringify({ error: "Sessão inválida" }), {
+    return new Response(JSON.stringify({ error: "Sessao invalida" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -84,56 +91,120 @@ Deno.serve(async (req: Request) => {
   try {
     body = (await req.json()) as Body;
   } catch {
-    return new Response(JSON.stringify({ error: "JSON inválido" }), {
+    return new Response(JSON.stringify({ error: "JSON invalido" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
-  const siteUrl = Deno.env.get("SITE_URL")?.replace(/\/$/, "") ?? "";
-  const defaultBack = siteUrl
-    ? {
-        success: `${siteUrl}/painel`,
-        failure: `${siteUrl}/painel`,
-        pending: `${siteUrl}/painel`,
-      }
-    : undefined;
+  // Determina o modulo: prioriza modulo_id explicito; fallback no external_reference legado.
+  const moduloId = (() => {
+    if (typeof body.modulo_id === "number") return body.modulo_id;
+    const m = body.external_reference?.match(/_modulo_(\d+)$/);
+    return m ? parseInt(m[1], 10) : NaN;
+  })();
 
-  const items =
-    body.items?.length ?
-      body.items.map((i) => ({
-        title: i.title,
-        quantity: Math.max(1, Math.floor(i.quantity)),
-        unit_price: Number(i.unit_price),
-        currency_id: i.currency_id ?? "BRL",
-      }))
-    : [
+  if (!PRECOS_OFICIAIS[moduloId]) {
+    return new Response(
+      JSON.stringify({ error: "Modulo invalido" }),
+      {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
+    );
+  }
+
+  // GATE DE SEQUENCIA SERVER-SIDE.
+  // Para comprar M(n) e preciso ter PAGADO e CONCLUIDO M(n-1).
+  // M1 e o ponto de entrada (sem pre-requisito).
+  if (moduloId > 1) {
+    const anteriorId = moduloId - 1;
+
+    const [
+      { data: pagoAnterior },
+      { data: concluidoAnterior },
+    ] = await Promise.all([
+      supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", user.id)
+        .eq("modulo_id", anteriorId)
+        .maybeSingle(),
+      supabase
+        .from("progresso_usuario")
+        .select("modulo_id")
+        .eq("user_id", user.id)
+        .eq("modulo_id", anteriorId)
+        .maybeSingle(),
+    ]);
+
+    if (!pagoAnterior) {
+      return new Response(
+        JSON.stringify({
+          error: `Voce precisa comprar o Modulo ${anteriorId} antes do Modulo ${moduloId}.`,
+        }),
         {
-          title: "Acesso à plataforma Pare de Jogar",
-          quantity: 1,
-          unit_price: 1,
-          currency_id: "BRL",
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         },
-      ];
+      );
+    }
 
-  const payload: Record<string, unknown> = {
-    items,
-    external_reference:
-      body.external_reference ?? user.id,
-    metadata: { supabase_user_id: user.id },
+    if (!concluidoAnterior) {
+      return new Response(
+        JSON.stringify({
+          error: `Voce precisa concluir o Modulo ${anteriorId} antes de comprar o Modulo ${moduloId}.`,
+        }),
+        {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
+    }
+  }
+
+  // Evita compra duplicada do mesmo modulo.
+  const { data: jaPago } = await supabase
+    .from("modulos_liberados")
+    .select("modulo_id")
+    .eq("user_id", user.id)
+    .eq("modulo_id", moduloId)
+    .maybeSingle();
+
+  if (jaPago) {
+    return new Response(
+      JSON.stringify({
+        error: `Voce ja tem acesso ao Modulo ${moduloId}.`,
+      }),
+      {
+        status: 409,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
+    );
+  }
+
+  const { titulo, preco } = PRECOS_OFICIAIS[moduloId];
+
+  // Payload sob controle do servidor. Cliente nao decide preco nem URLs.
+  const payload = {
+    items: [
+      {
+        title: titulo,
+        quantity: 1,
+        unit_price: preco,
+        currency_id: "BRL",
+      },
+    ],
+    external_reference: `user_${user.id}_modulo_${moduloId}`,
+    metadata: { supabase_user_id: user.id, modulo_id: moduloId },
+    back_urls: {
+      success: `${SITE_URL}/painel?pagamento=sucesso&modulo=${moduloId}`,
+      failure: `${SITE_URL}/painel?pagamento=falha&modulo=${moduloId}`,
+      pending: `${SITE_URL}/painel?pagamento=pendente&modulo=${moduloId}`,
+    },
+    auto_return: "approved",
+    notification_url: WEBHOOK_URL,
   };
-
-  if (body.back_urls || defaultBack) {
-    payload.back_urls = { ...defaultBack, ...body.back_urls };
-  }
-  if (body.auto_return) {
-    payload.auto_return = body.auto_return;
-  } else if (payload.back_urls) {
-    payload.auto_return = "approved";
-  }
-  if (body.notification_url) {
-    payload.notification_url = body.notification_url;
-  }
 
   const mpRes = await fetch(MP_API, {
     method: "POST",
@@ -150,7 +221,7 @@ Deno.serve(async (req: Request) => {
     console.error("Mercado Pago preferences error:", mpRes.status, mpData);
     return new Response(
       JSON.stringify({
-        error: "Falha ao criar preferência",
+        error: "Falha ao criar preferencia",
         details: mpData,
       }),
       {

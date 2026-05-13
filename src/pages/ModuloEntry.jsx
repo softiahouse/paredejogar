@@ -1,10 +1,57 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Navigate, useParams, useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 import { modulos } from "../data/modulosContent";
 
-/** Redireciona `/modulo/:id` para a primeira aula quando o módulo existe em `modulosContent`. */
+/** Redireciona `/modulo/:id` para a primeira aula quando o módulo existe e
+ *  o usuário tem acesso (módulo comprado). Caso contrário, manda de volta
+ *  ao painel com aviso de bloqueio. */
 export default function ModuloEntry() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const n = Number(id);
+
+  // null = checando | true = liberado | false = bloqueado
+  const [liberado, setLiberado] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) {
+        navigate("/entrar");
+        return;
+      }
+      const { data: row } = await supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", data.user.id)
+        .eq("modulo_id", n)
+        .maybeSingle();
+      setLiberado(!!row);
+    })();
+  }, [n, navigate]);
+
+  if (liberado === null) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#F7F5F0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "DM Sans, sans-serif",
+          color: "#999",
+        }}
+      >
+        Carregando módulo...
+      </div>
+    );
+  }
+
+  if (!liberado) {
+    return <Navigate to={`/painel?bloqueado=modulo_${n}`} replace />;
+  }
 
   if (modulos[n]?.aulas?.length) {
     return <Navigate to={`/modulo/${n}/aula/1`} replace />;
