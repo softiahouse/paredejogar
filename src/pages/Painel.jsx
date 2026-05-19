@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import BotaoEmergencia from "../components/BotaoEmergencia";
@@ -110,8 +110,9 @@ export default function Painel() {
   const [moduloExpandido, setModuloExpandido] = useState(null);
 
   // Limpa query params apos 8s para nao persistir no historico
+  // Exceto "pendente": esse fica ate o modulo ser liberado via polling
   useEffect(() => {
-    if (pagamentoStatus || bloqueado) {
+    if ((pagamentoStatus && pagamentoStatus !== "pendente") || bloqueado) {
       const t = setTimeout(() => {
         const novo = new URLSearchParams(searchParams);
         novo.delete("pagamento");
@@ -133,6 +134,38 @@ export default function Painel() {
       carregarProgresso(data.user.id);
     });
   }, []);
+
+  // Polling automatico quando pagamento esta pendente (Pix demora alguns minutos)
+  // Verifica a cada 10s se o modulo foi liberado; quando sim, redireciona para sucesso
+  const pollingRef = useRef(null);
+  useEffect(() => {
+    if (pagamentoStatus !== "pendente" || !moduloPagamento || !user) return;
+
+    const modId = parseInt(moduloPagamento, 10);
+
+    pollingRef.current = setInterval(async () => {
+      const { data } = await supabase
+        .from("modulos_liberados")
+        .select("modulo_id")
+        .eq("user_id", user.id)
+        .eq("modulo_id", modId)
+        .maybeSingle();
+
+      if (data) {
+        clearInterval(pollingRef.current);
+        // Redireciona para sucesso — recarga limpa todo o estado do painel
+        window.location.href = `/painel?pagamento=sucesso&modulo=${modId}`;
+      }
+    }, 10000);
+
+    // Para de verificar apos 15 minutos (Pix expirado ou outro problema)
+    const giveUpTimer = setTimeout(() => clearInterval(pollingRef.current), 15 * 60 * 1000);
+
+    return () => {
+      clearInterval(pollingRef.current);
+      clearTimeout(giveUpTimer);
+    };
+  }, [pagamentoStatus, moduloPagamento, user]);
 
   async function carregarProgresso(userId) {
     const { data, error } = await supabase
@@ -333,8 +366,21 @@ export default function Painel() {
             background: "#FFF8E0", border: "1px solid #E8A000",
             borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
             fontFamily: "DM Sans, sans-serif", color: "#7A5500",
+            display: "flex", alignItems: "flex-start", gap: "0.85rem",
           }}>
-            Pagamento pendente. Assim que o Mercado Pago confirmar, seu acesso é liberado automaticamente — pode levar alguns minutos. Atualize a página caso não apareça.
+            <div style={{
+              width: 18, height: 18, border: "2.5px solid #E8A000",
+              borderTopColor: "transparent", borderRadius: "50%",
+              animation: "painel-spin 0.9s linear infinite", flexShrink: 0,
+              marginTop: 2,
+            }} />
+            <div>
+              <strong style={{ fontSize: "0.92rem" }}>Aguardando confirmação do Pix{moduloPagamento ? ` — Módulo ${moduloPagamento}` : ""}</strong>
+              <p style={{ margin: "0.3rem 0 0", fontSize: "0.84rem", lineHeight: 1.5 }}>
+                Seu pagamento foi registrado. Assim que o banco confirmar o Pix (normalmente em até 5 minutos),
+                o módulo é liberado <strong>automaticamente</strong> — esta página detecta e atualiza sozinha.
+              </p>
+            </div>
           </div>
         )}
         {pagamentoStatus === "falha" && (
@@ -950,6 +996,12 @@ export default function Painel() {
           Instituto ISTOP — Método científico de interrupção do ciclo do jogo
         </p>
       </div>
+      <style>{`
+        @keyframes painel-spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
