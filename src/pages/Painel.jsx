@@ -224,7 +224,13 @@ export default function Painel() {
       );
       const json = await res.json();
       if (res.ok && json.init_point) {
-        window.location.href = json.init_point;
+        // Marca painel como pendente e inicia polling ANTES de abrir o MP
+        // Assim o usuario paga na aba nova e volta para ca ja com o modulo liberado
+        const novo = new URLSearchParams(searchParams);
+        novo.set("pagamento", "pendente");
+        novo.set("modulo", String(moduloId));
+        setSearchParams(novo, { replace: true });
+        window.open(json.init_point, "_blank", "noopener,noreferrer");
       } else {
         alert(json.error || "Erro ao iniciar pagamento. Tente novamente.");
       }
@@ -377,8 +383,7 @@ export default function Painel() {
             <div>
               <strong style={{ fontSize: "0.92rem" }}>Aguardando confirmação do Pix{moduloPagamento ? ` — Módulo ${moduloPagamento}` : ""}</strong>
               <p style={{ margin: "0.3rem 0 0", fontSize: "0.84rem", lineHeight: 1.5 }}>
-                Seu pagamento foi registrado. Assim que o banco confirmar o Pix (normalmente em até 5 minutos),
-                o módulo é liberado <strong>automaticamente</strong> — esta página detecta e atualiza sozinha.
+                O Pix foi aberto numa nova aba. Pague por lá e <strong>volte para esta página</strong> — ela detecta a confirmação e libera o módulo <strong>automaticamente</strong>. Pode fechar a aba do Mercado Pago depois de pagar.
               </p>
             </div>
           </div>
