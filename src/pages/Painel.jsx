@@ -334,7 +334,7 @@ export default function Painel() {
             borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
             fontFamily: "DM Sans, sans-serif", color: "#7A5500",
           }}>
-            Pagamento pendente. Assim que o Mercado Pago confirmar, seu acesso é liberado.
+            Pagamento pendente. Assim que o Mercado Pago confirmar, seu acesso é liberado automaticamente — pode levar alguns minutos. Atualize a página caso não apareça.
           </div>
         )}
         {pagamentoStatus === "falha" && (
