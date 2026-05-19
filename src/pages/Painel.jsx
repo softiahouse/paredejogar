@@ -648,16 +648,28 @@ export default function Painel() {
         )}
 
         {/* Grid de módulos */}
-        <h2
-          style={{
-            fontFamily: "DM Serif Display, serif",
-            fontSize: "1.2rem",
-            color: "#1a1a1a",
-            marginBottom: "1rem",
-          }}
-        >
-          Módulos do Programa
-        </h2>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.6rem" }}>
+          <h2
+            style={{
+              fontFamily: "DM Serif Display, serif",
+              fontSize: "1.2rem",
+              color: "#1a1a1a",
+              margin: 0,
+            }}
+          >
+            Módulos do Programa
+          </h2>
+          <span style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.78rem", color: "#888" }}>
+            🔒 Cada módulo só é liberado após concluir o anterior
+          </span>
+        </div>
+        <div style={{
+          background: "#f7f5f0", border: "1px solid #e8e4dc", borderRadius: 10,
+          padding: "0.65rem 1rem", marginBottom: "1.25rem",
+          fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#666", lineHeight: 1.55,
+        }}>
+          O programa segue uma sequência clínica: você <strong>compra</strong> e <strong>conclui</strong> cada módulo para desbloquear o próximo. Isso faz parte do método — cada etapa prepara você para a seguinte.
+        </div>
 
         <div
           style={{
@@ -669,6 +681,9 @@ export default function Painel() {
             const status = calcularStatus(m.id, liberados, progresso.concluidos);
             const ativo = status === "disponivel" || status === "pagar";
             const bloqueado = status === "bloqueado";
+            // Mensagem de bloqueio especifica: saber se o anterior foi pago mas nao concluido
+            const anteriorPago = m.id === 1 || liberados.includes(m.id - 1);
+            const anteriorConcluido = m.id === 1 || progresso.concluidos.includes(m.id - 1);
 
             return (
               <div
@@ -952,7 +967,11 @@ export default function Painel() {
                           fontFamily: "DM Sans, sans-serif",
                         }}
                       >
-                        🔒 Conclua o módulo anterior
+                        {!anteriorPago
+                          ? `🔒 Compre e conclua o Módulo ${m.id - 1} para desbloquear`
+                          : !anteriorConcluido
+                            ? `🔒 Conclua o Módulo ${m.id - 1} para desbloquear`
+                            : "🔒 Módulo bloqueado"}
                       </span>
                     )}
                   </div>
