@@ -43,7 +43,7 @@ export default function BlogPage() {
 
       {/* Ticker */}
       <div style={{ background: "#1a1a1a", overflow: "hidden", height: 36, display: "flex", alignItems: "center" }}>
-        <div style={{ display: "flex", gap: 32, animation: "ticker 60s linear infinite", whiteSpace: "nowrap", padding: "0 2rem" }}>
+        <div style={{ display: "flex", gap: 32, animation: "ticker 90s linear infinite", whiteSpace: "nowrap", padding: "0 2rem" }}>
           {[...Array(3)].flatMap(() => posts.map((p, i) => (
             <span key={`${p.id}-${i}`} style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)", letterSpacing: "0.05em" }}>{p.titulo}</span>
           )))}
