@@ -777,7 +777,6 @@ export default function LandingPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, marginBottom: 40 }}>
             {/* Card paciente */}
             <div style={{ background: "var(--verde-suave)", border: "1px solid #CDDDB8", borderRadius: 16, padding: "32px 28px" }}>
-              <div style={{ fontSize: 36, marginBottom: 16 }}>🧠</div>
               <h3 style={{ fontFamily: "var(--fonte-titulo)", fontSize: 22, fontWeight: 400, color: "var(--texto)", marginBottom: 10 }}>Preciso de ajuda profissional</h3>
               <p style={{ fontSize: 14, color: "var(--texto-sec)", lineHeight: 1.65, marginBottom: 24 }}>
                 Busque especialistas em ludopatia por estado e cidade. Filtre por atendimento presencial ou online.
@@ -788,7 +787,6 @@ export default function LandingPage() {
             </div>
             {/* Card profissional */}
             <div style={{ background: "#F0F7FF", border: "1px solid #BAD9F5", borderRadius: 16, padding: "32px 28px" }}>
-              <div style={{ fontSize: 36, marginBottom: 16 }}>🩺</div>
               <h3 style={{ fontFamily: "var(--fonte-titulo)", fontSize: 22, fontWeight: 400, color: "var(--texto)", marginBottom: 10 }}>Sou psicólogo(a) ou psiquiatra</h3>
               <p style={{ fontSize: 14, color: "var(--texto-sec)", lineHeight: 1.65, marginBottom: 24 }}>
                 Cadastre-se gratuitamente no Diretório Nacional e receba pacientes da sua região que buscam apoio especializado.
@@ -799,7 +797,6 @@ export default function LandingPage() {
             </div>
             {/* Card informativo */}
             <div style={{ background: "var(--creme)", border: "1px solid var(--borda)", borderRadius: 16, padding: "32px 28px" }}>
-              <div style={{ fontSize: 36, marginBottom: 16 }}>🤝</div>
               <h3 style={{ fontFamily: "var(--fonte-titulo)", fontSize: 22, fontWeight: 400, color: "var(--texto)", marginBottom: 10 }}>Por que usar o diretório?</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                 {["Profissionais verificados pelo CFP/CFM", "Especialistas em dependência comportamental", "Busca por geolocalização", "Atendimento presencial e online"].map(item => (
