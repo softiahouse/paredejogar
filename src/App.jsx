@@ -25,6 +25,7 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import BlogAdminPage from './pages/BlogAdminPage'
 import DiretorioPage from './pages/DiretorioPage'
+import AngelPage from './pages/AngelPage'
 
 function Layout({ children, noFooter }) {
   return (
@@ -77,6 +78,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/blog/admin" element={<BlogAdminPage />} />
           <Route path="/especialistas" element={<DiretorioPage />} />
+          <Route path="/angel" element={<AngelPage />} />
           <Route path="*" element={<Layout><div style={{ padding: '120px 24px', textAlign: 'center' }}><h2>Página não encontrada</h2></div></Layout>} />
         </Routes>
         <BotaoEmergencia modulosLiberados={[]} inline={false} />

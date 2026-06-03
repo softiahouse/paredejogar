@@ -1,3 +1,10 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "has": [{ "type": "host", "value": "angel.paredejogar.com" }],
+      "source": "/(.*)",
+      "destination": "/angel"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
