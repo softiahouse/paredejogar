@@ -766,6 +766,54 @@ export default function LandingPage() {
         </section>
       )}
 
+      {/* DIRETÓRIO DE ESPECIALISTAS */}
+      <section className="lp-section" style={{ background: "#fff" }}>
+        <div className="lp-container">
+          <span className="lp-section-label">Apoio profissional</span>
+          <h2 className="lp-section-title">Diretório Nacional de Especialistas em Ludopatia</h2>
+          <p className="lp-section-sub">
+            Encontre psicólogos e psiquiatras especializados no tratamento da dependência de apostas na sua cidade.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, marginBottom: 40 }}>
+            {/* Card paciente */}
+            <div style={{ background: "var(--verde-suave)", border: "1px solid #CDDDB8", borderRadius: 16, padding: "32px 28px" }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>🧠</div>
+              <h3 style={{ fontFamily: "var(--fonte-titulo)", fontSize: 22, fontWeight: 400, color: "var(--texto)", marginBottom: 10 }}>Preciso de ajuda profissional</h3>
+              <p style={{ fontSize: 14, color: "var(--texto-sec)", lineHeight: 1.65, marginBottom: 24 }}>
+                Busque especialistas em ludopatia por estado e cidade. Filtre por atendimento presencial ou online.
+              </p>
+              <Link to="/especialistas" className="lp-btn-primary" style={{ fontSize: 14 }}>
+                Buscar especialista →
+              </Link>
+            </div>
+            {/* Card profissional */}
+            <div style={{ background: "#F0F7FF", border: "1px solid #BAD9F5", borderRadius: 16, padding: "32px 28px" }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>🩺</div>
+              <h3 style={{ fontFamily: "var(--fonte-titulo)", fontSize: 22, fontWeight: 400, color: "var(--texto)", marginBottom: 10 }}>Sou psicólogo(a) ou psiquiatra</h3>
+              <p style={{ fontSize: 14, color: "var(--texto-sec)", lineHeight: 1.65, marginBottom: 24 }}>
+                Cadastre-se gratuitamente no Diretório Nacional e receba pacientes da sua região que buscam apoio especializado.
+              </p>
+              <Link to="/especialistas?aba=cadastro" className="lp-btn-secondary" style={{ fontSize: 14 }}>
+                Cadastrar gratuitamente →
+              </Link>
+            </div>
+            {/* Card informativo */}
+            <div style={{ background: "var(--creme)", border: "1px solid var(--borda)", borderRadius: 16, padding: "32px 28px" }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>🤝</div>
+              <h3 style={{ fontFamily: "var(--fonte-titulo)", fontSize: 22, fontWeight: 400, color: "var(--texto)", marginBottom: 10 }}>Por que usar o diretório?</h3>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {["Profissionais verificados pelo CFP/CFM", "Especialistas em dependência comportamental", "Busca por geolocalização", "Atendimento presencial e online"].map(item => (
+                  <li key={item} style={{ fontSize: 13, color: "var(--texto-sec)", padding: "7px 0", borderBottom: "1px solid var(--borda)", display: "flex", alignItems: "flex-start", gap: 8 }}>
+                    <span style={{ color: "var(--verde)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA FINAL */}
       <section className="lp-cta-final">
         <span className="lp-section-label">Comece agora</span>
