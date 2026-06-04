@@ -108,6 +108,7 @@ export default function Painel() {
   const [liberados, setLiberados] = useState([]); // módulos pagos
   const [carregandoPgto, setCarregandoPgto] = useState(null); // id do módulo em loading
   const [moduloExpandido, setModuloExpandido] = useState(null);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   // Limpa query params apos 8s para nao persistir no historico
   // Exceto "pendente": esse fica ate o modulo ser liberado via polling
@@ -265,8 +266,95 @@ export default function Painel() {
     );
   }
 
+  /* ── Modal tutorial de compra ── */
+  const ModalTutorial = showTutorial ? (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 999,
+      background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "20px",
+    }} onClick={() => setShowTutorial(false)}>
+      <div style={{
+        background: "#fff", borderRadius: 20, padding: "28px 24px",
+        maxWidth: 400, width: "100%", boxShadow: "0 24px 64px rgba(0,0,0,0.2)",
+      }} onClick={e => e.stopPropagation()}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <h3 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.15rem", color: "#1a1a1a" }}>
+            Como comprar um módulo
+          </h3>
+          <button onClick={() => setShowTutorial(false)} style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#aaa", lineHeight: 1 }}>✕</button>
+        </div>
+
+        {[
+          {
+            n: "1",
+            icon: "🛒",
+            title: 'Clique em "Comprar"',
+            desc: "Uma nova aba abre com o Mercado Pago — a página do programa fica aberta aqui.",
+          },
+          {
+            n: "2",
+            icon: "💳",
+            title: "Escolha Pix ou cartão",
+            desc: "Pix: escaneie o QR code no app do seu banco. Cartão: preencha os dados normalmente.",
+          },
+          {
+            n: "3",
+            icon: "✅",
+            title: "Confirme o pagamento",
+            desc: "No Pix, o código é válido por 23 horas. No cartão, a aprovação é imediata.",
+          },
+          {
+            n: "4",
+            icon: "🎉",
+            title: "Volte para esta página",
+            desc: 'O módulo é liberado automaticamente. O botão "Iniciar módulo →" aparecerá em segundos.',
+          },
+        ].map((step, i) => (
+          <div key={step.n} style={{
+            display: "flex", gap: 14, paddingBottom: i < 3 ? 16 : 0,
+            marginBottom: i < 3 ? 16 : 0,
+            borderBottom: i < 3 ? "1px solid #f0ede8" : "none",
+          }}>
+            <div style={{
+              width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
+              background: "#EFF5E8", border: "2px solid #3B6D11",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "DM Serif Display, serif", fontWeight: 700, fontSize: "0.95rem", color: "#3B6D11",
+            }}>
+              {step.n}
+            </div>
+            <div>
+              <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: "0.88rem", color: "#1a1a1a", marginBottom: 3 }}>
+                {step.icon} {step.title}
+              </p>
+              <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#666", lineHeight: 1.55 }}>
+                {step.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+
+        <div style={{ marginTop: 20, background: "#FFF8E0", border: "1px solid #E8A000", borderRadius: 10, padding: "10px 14px" }}>
+          <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.8rem", color: "#7A5500", lineHeight: 1.5 }}>
+            💡 <strong>Dica:</strong> Após pagar, feche a aba do Mercado Pago e volte aqui. A página detecta o pagamento e libera o módulo sozinha.
+          </p>
+        </div>
+
+        <button onClick={() => setShowTutorial(false)} style={{
+          width: "100%", marginTop: 16, padding: "11px", borderRadius: 10,
+          background: "#3B6D11", color: "#EAF3DE", border: "none", cursor: "pointer",
+          fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: "0.88rem",
+        }}>
+          Entendi, vou comprar →
+        </button>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <div style={{ minHeight: "100vh", background: "#F7F5F0" }}>
+      {ModalTutorial}
       {/* Header do painel */}
       <div
         style={{
@@ -946,23 +1034,36 @@ export default function Painel() {
                       </Link>
                     )}
                     {status === "pagar" && (
-                      <button
-                        type="button"
-                        onClick={() => handleComprar(m.id)}
-                        disabled={carregandoPgto === m.id}
-                        style={{
-                          ...estilos.btnIniciar,
-                          background: "#e8a000",
-                          color: "#fff",
-                          border: "none",
-                          cursor:
-                            carregandoPgto === m.id ? "wait" : "pointer",
-                        }}
-                      >
-                        {carregandoPgto === m.id
-                          ? "Aguarde..."
-                          : `Comprar — R$ ${[29.9, 49.9, 89.9, 149.9, 199.9][m.id - 1].toFixed(2).replace(".", ",")} `}
-                      </button>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+                        <button
+                          type="button"
+                          onClick={() => handleComprar(m.id)}
+                          disabled={carregandoPgto === m.id}
+                          style={{
+                            ...estilos.btnIniciar,
+                            background: "#e8a000",
+                            color: "#fff",
+                            border: "none",
+                            cursor: carregandoPgto === m.id ? "wait" : "pointer",
+                          }}
+                        >
+                          {carregandoPgto === m.id
+                            ? "Aguarde..."
+                            : `Comprar — R$ ${[29.9, 49.9, 89.9, 149.9, 199.9][m.id - 1].toFixed(2).replace(".", ",")} `}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowTutorial(true)}
+                          style={{
+                            background: "none", border: "none", cursor: "pointer",
+                            fontFamily: "DM Sans, sans-serif", fontSize: "0.75rem",
+                            color: "#3B6D11", fontWeight: 600, padding: 0,
+                            textDecoration: "underline", textUnderlineOffset: 2,
+                          }}
+                        >
+                          Como funciona o pagamento?
+                        </button>
+                      </div>
                     )}
                     {status === "bloqueado" && (
                       <span
