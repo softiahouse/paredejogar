@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { modulos } from "../data/modulosContent";
+import { verificarAcessoModulo } from "../lib/acesso";
 
 /** Redireciona `/modulo/:id` para a primeira aula quando o módulo existe e
- *  o usuário tem acesso (módulo comprado). Caso contrário, manda de volta
+ *  o usuário tem acesso (módulo anterior concluído). Caso contrário, manda de volta
  *  ao painel com aviso de bloqueio. */
 export default function ModuloEntry() {
   const { id } = useParams();
@@ -21,13 +22,7 @@ export default function ModuloEntry() {
         navigate("/entrar");
         return;
       }
-      const { data: row } = await supabase
-        .from("modulos_liberados")
-        .select("modulo_id")
-        .eq("user_id", data.user.id)
-        .eq("modulo_id", n)
-        .maybeSingle();
-      setLiberado(!!row);
+      setLiberado(await verificarAcessoModulo(data.user.id, n));
     })();
   }, [n, navigate]);
 

@@ -1,32 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import BotaoEmergencia from "../components/BotaoEmergencia";
+import { moduloDisponivel } from "../lib/acesso";
 
 function calcularStatus(moduloId, liberados, concluidos) {
-  const ehSocio = liberados.length >= 5;
-  const concluido = concluidos.includes(moduloId);
-  const pago = liberados.includes(moduloId);
-  // Regra de sequencia: para destravar M(n) para compra, o M(n-1) precisa estar
-  // PAGO E CONCLUIDO. M1 e o ponto de entrada (sempre destravado).
-  const anteriorOk =
-    moduloId === 1 ||
-    ehSocio ||
-    (liberados.includes(moduloId - 1) && concluidos.includes(moduloId - 1));
-
-  if (concluido) return "concluido";
-  if (pago && anteriorOk) return "disponivel";
-  if (!pago && anteriorOk) return "pagar";
+  if (concluidos.includes(moduloId)) return "concluido";
+  if (moduloDisponivel(moduloId, concluidos, liberados)) return "disponivel";
   return "bloqueado";
 }
-
-const PRECOS = {
-  1: { label: "R$ 29,90", valor: 29.9 },
-  2: { label: "R$ 49,90", valor: 49.9 },
-  3: { label: "R$ 89,90", valor: 89.9 },
-  4: { label: "R$ 149,90", valor: 149.9 },
-  5: { label: "R$ 199,90", valor: 199.9 },
-};
 
 const modulos = [
   {
@@ -99,31 +81,25 @@ const estilos = {
 export default function Painel() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const pagamentoStatus = searchParams.get("pagamento"); // sucesso | falha | pendente
-  const moduloPagamento = searchParams.get("modulo");
   const bloqueado = searchParams.get("bloqueado"); // ex: "modulo_2"
   const [user, setUser] = useState(null);
   const [progresso, setProgresso] = useState({ moduloAtual: 1, concluidos: [] });
   const [loading, setLoading] = useState(true);
-  const [liberados, setLiberados] = useState([]); // módulos pagos
-  const [carregandoPgto, setCarregandoPgto] = useState(null); // id do módulo em loading
+  const [liberados, setLiberados] = useState([]); // acessos antigos (compras/sócios)
   const [moduloExpandido, setModuloExpandido] = useState(null);
-  const [showTutorial, setShowTutorial] = useState(false);
 
   // Limpa query params apos 8s para nao persistir no historico
   // Exceto "pendente": esse fica ate o modulo ser liberado via polling
   useEffect(() => {
-    if ((pagamentoStatus && pagamentoStatus !== "pendente") || bloqueado) {
+    if (bloqueado) {
       const t = setTimeout(() => {
         const novo = new URLSearchParams(searchParams);
-        novo.delete("pagamento");
-        novo.delete("modulo");
         novo.delete("bloqueado");
         setSearchParams(novo, { replace: true });
       }, 8000);
       return () => clearTimeout(t);
     }
-  }, [pagamentoStatus, bloqueado, searchParams, setSearchParams]);
+  }, [bloqueado, searchParams, setSearchParams]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -135,38 +111,6 @@ export default function Painel() {
       carregarProgresso(data.user.id);
     });
   }, []);
-
-  // Polling automatico quando pagamento esta pendente (Pix demora alguns minutos)
-  // Verifica a cada 10s se o modulo foi liberado; quando sim, redireciona para sucesso
-  const pollingRef = useRef(null);
-  useEffect(() => {
-    if (pagamentoStatus !== "pendente" || !moduloPagamento || !user) return;
-
-    const modId = parseInt(moduloPagamento, 10);
-
-    pollingRef.current = setInterval(async () => {
-      const { data } = await supabase
-        .from("modulos_liberados")
-        .select("modulo_id")
-        .eq("user_id", user.id)
-        .eq("modulo_id", modId)
-        .maybeSingle();
-
-      if (data) {
-        clearInterval(pollingRef.current);
-        // Redireciona para sucesso — recarga limpa todo o estado do painel
-        window.location.href = `/painel?pagamento=sucesso&modulo=${modId}`;
-      }
-    }, 10000);
-
-    // Para de verificar apos 15 minutos (Pix expirado ou outro problema)
-    const giveUpTimer = setTimeout(() => clearInterval(pollingRef.current), 15 * 60 * 1000);
-
-    return () => {
-      clearInterval(pollingRef.current);
-      clearTimeout(giveUpTimer);
-    };
-  }, [pagamentoStatus, moduloPagamento, user]);
 
   async function carregarProgresso(userId) {
     const { data, error } = await supabase
@@ -197,52 +141,6 @@ export default function Painel() {
     setLoading(false);
   }
 
-  async function handleComprar(moduloId) {
-    setCarregandoPgto(moduloId);
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const MODULOS_CONFIG = {
-        1: { nome: "Módulo 1 — Interrupção", preco: 29.90 },
-        2: { nome: "Módulo 2 — Sensibilização", preco: 49.90 },
-        3: { nome: "Módulo 3 — Autorregulação", preco: 89.90 },
-        4: { nome: "Módulo 4 — Reorganização", preco: 149.90 },
-        5: { nome: "Módulo 5 — Manutenção", preco: 199.90 },
-      };
-      const { nome, preco } = MODULOS_CONFIG[moduloId];
-      const res = await fetch(
-        "https://gybzuhopxhlbewhjihnd.supabase.co/functions/v1/criar-preferencia-mp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session.access_token}`,
-          },
-          body: JSON.stringify({
-            modulo_id: moduloId,
-            items: [{ title: nome, quantity: 1, unit_price: preco, currency_id: "BRL" }],
-          }),
-        }
-      );
-      const json = await res.json();
-      if (res.ok && json.init_point) {
-        // Marca painel como pendente e inicia polling ANTES de abrir o MP
-        // Assim o usuario paga na aba nova e volta para ca ja com o modulo liberado
-        const novo = new URLSearchParams(searchParams);
-        novo.set("pagamento", "pendente");
-        novo.set("modulo", String(moduloId));
-        setSearchParams(novo, { replace: true });
-        window.open(json.init_point, "_blank", "noopener,noreferrer");
-      } else {
-        alert(json.error || "Erro ao iniciar pagamento. Tente novamente.");
-      }
-    } catch (e) {
-      console.error(e);
-      alert("Erro ao conectar ao sistema de pagamento.");
-    } finally {
-      setCarregandoPgto(null);
-    }
-  }
-
   const nome = user?.user_metadata?.full_name?.split(" ")[0] || "bem-vindo";
   const avatar = user?.user_metadata?.avatar_url;
   const totalConcluidos = progresso.concluidos.length;
@@ -266,95 +164,9 @@ export default function Painel() {
     );
   }
 
-  /* ── Modal tutorial de compra ── */
-  const ModalTutorial = showTutorial ? (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 999,
-      background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      padding: "20px",
-    }} onClick={() => setShowTutorial(false)}>
-      <div style={{
-        background: "#fff", borderRadius: 20, padding: "28px 24px",
-        maxWidth: 400, width: "100%", boxShadow: "0 24px 64px rgba(0,0,0,0.2)",
-      }} onClick={e => e.stopPropagation()}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h3 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.15rem", color: "#1a1a1a" }}>
-            Como comprar um módulo
-          </h3>
-          <button onClick={() => setShowTutorial(false)} style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#aaa", lineHeight: 1 }}>✕</button>
-        </div>
-
-        {[
-          {
-            n: "1",
-            icon: "🛒",
-            title: 'Clique em "Comprar"',
-            desc: "Uma nova aba abre com o Mercado Pago — a página do programa fica aberta aqui.",
-          },
-          {
-            n: "2",
-            icon: "💳",
-            title: "Escolha Pix ou cartão",
-            desc: "Pix: escaneie o QR code no app do seu banco. Cartão: preencha os dados normalmente.",
-          },
-          {
-            n: "3",
-            icon: "✅",
-            title: "Confirme o pagamento",
-            desc: "No Pix, o código é válido por 23 horas. No cartão, a aprovação é imediata.",
-          },
-          {
-            n: "4",
-            icon: "🎉",
-            title: "Volte para esta página",
-            desc: 'O módulo é liberado automaticamente. O botão "Iniciar módulo →" aparecerá em segundos.',
-          },
-        ].map((step, i) => (
-          <div key={step.n} style={{
-            display: "flex", gap: 14, paddingBottom: i < 3 ? 16 : 0,
-            marginBottom: i < 3 ? 16 : 0,
-            borderBottom: i < 3 ? "1px solid #f0ede8" : "none",
-          }}>
-            <div style={{
-              width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
-              background: "#EFF5E8", border: "2px solid #3B6D11",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: "DM Serif Display, serif", fontWeight: 700, fontSize: "0.95rem", color: "#3B6D11",
-            }}>
-              {step.n}
-            </div>
-            <div>
-              <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: "0.88rem", color: "#1a1a1a", marginBottom: 3 }}>
-                {step.icon} {step.title}
-              </p>
-              <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#666", lineHeight: 1.55 }}>
-                {step.desc}
-              </p>
-            </div>
-          </div>
-        ))}
-
-        <div style={{ marginTop: 20, background: "#FFF8E0", border: "1px solid #E8A000", borderRadius: 10, padding: "10px 14px" }}>
-          <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.8rem", color: "#7A5500", lineHeight: 1.5 }}>
-            💡 <strong>Dica:</strong> Após pagar, feche a aba do Mercado Pago e volte aqui. A página detecta o pagamento e libera o módulo sozinha.
-          </p>
-        </div>
-
-        <button onClick={() => setShowTutorial(false)} style={{
-          width: "100%", marginTop: 16, padding: "11px", borderRadius: 10,
-          background: "#3B6D11", color: "#EAF3DE", border: "none", cursor: "pointer",
-          fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: "0.88rem",
-        }}>
-          Entendi, vou comprar →
-        </button>
-      </div>
-    </div>
-  ) : null;
 
   return (
     <div style={{ minHeight: "100vh", background: "#F7F5F0" }}>
-      {ModalTutorial}
       {/* Header do painel */}
       <div
         style={{
@@ -414,7 +226,7 @@ export default function Painel() {
           >
             {nome}
           </span>
-          <BotaoEmergencia modulosLiberados={liberados} inline={true} />
+          <BotaoEmergencia modulosLiberados={[1]} inline={true} />
           <button
             onClick={async () => {
               await supabase.auth.signOut();
@@ -444,54 +256,13 @@ export default function Painel() {
           padding: "2.5rem 1.5rem",
         }}
       >
-        {/* Avisos de retorno do Mercado Pago / acesso bloqueado */}
-        {pagamentoStatus === "sucesso" && (
-          <div style={{
-            background: "#EFF5E8", border: "1px solid #3B6D11",
-            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
-            fontFamily: "DM Sans, sans-serif", color: "#2A5009",
-          }}>
-            Pagamento aprovado{moduloPagamento ? ` para o Módulo ${moduloPagamento}` : ""}.
-            O acesso é liberado em instantes — recarregue a página se ainda não aparecer.
-          </div>
-        )}
-        {pagamentoStatus === "pendente" && (
-          <div style={{
-            background: "#FFF8E0", border: "1px solid #E8A000",
-            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
-            fontFamily: "DM Sans, sans-serif", color: "#7A5500",
-            display: "flex", alignItems: "flex-start", gap: "0.85rem",
-          }}>
-            <div style={{
-              width: 18, height: 18, border: "2.5px solid #E8A000",
-              borderTopColor: "transparent", borderRadius: "50%",
-              animation: "painel-spin 0.9s linear infinite", flexShrink: 0,
-              marginTop: 2,
-            }} />
-            <div>
-              <strong style={{ fontSize: "0.92rem" }}>Aguardando confirmação do Pix{moduloPagamento ? ` — Módulo ${moduloPagamento}` : ""}</strong>
-              <p style={{ margin: "0.3rem 0 0", fontSize: "0.84rem", lineHeight: 1.5 }}>
-                O Pix foi aberto numa nova aba. Pague por lá e <strong>volte para esta página</strong> — ela detecta a confirmação e libera o módulo <strong>automaticamente</strong>. Pode fechar a aba do Mercado Pago depois de pagar.
-              </p>
-            </div>
-          </div>
-        )}
-        {pagamentoStatus === "falha" && (
-          <div style={{
-            background: "#FDECEC", border: "1px solid #C44",
-            borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
-            fontFamily: "DM Sans, sans-serif", color: "#7A2020",
-          }}>
-            O pagamento não foi concluído. Você pode tentar novamente.
-          </div>
-        )}
         {bloqueado && (
           <div style={{
             background: "#FDECEC", border: "1px solid #C44",
             borderRadius: 12, padding: "1rem 1.25rem", marginBottom: "1.25rem",
             fontFamily: "DM Sans, sans-serif", color: "#7A2020",
           }}>
-            Você precisa comprar este módulo (ou concluir o anterior) para acessar.
+            Conclua o módulo anterior para acessar este.
           </div>
         )}
         {/* Boas-vindas + progresso */}
@@ -572,7 +343,7 @@ export default function Painel() {
           >
             {modulos.map((m) => {
               const s = calcularStatus(m.id, liberados, progresso.concluidos);
-              const ativo = s === "disponivel" || s === "pagar";
+              const ativo = s === "disponivel";
               return (
                 <div
                   key={m.id}
@@ -632,7 +403,7 @@ export default function Painel() {
           </div>
 
           {/* Livros gratuitos — Módulo 1 */}
-          {liberados.includes(1) && (
+          {(
             <div
               style={{
                 marginTop: "1.5rem",
@@ -761,7 +532,7 @@ export default function Painel() {
           padding: "0.65rem 1rem", marginBottom: "1.25rem",
           fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#666", lineHeight: 1.55,
         }}>
-          O programa segue uma sequência clínica: você <strong>compra</strong> e <strong>conclui</strong> cada módulo para desbloquear o próximo. Isso faz parte do método — cada etapa prepara você para a seguinte.
+          Todo o programa é <strong>gratuito</strong>. Ele segue uma sequência clínica: ao <strong>concluir</strong> um módulo, o próximo é liberado. Isso faz parte do método — cada etapa prepara você para a seguinte.
         </div>
 
         <div
@@ -772,11 +543,8 @@ export default function Painel() {
         >
           {modulos.map((m) => {
             const status = calcularStatus(m.id, liberados, progresso.concluidos);
-            const ativo = status === "disponivel" || status === "pagar";
+            const ativo = status === "disponivel";
             const bloqueado = status === "bloqueado";
-            // Mensagem de bloqueio especifica: saber se o anterior foi pago mas nao concluido
-            const anteriorPago = m.id === 1 || liberados.includes(m.id - 1);
-            const anteriorConcluido = m.id === 1 || progresso.concluidos.includes(m.id - 1);
 
             return (
               <div
@@ -891,21 +659,6 @@ export default function Painel() {
                         Disponível
                       </span>
                     )}
-                    {status === "pagar" && (
-                      <span
-                        style={{
-                          background: "#FFF4E5",
-                          color: "#8B5A00",
-                          fontSize: "0.68rem",
-                          padding: "0.15rem 0.5rem",
-                          borderRadius: 99,
-                          fontFamily: "DM Sans, sans-serif",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Comprar acesso
-                      </span>
-                    )}
                     {status === "bloqueado" && (
                       <span
                         style={{
@@ -943,7 +696,7 @@ export default function Painel() {
                   >
                     {m.descricao}
                   </p>
-                  {m.detalhes && (status === "concluido" || status === "disponivel" || status === "pagar") && (
+                  {m.detalhes && (status === "concluido" || status === "disponivel") && (
                     <div style={{ background: "#f0f7e8", borderRadius: 10, marginBottom: "0.75rem", borderLeft: "3px solid #3B6D11", overflow: "hidden" }}>
                       <div style={{
                         maxHeight: moduloExpandido === m.id ? "2000px" : "80px",
@@ -1016,11 +769,6 @@ export default function Painel() {
                     >
                       <span>📖 {m.aulas} aulas</span>
                       <span>🛠 {m.ferramenta}</span>
-                      {status === "pagar" && (
-                        <span style={{ fontWeight: 600, color: "#3B6D11" }}>
-                          {PRECOS[m.id]?.label}
-                        </span>
-                      )}
                     </div>
 
                     {status === "concluido" && (
@@ -1033,38 +781,6 @@ export default function Painel() {
                         Iniciar módulo →
                       </Link>
                     )}
-                    {status === "pagar" && (
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
-                        <button
-                          type="button"
-                          onClick={() => handleComprar(m.id)}
-                          disabled={carregandoPgto === m.id}
-                          style={{
-                            ...estilos.btnIniciar,
-                            background: "#e8a000",
-                            color: "#fff",
-                            border: "none",
-                            cursor: carregandoPgto === m.id ? "wait" : "pointer",
-                          }}
-                        >
-                          {carregandoPgto === m.id
-                            ? "Aguarde..."
-                            : `Comprar — R$ ${[29.9, 49.9, 89.9, 149.9, 199.9][m.id - 1].toFixed(2).replace(".", ",")} `}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setShowTutorial(true)}
-                          style={{
-                            background: "none", border: "none", cursor: "pointer",
-                            fontFamily: "DM Sans, sans-serif", fontSize: "0.75rem",
-                            color: "#3B6D11", fontWeight: 600, padding: 0,
-                            textDecoration: "underline", textUnderlineOffset: 2,
-                          }}
-                        >
-                          Como funciona o pagamento?
-                        </button>
-                      </div>
-                    )}
                     {status === "bloqueado" && (
                       <span
                         style={{
@@ -1073,11 +789,7 @@ export default function Painel() {
                           fontFamily: "DM Sans, sans-serif",
                         }}
                       >
-                        {!anteriorPago
-                          ? `🔒 Compre e conclua o Módulo ${m.id - 1} para desbloquear`
-                          : !anteriorConcluido
-                            ? `🔒 Conclua o Módulo ${m.id - 1} para desbloquear`
-                            : "🔒 Módulo bloqueado"}
+                        {`🔒 Conclua o Módulo ${m.id - 1} para desbloquear`}
                       </span>
                     )}
                   </div>

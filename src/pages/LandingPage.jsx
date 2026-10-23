@@ -434,10 +434,10 @@ const css = `
 
 const faqs = [
   { p: 'O programa substitui tratamento psicológico?', r: 'Não. O programa é psicoeducacional e complementar. Para casos de dependência grave, o acompanhamento com profissional de saúde mental é fundamental. O ISTOP pode ser utilizado em paralelo ao tratamento.' },
-  { p: 'Preciso comprar todos os módulos de uma vez?', r: 'O programa é vendido por módulo, de forma sequencial. Cada módulo é adquirido separadamente, mas a ordem é obrigatória: o Módulo 2 só pode ser comprado após o Módulo 1, o Módulo 3 após o 2, e assim por diante. Essa sequência existe porque cada etapa prepara você para a próxima.' },
+  { p: 'O programa é pago?', r: 'Não. Todo o programa é gratuito: basta criar sua conta e confirmar o e-mail. Os módulos seguem uma ordem — o Módulo 2 é liberado quando você conclui o Módulo 1, e assim por diante — porque cada etapa prepara você para a próxima.' },
   { p: 'O programa funciona para qualquer tipo de aposta?', r: 'Sim. O método foi desenvolvido para comportamentos compulsivos com apostas em geral — esportes, cassinos online, jogos de azar — com foco especial nas plataformas digitais (bets).' },
   { p: 'Quanto tempo por dia preciso dedicar?', r: 'Cada aula leva entre 15 e 25 minutos. As atividades práticas levam cerca de 3 minutos. O programa foi desenhado para ser compatível com a rotina de quem trabalha.' },
-  { p: 'Tenho acesso vitalício após a compra?', r: 'Não. Após a compra de cada módulo, você tem 120 dias para concluí-lo. O prazo é individual por módulo — não existe limite de tempo global para o programa completo.' },
+  { p: 'Existe prazo para concluir?', r: 'Não. Você faz o programa no seu ritmo, e o acesso continua disponível na sua conta.' },
 ]
 
 export default function LandingPage() {
@@ -449,11 +449,8 @@ export default function LandingPage() {
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data }) => {
       if (!data.user) return;
-      const { data: lib } = await supabase
-        .from("modulos_liberados")
-        .select("modulo_id")
-        .eq("user_id", data.user.id);
-      if (lib) setModulosLiberados(lib.map((r) => r.modulo_id));
+      // Programa gratuito: usuário logado já tem o Módulo 1.
+      setModulosLiberados([1]);
     });
   }, []);
 

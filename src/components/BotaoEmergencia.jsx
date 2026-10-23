@@ -141,11 +141,8 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
     async function carregarModulos() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
-      const { data } = await supabase
-        .from("modulos_liberados")
-        .select("modulo_id")
-        .eq("user_id", user.id);
-      if (data && data.length > 0) setModulosState(data);
+      // Programa gratuito: todo usuário logado tem o Módulo 1.
+      setModulosState([1]);
     }
     if (!modulosLiberados || modulosLiberados.length === 0) {
       carregarModulos();

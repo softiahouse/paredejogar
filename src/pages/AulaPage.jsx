@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { modulos } from "../data/modulosContent";
+import { verificarAcessoModulo } from "../lib/acesso";
 
 /** Fragmentos de texto com trechos **negrito** (sem markdown completo). */
 function partesComNegrito(texto) {
@@ -26,7 +27,7 @@ export default function AulaPage() {
   const totalAulas = modulo?.aulas.length || 0;
   const isUltimaAula = aId === totalAulas;
 
-  // Bloqueia acesso a aulas de modulos nao comprados.
+  // Bloqueia acesso a aulas de modulos cujo anterior ainda nao foi concluido.
   // null = checando | true = liberado | false = bloqueado (redireciona)
   const [acessoLiberado, setAcessoLiberado] = useState(null);
 
@@ -37,12 +38,7 @@ export default function AulaPage() {
         navigate("/entrar");
         return;
       }
-      const { data: liberado } = await supabase
-        .from("modulos_liberados")
-        .select("modulo_id")
-        .eq("user_id", data.user.id)
-        .eq("modulo_id", mId)
-        .maybeSingle();
+      const liberado = await verificarAcessoModulo(data.user.id, mId);
       if (!liberado) {
         navigate(`/painel?bloqueado=modulo_${mId}`, { replace: true });
         return;
