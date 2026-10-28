@@ -12,16 +12,6 @@ import '../portal.css'
 // ID do vídeo no YouTube (o trecho depois de "v=" no link). Vazio = "em breve".
 const VIDEO_YOUTUBE_ID = ''
 
-// Corpo docente. Adicione { nome, papel, bio, foto } — foto é opcional (ex.: '/imagens/docentes/marcelo.jpg').
-const DOCENTES = [
-  {
-    nome: 'Marcelo R. Paulo',
-    papel: 'Conteúdo do programa',
-    bio: 'Autor do livro O Luto, material de apoio do Módulo 1.',
-  },
-]
-const VAGAS_DOCENTES = 3 // quantos lugares "em breve" mostrar
-
 // Depoimentos. Só publique relatos reais, com autorização.
 const DEPOIMENTOS = {
   jogadores: {
@@ -189,7 +179,7 @@ function Video() {
 export default function LandingPage() {
   const [logado, setLogado] = useState(false)
   const [posts, setPosts] = useState([])
-  const [folha, setFolha] = useState(null) // 'programa' | 'sinais' | 'depoimentos' | 'docentes' | 'duvidas'
+  const [folha, setFolha] = useState(null) // 'programa' | 'sinais' | 'depoimentos' | 'duvidas'
   const [aba, setAba] = useState('jogadores')
   const [faqAberto, setFaqAberto] = useState(0)
   const [quoteIdx, setQuoteIdx] = useState(0)
@@ -348,29 +338,8 @@ export default function LandingPage() {
             </div>
           </section>
 
-          {/* CORPO DOCENTE */}
-          <section className="pt-glass pt-tile pt-span-5" aria-labelledby="pt-doc-t">
-            <h2 className="pt-tile-title" id="pt-doc-t">Corpo docente</h2>
-            <p className="pt-tile-text">Quem escreve e revisa o conteúdo do programa.</p>
-            <div className="pt-faces">
-              {DOCENTES.map((d) => (
-                <span key={d.nome} className="pt-face" title={d.nome}>
-                  {d.foto ? <img src={d.foto} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} /> : d.nome.split(' ').map((p) => p[0]).slice(0, 2).join('')}
-                </span>
-              ))}
-              {Array.from({ length: VAGAS_DOCENTES }).map((_, i) => (
-                <span key={i} className="pt-face pt-face--soon" aria-hidden="true">?</span>
-              ))}
-            </div>
-            <div className="pt-tile-foot">
-              <button type="button" className="pt-more" onClick={() => setFolha('docentes')}>
-                Conhecer a equipe <IconArrow />
-              </button>
-            </div>
-          </section>
-
           {/* BLOG */}
-          <section className="pt-glass pt-tile pt-span-4" aria-labelledby="pt-blog-t">
+          <section className="pt-glass pt-tile pt-span-5" aria-labelledby="pt-blog-t">
             <h2 className="pt-tile-title" id="pt-blog-t">Blog</h2>
             {posts.length > 0 ? (
               <div style={{ marginBottom: 14 }}>
@@ -390,7 +359,7 @@ export default function LandingPage() {
           </section>
 
           {/* ESPECIALISTAS */}
-          <section className="pt-glass pt-tile pt-span-4" aria-labelledby="pt-esp-t">
+          <section className="pt-glass pt-tile pt-span-6" aria-labelledby="pt-esp-t">
             <h2 className="pt-tile-title" id="pt-esp-t">Especialistas</h2>
             <p className="pt-tile-text">
               Diretório nacional de psicólogos e psiquiatras que tratam a dependência de apostas, presencial ou online.
@@ -402,7 +371,7 @@ export default function LandingPage() {
           </section>
 
           {/* DÚVIDAS */}
-          <section className="pt-glass pt-tile pt-span-4" aria-labelledby="pt-faq-t">
+          <section className="pt-glass pt-tile pt-span-6" aria-labelledby="pt-faq-t">
             <h2 className="pt-tile-title" id="pt-faq-t">Dúvidas</h2>
             <ul className="pt-qlist">
               {FAQS.slice(0, 3).map((f) => <li key={f.p}>{f.p}</li>)}
@@ -426,7 +395,6 @@ export default function LandingPage() {
             <Link to="/blog">Blog</Link>
             <Link to="/especialistas">Especialistas</Link>
           </nav>
-          <span className="pt-crise">Em crise? Ligue 188 (CVV), 24 horas, gratuito.</span>
         </div>
       </footer>
 
@@ -499,23 +467,6 @@ export default function LandingPage() {
               )}
             </div>
           ))}
-        </Sheet>
-      )}
-
-      {folha === 'docentes' && (
-        <Sheet titulo="Corpo docente" onClose={fechar}>
-          <p>Profissionais e autores responsáveis pelo conteúdo do Método ISTOP.</p>
-          <div className="pt-cols" style={{ marginTop: 16 }}>
-            {DOCENTES.map((d) => (
-              <div key={d.nome} className="pt-card">
-                <span className="pt-face" style={{ marginBottom: 12 }}>{d.nome.split(' ').map((p) => p[0]).slice(0, 2).join('')}</span>
-                <h4 style={{ margin: '0 0 2px', font: '700 18px var(--f-display)' }}>{d.nome}</h4>
-                <small style={{ color: 'var(--folha)', fontWeight: 600 }}>{d.papel}</small>
-                <p style={{ margin: '8px 0 0', fontSize: 15 }}>{d.bio}</p>
-              </div>
-            ))}
-            <div className="pt-soon" style={{ margin: 0 }}>Novos nomes do corpo docente serão apresentados em breve.</div>
-          </div>
         </Sheet>
       )}
 

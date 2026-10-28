@@ -109,6 +109,7 @@
 .pt-tile { position: relative; padding: 26px; display: flex; flex-direction: column; min-width: 0; }
 .pt-span-7 { grid-column: span 7; }
 .pt-span-5 { grid-column: span 5; }
+.pt-span-6 { grid-column: span 6; }
 .pt-span-4 { grid-column: span 4; }
 .pt-span-3 { grid-column: span 3; }
 
@@ -235,7 +236,6 @@
 .pt-foot-inner nav { display: flex; flex-wrap: wrap; gap: 16px; }
 .pt-foot-inner a { text-decoration: none; }
 .pt-foot-inner a:hover { text-decoration: underline; }
-.pt-crise { font-weight: 600; color: var(--ink); }
 
 /* ───────── Sheet (iOS) ───────── */
 .pt-sheet-backdrop {
@@ -314,7 +314,7 @@
 }
 @media (max-width: 640px) {
   .pt-grid { gap: 12px; }
-  .pt-span-4, .pt-span-3 { grid-column: span 12; }
+  .pt-span-6, .pt-span-4, .pt-span-3 { grid-column: span 12; }
   .pt-tile { padding: 22px; }
   .pt-hero { padding: 26px 22px; min-height: 0; }
   .pt-nav-logo img { height: 32px; }
