@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap');
 
 /* ───────── Tokens ───────── */
-.pt {
+.pt, .pt-layer {
   --ink: #15261c;
   --ink-2: #44554a;
   --ink-3: #6f7d73;
@@ -25,19 +25,21 @@
   --f-display: 'Bricolage Grotesque', 'Figtree', system-ui, sans-serif;
   --f-body: 'Figtree', system-ui, -apple-system, sans-serif;
 
-  position: relative;
-  min-height: 100vh;
-  background: var(--page);
   color: var(--ink);
   font-family: var(--f-body);
   font-size: 16px;
   line-height: 1.55;
+}
+.pt {
+  position: relative;
+  min-height: 100vh;
+  background: var(--page);
   overflow-x: hidden;
   isolation: isolate;
 }
-.pt *, .pt *::before, .pt *::after { box-sizing: border-box; }
-:where(.pt) a { color: inherit; }
-.pt :focus-visible { outline: 3px solid var(--folha); outline-offset: 3px; border-radius: 10px; }
+.pt *, .pt *::before, .pt *::after, .pt-layer *, .pt-layer *::before, .pt-layer *::after { box-sizing: border-box; }
+:where(.pt, .pt-layer) a { color: inherit; }
+.pt :focus-visible, .pt-layer :focus-visible { outline: 3px solid var(--folha); outline-offset: 3px; border-radius: 10px; }
 
 /* ───────── Aurora background ───────── */
 .pt-sky { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
@@ -239,7 +241,7 @@
 
 /* ───────── Sheet (iOS) ───────── */
 .pt-sheet-backdrop {
-  position: fixed; inset: 0; z-index: 200; background: rgba(12, 28, 18, .32);
+  position: fixed; inset: 0; z-index: 10000; background: rgba(12, 28, 18, .32);
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   display: flex; align-items: flex-end; justify-content: center;
   animation: pt-fade .25s ease;
@@ -305,6 +307,11 @@
 
 .pt-sheet-cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
 
+/* ───────── Player vertical ───────── */
+.pt-sheet--video { width: min(460px, 100%); }
+.pt-video-player { position: relative; aspect-ratio: 9 / 16; height: min(70vh, 720px); width: auto; max-width: 100%; margin: 0 auto; border-radius: var(--r-inner); overflow: hidden; background: #000; }
+.pt-video-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
 /* ───────── Responsive ───────── */
 @media (max-width: 1000px) {
   .pt-span-7, .pt-span-5 { grid-column: span 12; }
@@ -328,5 +335,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pt *, .pt-sheet, .pt-sheet-backdrop { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
+  .pt *, .pt-layer *, .pt-sheet, .pt-sheet-backdrop { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
 }

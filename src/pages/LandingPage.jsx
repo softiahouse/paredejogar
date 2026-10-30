@@ -1,6 +1,7 @@
 // src/pages/LandingPage.jsx — Portal PareDeJogar / Instituto ISTOP
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { createPortal } from 'react-dom'
 import { supabase } from '../lib/supabaseClient'
 import '../portal.css'
 
@@ -10,7 +11,8 @@ import '../portal.css'
    ───────────────────────────────────────────── */
 
 // ID do vídeo no YouTube (o trecho depois de "v=" no link). Vazio = "em breve".
-const VIDEO_YOUTUBE_ID = ''
+const VIDEO_YOUTUBE_ID = 'kF5vPjmsxP8'
+const VIDEO_CAPA = '/imagens/video-marcelo.jpg'
 
 // Depoimentos. Só publique relatos reais, com autorização.
 const DEPOIMENTOS = {
@@ -81,7 +83,7 @@ const IconCheck = () => (
 )
 
 /* ───────── Folha (sheet estilo iOS) ───────── */
-function Sheet({ titulo, onClose, children }) {
+function Sheet({ titulo, onClose, children, estreita = false }) {
   const ref = useRef(null)
   useEffect(() => {
     const prev = document.body.style.overflow
@@ -95,10 +97,10 @@ function Sheet({ titulo, onClose, children }) {
     }
   }, [onClose])
 
-  return (
-    <div className="pt-sheet-backdrop" onClick={onClose}>
+  return createPortal(
+    <div className="pt-layer pt-sheet-backdrop" onClick={onClose}>
       <div
-        className="pt-sheet"
+        className={estreita ? 'pt-sheet pt-sheet--video' : 'pt-sheet'}
         role="dialog"
         aria-modal="true"
         aria-label={titulo}
@@ -115,7 +117,8 @@ function Sheet({ titulo, onClose, children }) {
         </div>
         <div className="pt-sheet-body">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
@@ -143,35 +146,36 @@ function Gauge() {
 
 /* ───────── Vídeo ───────── */
 function Video() {
-  const [tocando, setTocando] = useState(false)
+  const [aberto, setAberto] = useState(false)
   const temVideo = Boolean(VIDEO_YOUTUBE_ID)
-
-  if (temVideo && tocando) {
-    return (
-      <div className="pt-video-frame">
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${VIDEO_YOUTUBE_ID}?autoplay=1&rel=0`}
-          title="Por que tratar a ludopatia"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
-    )
-  }
   return (
-    <button
-      type="button"
-      className="pt-video-frame"
-      onClick={() => setTocando(true)}
-      disabled={!temVideo}
-      aria-label={temVideo ? 'Assistir ao vídeo' : 'Vídeo em breve'}
-    >
-      {temVideo && <img src={`https://i.ytimg.com/vi/${VIDEO_YOUTUBE_ID}/hqdefault.jpg`} alt="" />}
-      <span className="pt-play">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z" /></svg>
-      </span>
-      {!temVideo && <span className="pt-video-soon">Vídeo em breve</span>}
-    </button>
+    <>
+      <button
+        type="button"
+        className="pt-video-frame"
+        onClick={() => setAberto(true)}
+        disabled={!temVideo}
+        aria-label={temVideo ? 'Assistir ao vídeo' : 'Vídeo em breve'}
+      >
+        {temVideo && <img src={VIDEO_CAPA} alt="" />}
+        <span className="pt-play">
+          <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z" /></svg>
+        </span>
+        {temVideo ? <span className="pt-video-soon">1 min</span> : <span className="pt-video-soon">Vídeo em breve</span>}
+      </button>
+      {aberto && (
+        <Sheet titulo="Por que tratar a ludopatia" onClose={() => setAberto(false)} estreita>
+          <div className="pt-video-player">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${VIDEO_YOUTUBE_ID}?autoplay=1&rel=0&playsinline=1`}
+              title="Por que tratar a ludopatia"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          </div>
+        </Sheet>
+      )}
+    </>
   )
 }
 
