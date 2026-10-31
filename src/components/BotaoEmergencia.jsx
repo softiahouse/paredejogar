@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { LEGENDA_CURVA, LEGENDA_RESPIRACAO } from "../data/emergenciaLegendas";
 import { supabase } from "../lib/supabaseClient";
 
 const BLOCOS = [
@@ -129,13 +130,153 @@ const BLOCOS = [
   },
 ];
 
+
+const fonte = "DM Sans, sans-serif";
+const fmt = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+
+/* Áudio com legenda sincronizada */
+function AudioLegendado({ src, legenda, cor = "#1E4D2B" }) {
+  const ref = useRef(null);
+  const [tocando, setTocando] = useState(false);
+  const [tempo, setTempo] = useState(0);
+  const [duracao, setDuracao] = useState(0);
+
+  useEffect(() => {
+    const a = ref.current;
+    if (!a) return;
+    // Tenta iniciar sozinho (o toque no botão de emergência conta como interação).
+    a.play().catch(() => {});
+    return () => a.pause();
+  }, [src]);
+
+  const atual = legenda.find(([ini, fimC]) => tempo >= ini - 0.15 && tempo <= fimC + 0.6);
+  const alternar = () => {
+    const a = ref.current;
+    if (!a) return;
+    if (a.paused) a.play().catch(() => {}); else a.pause();
+  };
+
+  return (
+    <div style={{ background: "#F3F7EF", border: "1px solid #DCE7D2", borderRadius: 18, padding: "0.9rem 1rem", marginTop: "0.9rem" }}>
+      <audio
+        ref={ref}
+        src={src}
+        preload="auto"
+        onPlay={() => setTocando(true)}
+        onPause={() => setTocando(false)}
+        onEnded={() => setTocando(false)}
+        onTimeUpdate={(e) => setTempo(e.currentTarget.currentTime)}
+        onLoadedMetadata={(e) => setDuracao(e.currentTarget.duration)}
+      />
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <button
+          type="button"
+          onClick={alternar}
+          aria-label={tocando ? "Pausar áudio" : "Ouvir áudio"}
+          style={{ flex: "none", width: 46, height: 46, borderRadius: "50%", border: "none", background: cor, color: "#fff", cursor: "pointer", display: "grid", placeItems: "center" }}
+        >
+          {tocando ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1.5" /><rect x="14" y="4" width="4" height="16" rx="1.5" /></svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z" /></svg>
+          )}
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={duracao || 0}
+          step={0.1}
+          value={tempo}
+          onChange={(e) => { if (ref.current) ref.current.currentTime = Number(e.target.value); }}
+          aria-label="Posição do áudio"
+          style={{ flex: 1, accentColor: cor }}
+        />
+        <span style={{ fontFamily: fonte, fontSize: "0.78rem", color: "#5F6B62", minWidth: 74, textAlign: "right" }}>
+          {fmt(tempo)} / {fmt(duracao)}
+        </span>
+      </div>
+      <p
+        aria-live="polite"
+        style={{ fontFamily: fonte, fontSize: "1.02rem", fontWeight: 600, color: "#15261C", lineHeight: 1.45, textAlign: "center", minHeight: "3.2em", margin: "0.8rem 0 0.1rem", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        {atual ? atual[2] : tocando ? "" : "Toque no play para ouvir."}
+      </p>
+    </div>
+  );
+}
+
+/* Círculo de respiração 4-6-2 */
+function CirculoRespiracao() {
+  const [t, setT] = useState(0);
+  useEffect(() => {
+    const ini = Date.now();
+    const id = setInterval(() => setT(((Date.now() - ini) / 1000) % 12), 100);
+    return () => clearInterval(id);
+  }, []);
+  let fase, escala, seg;
+  if (t < 4) { fase = "Inspire pelo nariz"; escala = 0.55 + 0.45 * (t / 4); seg = Math.ceil(t + 0.001); }
+  else if (t < 10) { fase = "Segure"; escala = 1; seg = Math.ceil(t - 4 + 0.001); }
+  else { fase = "Solte pela boca"; escala = 1 - 0.45 * ((t - 10) / 2); seg = Math.ceil(t - 10 + 0.001); }
+  return (
+    <div style={{ display: "grid", placeItems: "center", padding: "0.5rem 0 0.25rem" }}>
+      <div style={{ position: "relative", width: 210, height: 210, display: "grid", placeItems: "center" }}>
+        <div style={{ position: "absolute", inset: 0, borderRadius: "50%", border: "2px dashed #BFD9C5" }} />
+        <div style={{
+          width: 210, height: 210, borderRadius: "50%",
+          background: "radial-gradient(circle at 35% 30%, #CFE8BC, #7FB86A 55%, #3B6D11)",
+          transform: `scale(${escala})`, transition: "transform 0.1s linear",
+          boxShadow: "0 18px 40px -18px rgba(30,77,43,.6)",
+        }} />
+        <div style={{ position: "absolute", textAlign: "center", color: "#fff", fontFamily: fonte, textShadow: "0 1px 6px rgba(0,0,0,.25)" }}>
+          <div style={{ fontSize: "2.2rem", fontWeight: 800, lineHeight: 1 }}>{seg}</div>
+          <div style={{ fontSize: "0.85rem", fontWeight: 700, marginTop: 4 }}>{fase}</div>
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: "0.4rem", marginTop: "0.75rem", fontFamily: fonte, fontSize: "0.78rem", fontWeight: 700 }}>
+        {[["4s", "Inspire", t < 4], ["6s", "Segure", t >= 4 && t < 10], ["2s", "Solte", t >= 10]].map(([d, n, on]) => (
+          <span key={n} style={{ padding: "0.3rem 0.7rem", borderRadius: 99, background: on ? "#1E4D2B" : "#EEF3EA", color: on ? "#fff" : "#5F6B62" }}>{n} {d}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const ETAPAS = [
+  { id: "curva", titulo: "A curva do impulso" },
+  { id: "respiracao", titulo: "Respiração guiada" },
+  { id: "questionario", titulo: "Reflexão" },
+];
+
+function Etapas({ atual }) {
+  const idx = ETAPAS.findIndex((e) => e.id === atual);
+  return (
+    <div style={{ marginBottom: "1rem", paddingRight: "2rem" }}>
+      <div style={{ display: "flex", gap: 6, marginBottom: "0.6rem" }}>
+        {ETAPAS.map((e, i) => (
+          <span key={e.id} style={{ flex: 1, height: 5, borderRadius: 99, background: i <= idx ? "#3B6D11" : "#E3E8DF" }} />
+        ))}
+      </div>
+      <p style={{ fontFamily: fonte, fontSize: "0.78rem", color: "#6F7D73", margin: 0 }}>
+        Etapa {idx + 1} de {ETAPAS.length}
+      </p>
+      <h2 style={{ fontFamily: fonte, fontWeight: 800, fontSize: "1.35rem", color: "#15261C", margin: "0.1rem 0 0" }}>
+        {ETAPAS[idx].titulo}
+      </h2>
+    </div>
+  );
+}
+
+const btnPrincipal = { width: "100%", background: "#1E4D2B", color: "#fff", border: "none", padding: "0.95rem", borderRadius: 999, fontFamily: fonte, fontWeight: 700, fontSize: "1rem", cursor: "pointer", marginTop: "1rem" };
+
 export default function BotaoEmergencia({ modulosLiberados = [], inline = false }) {
   const [modulosState, setModulosState] = useState(modulosLiberados || []);
   const temModulo = modulosState && modulosState.length > 0;
   const [aberto, setAberto] = useState(false);
+  const [etapa, setEtapa] = useState("curva");
   const [blocoAtual, setBlocoAtual] = useState(null);
   const [respostas, setRespostas] = useState({});
   const [concluido, setConcluido] = useState(false);
+  const caixaRef = useRef(null);
 
   useEffect(() => {
     async function carregarModulos() {
@@ -149,9 +290,16 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
     }
   }, []);
 
+  useEffect(() => {
+    if (caixaRef.current) caixaRef.current.scrollTop = 0;
+  }, [etapa, concluido]);
+
   async function handleAbrir() {
-    if (!temModulo) { setAberto(true); return; }
     setAberto(true);
+    setEtapa("curva");
+    setRespostas({});
+    setConcluido(false);
+    if (!temModulo) return;
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
     const { data: vistos } = await supabase
@@ -163,8 +311,6 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
     const pool = naoVistos.length > 0 ? naoVistos : BLOCOS;
     const escolhido = pool[Math.floor(Math.random() * pool.length)];
     setBlocoAtual(escolhido);
-    setRespostas({});
-    setConcluido(false);
   }
 
   async function handleConcluir() {
@@ -182,6 +328,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
     setBlocoAtual(null);
     setRespostas({});
     setConcluido(false);
+    setEtapa("curva");
   }
 
   const totalRespondidas = Object.keys(respostas).length;
@@ -204,7 +351,7 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
           }}
         >
           <button
-            onClick={() => (temModulo ? handleAbrir() : setAberto(true))}
+            onClick={handleAbrir}
             title="Botão de Emergência"
             style={{
               width: 96,
@@ -240,15 +387,13 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
         </div>
       )}
 
-      {/* MODAL */}
+      {/* MODAL — fluxo em 3 etapas */}
       {aberto && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
-          <div style={{ background: "#fff", borderRadius: 16, padding: "2rem 1.5rem", maxWidth: 480, width: "100%", maxHeight: "85vh", overflowY: "auto", position: "relative" }}>
-            <button onClick={handleFechar} style={{ position: "absolute", top: "1rem", right: "1rem", background: "none", border: "none", fontSize: "1.4rem", cursor: "pointer", color: "#666" }}>×</button>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(12,28,18,0.55)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
+          <div ref={caixaRef} role="dialog" aria-modal="true" aria-label="Botão de emergência" style={{ background: "#fff", borderRadius: 24, padding: "1.5rem 1.25rem", maxWidth: 520, width: "100%", maxHeight: "90vh", overflowY: "auto", position: "relative" }}>
+            <button onClick={handleFechar} aria-label="Fechar" style={{ position: "absolute", top: "0.9rem", right: "0.9rem", width: 34, height: 34, borderRadius: "50%", background: "#F0F2EE", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#555", lineHeight: 1 }}>×</button>
 
-            {temModulo ? (
-              <>
-                {concluido ? (
+            {concluido ? (
                   <div style={{ padding: "0.5rem 0" }}>
                     <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
                       <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>✅</div>
@@ -295,65 +440,44 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                       Fechar
                     </button>
                   </div>
-                ) : blocoAtual ? (
-                  <>
-                    {/* Imagem curva do impulso */}
-                    <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
-                      <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" className="w-full rounded-lg" />
-                    </div>
-                    <div style={{ marginTop: "1rem", marginBottom: "1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.875rem" }}>
-                      <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
-                        RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
-                      </p>
-                      <div style={{ background: "#f0f7ff", border: "1px solid #bfd9f5", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem" }}>
-                        <p style={{ fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.5rem" }}>Respiração Guiada para Atravessar o Impulso</p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>O QUE É?</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO FUNCIONA?</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.5rem" }}>Quando executada corretamente, esta sequência respiratória:</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8, marginBottom: "0.75rem" }}>
-                          ✅ Estimula o nervo vago — principal componente do sistema parassimpático<br />
-                          ✅ Reduz a frequência cardíaca e a pressão arterial<br />
-                          ✅ Diminui a liberação de cortisol (hormônio do estresse)<br />
-                          ✅ Aumenta a variabilidade da frequência cardíaca<br />
-                          ✅ Ativa o córtex pré-frontal — área responsável pelo controle executivo
-                        </p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO PRATICAR</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 1 — INSPIRAÇÃO (4 segundos):</strong> Inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 2 — RETENÇÃO (6 segundos):</strong> Segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}><strong>FASE 3 — EXPIRAÇÃO (2 segundos):</strong> Solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>QUANDO USAR?</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8 }}>
-                          🎯 No momento do impulso: assim que perceber a vontade de jogar<br />
-                          🎯 Antes de situações de risco: quando souber que estará exposto a gatilhos<br />
-                          🎯 Após uma recaída: para retomar o controle sem autocrítica<br />
-                          🎯 Na prevenção diária: como prática de manutenção
-                        </p>
-                      </div>
-                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                        Você observou o impulso sem agir.<br />
-                        Isso é Interrupção.<br />
-                        O ciclo automático perdeu força.
-                      </p>
-                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                        O impulso tem pico... e depois passa.<br />
-                        Você não precisa fazer nada agora.<br />
-                        Só respirar.
-                      </p>
-                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                        Seu "freio natural" foi ativado.<br />
-                        O nervo vago respondeu.<br />
-                        Seu corpo está mais calmo.<br />
-                        Sua mente, mais clara.
-                      </p>
-                    </div>
-
+            ) : etapa === "curva" ? (
+              <>
+                <Etapas atual="curva" />
+                <a href="/imagens/curva-do-impulso-hd.jpg" target="_blank" rel="noopener noreferrer" title="Abrir imagem ampliada"><img src="/imagens/curva-do-impulso-hd.jpg" alt="Gráfico da curva do impulso: ativação, aumento, pico e declínio natural ao longo dos minutos" style={{ width: "100%", borderRadius: 14, display: "block" }} /></a>
+                <p style={{ fontFamily: fonte, fontSize: "0.75rem", color: "#6F7D73", textAlign: "center", margin: "0.4rem 0 0" }}>Toque na imagem para ampliar</p>
+                <AudioLegendado key="a1" src="/audios/curva-do-impulso.m4a" legenda={LEGENDA_CURVA} />
+                <button type="button" onClick={() => setEtapa("respiracao")} style={btnPrincipal}>
+                  Continuar para a respiração
+                </button>
+              </>
+            ) : etapa === "respiracao" ? (
+              <>
+                <Etapas atual="respiracao" />
+                <CirculoRespiracao />
+                <AudioLegendado key="a2" src="/audios/respiracao-guiada.m4a" legenda={LEGENDA_RESPIRACAO} />
+                <details style={{ marginTop: "0.9rem", fontFamily: fonte }}>
+                  <summary style={{ cursor: "pointer", fontWeight: 700, color: "#3B6D11", fontSize: "0.9rem" }}>Ver o guia escrito</summary>
+                  <div style={{ fontSize: "0.85rem", color: "#333", lineHeight: 1.6, marginTop: "0.6rem" }}>
+                    <p style={{ margin: "0 0 0.5rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
+                    <p style={{ margin: "0 0 0.3rem" }}><strong>Fase 1, inspiração (4 segundos):</strong> inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
+                    <p style={{ margin: "0 0 0.3rem" }}><strong>Fase 2, retenção (6 segundos):</strong> segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
+                    <p style={{ margin: "0 0 0.5rem" }}><strong>Fase 3, expiração (2 segundos):</strong> solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
+                    <p style={{ margin: 0 }}><strong>Quando usar:</strong> no momento do impulso; antes de situações de risco; após uma recaída, para retomar o controle sem autocrítica; e na prevenção diária.</p>
+                  </div>
+                </details>
+                <button type="button" onClick={() => setEtapa("questionario")} style={btnPrincipal}>
+                  Continuar para a reflexão
+                </button>
+                <button type="button" onClick={() => setEtapa("curva")} style={{ display: "block", margin: "0.6rem auto 0", background: "none", border: "none", color: "#6F7D73", fontFamily: fonte, fontSize: "0.85rem", cursor: "pointer" }}>
+                  Voltar
+                </button>
+              </>
+            ) : temModulo && blocoAtual ? (
+              <>
+                <Etapas atual="questionario" />
                     <div style={{ display: "inline-block", background: blocoAtual.cor + "15", color: blocoAtual.cor, padding: "0.25rem 0.75rem", borderRadius: 99, fontSize: "0.72rem", fontFamily: "DM Sans, sans-serif", fontWeight: 700, marginBottom: "0.5rem" }}>
                       {blocoAtual.modulo}
                     </div>
-                    <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.25rem" }}>
-                      Reflexão de emergência
-                    </h2>
                     <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#888", marginBottom: "1.5rem" }}>
                       Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/{blocoAtual.perguntas.length})
                     </p>
@@ -388,154 +512,28 @@ export default function BotaoEmergencia({ modulosLiberados = [], inline = false 
                     <p style={{ textAlign: "center", fontSize: "0.75rem", color: "#aaa", fontFamily: "DM Sans, sans-serif", marginTop: "1rem" }}>
                       CVV: 188 · SAMU: 192 (24h)
                     </p>
-                  </>
-                ) : blocoAtual ? (
-                  <>
-                    {/* Imagem curva do impulso */}
-                    <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
-                      <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" className="w-full rounded-lg" />
-                    </div>
-                    <div style={{ marginTop: "1rem", marginBottom: "1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.875rem" }}>
-                      <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.75rem" }}>
-                        RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
-                      </p>
-                      <div style={{ background: "#f0f7ff", border: "1px solid #bfd9f5", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem" }}>
-                        <p style={{ fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.5rem" }}>Respiração Guiada para Atravessar o Impulso</p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>O QUE É?</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO FUNCIONA?</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.5rem" }}>Quando executada corretamente, esta sequência respiratória:</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8, marginBottom: "0.75rem" }}>
-                          ✅ Estimula o nervo vago — principal componente do sistema parassimpático<br />
-                          ✅ Reduz a frequência cardíaca e a pressão arterial<br />
-                          ✅ Diminui a liberação de cortisol (hormônio do estresse)<br />
-                          ✅ Aumenta a variabilidade da frequência cardíaca<br />
-                          ✅ Ativa o córtex pré-frontal — área responsável pelo controle executivo
-                        </p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO PRATICAR</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 1 — INSPIRAÇÃO (4 segundos):</strong> Inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 2 — RETENÇÃO (6 segundos):</strong> Segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}><strong>FASE 3 — EXPIRAÇÃO (2 segundos):</strong> Solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
-                        <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>QUANDO USAR?</p>
-                        <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8 }}>
-                          🎯 No momento do impulso: assim que perceber a vontade de jogar<br />
-                          🎯 Antes de situações de risco: quando souber que estará exposto a gatilhos<br />
-                          🎯 Após uma recaída: para retomar o controle sem autocrítica<br />
-                          🎯 Na prevenção diária: como prática de manutenção
-                        </p>
-                      </div>
-                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                        Você observou o impulso sem agir.<br />
-                        Isso é Interrupção.<br />
-                        O ciclo automático perdeu força.
-                      </p>
-                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                        O impulso tem pico... e depois passa.<br />
-                        Você não precisa fazer nada agora.<br />
-                        Só respirar.
-                      </p>
-                      <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                        Seu "freio natural" foi ativado.<br />
-                        O nervo vago respondeu.<br />
-                        Seu corpo está mais calmo.<br />
-                        Sua mente, mais clara.
-                      </p>
-                    </div>
-                    <div style={{ display: "inline-block", background: blocoAtual.cor + "15", color: blocoAtual.cor, padding: "0.25rem 0.75rem", borderRadius: 99, fontSize: "0.72rem", fontFamily: "DM Sans, sans-serif", fontWeight: 700, marginBottom: "0.5rem" }}>
-                      {blocoAtual.modulo}
-                    </div>
-                    <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.25rem" }}>
-                      Reflexão de emergência
-                    </h2>
-                    <p style={{ fontFamily: "DM Sans, sans-serif", fontSize: "0.82rem", color: "#888", marginBottom: "1.5rem" }}>
-                      Responda com sinceridade. Não há respostas certas ou erradas. ({totalRespondidas}/{blocoAtual.perguntas.length})
-                    </p>
-                  </>
-                ) : (
-                  <p style={{ fontFamily: "DM Sans, sans-serif", color: "#888", textAlign: "center" }}>Carregando...</p>
-                )}
               </>
+            ) : temModulo ? (
+              <p style={{ fontFamily: fonte, color: "#888", textAlign: "center" }}>Carregando...</p>
             ) : (
-              <div style={{ textAlign: "center" }}>
-                <img src="/logo-icon.png" alt="PareDeJogar" style={{ width: 72, height: 72, objectFit: "contain", margin: "0 auto 0.75rem" }} />
-                <div style={{ marginBottom: "0.75rem", borderRadius: 10, overflow: "hidden" }}>
-                  <img src="/imagens/curva-do-impulso.png" alt="Curva do Impulso" style={{ width: "100%", borderRadius: 8 }} />
+              <>
+                <Etapas atual="questionario" />
+                <div style={{ background: "#F7F5F0", borderRadius: 16, padding: "1.1rem 1.2rem", fontFamily: fonte }}>
+                  <p style={{ fontWeight: 700, color: "#3B6D11", margin: "0 0 0.6rem" }}>Responda para você mesmo, com honestidade:</p>
+                  {["O que aconteceu antes dessa vontade aparecer?", "O que você vai sentir se jogar agora?", "O que você vai sentir se resistir?"].map((q) => (
+                    <p key={q} style={{ color: "#444", margin: "0 0 0.45rem", fontSize: "0.95rem" }}>{q}</p>
+                  ))}
                 </div>
-                <div style={{ marginTop: "0.75rem", marginBottom: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.82rem" }}>
-                  <p style={{ fontWeight: 700, textAlign: "center", color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: "0.72rem" }}>
-                    RESPIRAÇÃO REGULADA — ATIVANDO O FREIO NATURAL DO CORPO
-                  </p>
-                  <div style={{ background: "#f0f7ff", border: "1px solid #bfd9f5", borderRadius: 10, padding: "1rem 1.1rem", marginBottom: "0.75rem" }}>
-                    <p style={{ fontWeight: 700, fontSize: "0.85rem", color: "#1A6B8A", marginBottom: "0.5rem" }}>Respiração Guiada para Atravessar o Impulso</p>
-                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>O QUE É?</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}>A técnica de respiração 4-6-2 é uma ferramenta fisiológica baseada em evidências científicas que ativa o sistema nervoso parassimpático através da estimulação do nervo vago, promovendo redução imediata da ativação fisiológica associada ao impulso de jogar.</p>
-                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO FUNCIONA?</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.5rem" }}>Quando executada corretamente, esta sequência respiratória:</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8, marginBottom: "0.75rem" }}>
-                      ✅ Estimula o nervo vago — principal componente do sistema parassimpático<br />
-                      ✅ Reduz a frequência cardíaca e a pressão arterial<br />
-                      ✅ Diminui a liberação de cortisol (hormônio do estresse)<br />
-                      ✅ Aumenta a variabilidade da frequência cardíaca<br />
-                      ✅ Ativa o córtex pré-frontal — área responsável pelo controle executivo
-                    </p>
-                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>COMO PRATICAR</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 1 — INSPIRAÇÃO (4 segundos):</strong> Inspire lentamente pelo nariz contando 1... 2... 3... 4. A barriga deve expandir.</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.3rem" }}><strong>FASE 2 — RETENÇÃO (6 segundos):</strong> Segure o ar suavemente contando 1... 2... 3... 4... 5... 6. Não force.</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.6, marginBottom: "0.75rem" }}><strong>FASE 3 — EXPIRAÇÃO (2 segundos):</strong> Solte o ar pela boca contando 1... 2. Sinta a barriga voltando ao lugar.</p>
-                    <p style={{ fontWeight: 700, fontSize: "0.78rem", color: "#1A6B8A", marginBottom: "0.3rem" }}>QUANDO USAR?</p>
-                    <p style={{ fontSize: "0.8rem", color: "#333", lineHeight: 1.8 }}>
-                      🎯 No momento do impulso: assim que perceber a vontade de jogar<br />
-                      🎯 Antes de situações de risco: quando souber que estará exposto a gatilhos<br />
-                      🎯 Após uma recaída: para retomar o controle sem autocrítica<br />
-                      🎯 Na prevenção diária: como prática de manutenção
-                    </p>
-                  </div>
-                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                    Você observou o impulso sem agir.<br />Isso é Interrupção.<br />O ciclo automático perdeu força.
-                  </p>
-                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                    O impulso tem pico... e depois passa.<br />Você não precisa fazer nada agora.<br />Só respirar.
-                  </p>
-                  <p style={{ textAlign: "center", color: "#4b5563", lineHeight: 1.6 }}>
-                    Seu "freio natural" foi ativado.<br />O nervo vago respondeu.<br />Seu corpo está mais calmo.<br />Sua mente, mais clara.
-                  </p>
-                </div>
-                <h2 style={{ fontFamily: "DM Serif Display, serif", fontSize: "1.3rem", color: "#1a1a1a", marginBottom: "0.5rem" }}>
-                  Você fez a escolha certa ao clicar aqui.
-                </h2>
-                <div style={{ background: "#f9f5f0", borderRadius: 12, padding: "1.25rem", marginBottom: "1.25rem", textAlign: "left" }}>
-                  <p style={{ fontWeight: 700, color: "#3B6D11", marginBottom: "0.75rem", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    Responda agora, com honestidade:
-                  </p>
-                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.92rem" }}>O que aconteceu antes dessa vontade aparecer?</p>
-                  <p style={{ color: "#444", marginBottom: "0.5rem", fontSize: "0.92rem" }}>O que você vai sentir se jogar agora?</p>
-                  <p style={{ color: "#444", marginBottom: "1rem", fontSize: "0.92rem" }}>O que você vai sentir se resistir?</p>
-                  <div style={{ borderTop: "1px solid #e0d8cc", paddingTop: "0.75rem" }}>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Você está sentindo um impulso AGORA?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Este impulso surgiu nos últimos 15 minutos?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Você já tentou recuperar perdas nas últimas 24h?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Está apostando escondido de alguém?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Você usou dinheiro que precisava para outra coisa?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Está sentindo culpa por suas apostas recentes?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Já mentiu sobre quanto tempo/dinheiro gastou jogando?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Está tentando provar algo através do jogo?</p>
-                    <p style={{ color: "#555", marginBottom: "0.4rem", fontSize: "0.88rem" }}>Sente que o jogo está controlando suas decisões hoje?</p>
-                    <p style={{ color: "#555", fontSize: "0.88rem" }}>Já cancelou ou adiou algo importante para jogar?</p>
-                  </div>
-                </div>
-                <p style={{ color: "#666", fontSize: "0.85rem", marginBottom: "1.25rem", lineHeight: 1.6 }}>
-                  Esta ferramenta tem uma versão completa com <strong>100 perguntas randomizadas</strong>, a Curva do Impulso e técnica de respiração guiada.
+                <p style={{ fontFamily: fonte, color: "#555", fontSize: "0.9rem", lineHeight: 1.6, margin: "1rem 0 0" }}>
+                  Crie sua conta grátis para responder a reflexão completa, com perguntas que mudam a cada uso, e acompanhar seu progresso no programa.
                 </p>
-                <a
-                  href="/modulo/1"
-                  style={{ display: "block", background: "#3B6D11", color: "#fff", padding: "0.9rem", borderRadius: 10, fontWeight: 700, fontSize: "1rem", textDecoration: "none", marginBottom: "0.75rem" }}
-                >
-                  Quero o Módulo 1 — Interrupção
+                <a href="/cadastrar" style={{ ...btnPrincipal, display: "block", textAlign: "center", textDecoration: "none" }}>
+                  Criar conta grátis
                 </a>
-                <button onClick={handleFechar} style={{ background: "none", border: "none", color: "#aaa", fontSize: "0.8rem", cursor: "pointer" }}>
+                <button type="button" onClick={handleFechar} style={{ display: "block", margin: "0.6rem auto 0", background: "none", border: "none", color: "#6F7D73", fontFamily: fonte, fontSize: "0.85rem", cursor: "pointer" }}>
                   Fechar
                 </button>
-              </div>
+              </>
             )}
           </div>
         </div>
